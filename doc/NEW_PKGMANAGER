@@ -1,0 +1,7 @@
+How to add new packager support to fontinfo
+
+1. adjust package-manager.sh to return correct
+   string for both --cflags and --libs
+
+2. implement file_from_pkg() function in
+   package-manager.c

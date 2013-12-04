@@ -1,0 +1,16 @@
+How to add new image format handler:
+
+1. duplicate nearest existing img-foo.c and img-foo.h to img-bar.c 
+   and img-bar.h respectively
+2. adjust new img_bar.c img_bar.h to format needs: write_bar_specimen()
+   write_bar_minispecimen() and write_bar_charset() are needed
+3. add new image handler identificator BAR to fontoutput_t in configuration.h
+4. adjust img.c to reflect new image handler: direct write_*() to invoke 
+   appropriate write_bar_* functions from img_bar.c
+3. adjust fontinfo.c to reflect new image handler: adjust usage() function 
+   to add new possibility for image format option (-o at the time of writing)
+4. adjust Makefile rules to build new files and link result to fontinfo
+
+In case of problems, improvements, suggestions, ideas, etc. drop me a mail
+on pgajdos at suse company.
+

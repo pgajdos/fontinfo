@@ -1,0 +1,26 @@
+How to add new index page:
+
+1. fcinfo.c: create function, which returns index groups,
+   e. g. fcinfo_fontformats() creates list of available
+   font formats (TrueType, PCF, CFF, etc.)
+2. fcinfo.c: create function, which returns font set
+   for given index group, e. g. fcinfo_fontformat_family_index()
+   creates font set consisting of families for given format
+3. styles-commons.c: create wrapper for function in step 1, e. g.
+   fontformat_index()
+4. styles-commons.c: create wrapper for function in step 2, e. g.
+   fontformat_family_index()
+5. foo-style.c: create wrapper for foo_page(), e. g. 
+   plain_fontformats_index() and corresponding callback for 
+   foo_page(), e. g. content_fontformats_index()
+6. fontinfo.c: add top level function created in step 5 to main()
+
+More complex example (creating one html page per index group, index
+fonts instead of families):
+1. fcinfo_languages()
+2. fcinfo_language_font_index()
+3. language_index()
+4. language_font_index()
+5. content_languages_index(), plain_languages_index(), 
+   content_language_font_index(), plain_language_fonts_indexes()
+

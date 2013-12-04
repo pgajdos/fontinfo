@@ -1,0 +1,974 @@
+/*
+ * fontinfo
+ *
+ * Overview of Installed Fonts
+ *
+ * Copyright (C) 2013 Petr Gajdos (pgajdos at suse)
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+/* 
+ * created manually 
+ *
+ * sources: MAIN
+ *          wikipedia
+ *          http://www.columbia.edu/~fdc/utf8/
+ *          http://en.wikipedia.org/wiki/List_of_pangrams
+ *          http://sourceforge.net/projects/fontaine/
+ *          http://www.omniglot.com/
+ *          http://unicode.org/udhr/assemblies/first_article_all.txt
+ *          http://guindo.pntic.mec.es/~jmag0042/Samples.pdf
+ *          Gurmukhi
+ *          http://www.sikhawareness.com/index.php/topic/15027-panjabi-and-gurmukhi-sentence-structures-grammar/
+ *          Limbu
+ *          http://www.xenotypetech.com/samplepdfs/LB_Sample.html
+ *          Old Italic
+ *          TABLE OF AGNONE
+ *          Old Persian
+ *          http://www.fas.harvard.edu/~iranian/OldPersian/OPers2_Lessons01_7.pdf
+ *          Glagolitic
+ *          http://glagolitic.com/
+ *          Ugaritic
+ *          http://lila.sns.it/mnamon/index.php?page=Esempi&id=30&lang=en
+ *          Cypriot
+ *          http://lila.sns.it/mnamon/index.php?page=Esempi&id=4&lang=en
+ *          Linear_B
+ *          http://lila.sns.it/mnamon/index.php?page=Esempi&id=20&lang=en
+ *          Miao
+ *          http://www.archives.ecs.soton.ac.uk/miao/songs/TranslatedSongs/m101/m101tx.pdf
+ *          Ogham
+ *          http://www.babelstone.co.uk/Fonts/Ogham.html
+ *          Runic
+ *          http://www.babelstone.co.uk/Fonts/AngloSaxon.html
+ *          Old South Arabian
+ *          http://www.omniglot.com/writing/southarabian.htm
+ *          Carian
+ *          "Proposal to encode the Carian script in the SMP of the UCS"
+ *          http://std.dkuug.dk/jtc1/sc2/wg2/docs/n3020.pdf
+ *          Autonyms
+ *          https://github.com/santhoshtr/AutonymFont/blob/master/autonyms.txt
+ *          Sundanese
+ *          http://sabilulungan.org/aksara/
+ *
+ * why some sentences do not match charsets:
+ * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
+ * coptic using greek plus coptic extension (0x0370-0x03FF block) or coptic
+ * extension from that block plus native coptic block (0x2C80-0x2CFF); coptic
+ * sentences excersises second variant, but there are a small set of fonts
+ * that have it (at the time of writing, we have FreeSerif, Aegyptus, Analecta,
+ * MPH2BDamase). Imho it is correct to display only some symbols for fonts
+ * that do not cover native coptic block.
+ * GREEK -- Estrangelo is group of font families for Syriac, but some of
+ * them seems to misuse some greek unicode codepoints to other symbols
+ *       -- MUTT ClearlyU Alternate Glyphs Wide has Extended Greek block
+ *       -- Andika missings some basic greek letters (even small)
+ *       -- Charis SIL missing some basic greek letters (even small)
+ *       -- Doulos SIL missing some basic greek letters (even small)
+ *       -- Musica coveres greek notation symbols (is there some meaningfull 
+ *          string?)
+ * DESERET -- Droid Sans Fallback has only 5 symbols (5.1% of script)
+ * RUNIC -- Misc Fixed Bold contains less then half seemingly random symbols
+ * TIBETAN -- Gnu Unifont Regular and MUTT ClearlyU Wide, Regular contains
+ * some symbols, but..
+ * LATIN -- Crisis B seems to use some random code points
+ *       -- Sappy Mugs really needs not a sentence :)
+ * HAN -- I tend to believe that 6.4% is too low coverage
+ * CYRILLIC --  Linux Libertine Initials O support seems to be too small?
+ * BENGALI -- MPH 2B Damase Regular has only Bengali digits
+ * SAMARITAN -- I have not found free font except AncientSemiticFonts by culmus
+ *              project. They cover only part, display alphabet is ok here imho.
+ * MUSICAL_SYMBOLS -- random characters for coverage around 6.7% is ok 
+ * MATH -- random characters for coverage around 10% is ok imho
+ *      -- Noto Sans Symbols
+ */
+
+{
+  "Latin", 5, L2R, (sentence_t [])
+  {
+    {"Vitrum edere possum; mihi non nocet.", "la"},
+    {"VITRUM EDERE POSSUM; MIHI NON NOCET.", "la"},
+    {"vitrum edere possum; mihi non nocet.", "la"},
+    /* full width */
+    {"Ｖｉｔｒｕｍ　ｅｄｅｒｅ　ｐｏｓｓｕｍ；　ｍｉｈｉ　ｎｏｎ　ｎｏｃｅｔ．", "la"},
+    /* without diacritics */
+    {"Vitrum edere possum mihi non nocet", "la"},
+  }
+},
+
+{
+  "Greek", 9, L2R, (sentence_t [])
+  {
+    /* Classical Greek */
+    {"ὕαλον ϕαγεῖν δύναμαι· τοῦτο οὔ με βλάπτει.", "el"},
+    /* Greek (monotonic) */
+    {"Μπορώ να φάω σπασμένα γυαλιά χωρίς να πάθω τίποτα.", "el"},
+    /* Greek (polytonic) */
+    {"Μπορῶ νὰ φάω σπασμένα γυαλιὰ χωρὶς νὰ πάθω τίποτα.", "el"},
+    {"Θέλει αρετή και τόλμη η ελευθερία. (Ανδρέας Κάλβος)", "el"},
+    {"Ο καλύμνιος σφουγγαράς ψιθύρισε πως θα βουτήξει χωρίς να διστάζει.", "el"},
+    {"ΑΓΗΣΙΑι ΣΥΡΑΚΟΣΙΩι ΑΠΗΝΗι", "el"}, 
+    {"ΑΓΗΣΙΑ ΣΥΡΑΚΟΣΙΩ ΑΠΗΝΗ", "el"},
+    {"αγησια συρακοσιω απηνη", "el"},
+    /* wide spaces (for Efont Fixed Wide) */
+    {"ΑΓΗΣΙΑ　ΣΥΡΑΚΟΣΙΩ　ΑΠΗΝΗ", "el"},
+  }
+},
+
+{
+  "Cyrillic", 10, L2R, (sentence_t [])
+  {
+    /* Russian */
+    {"В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!", "ru"},
+    /* Mongolian */
+    {"Би шил идэй чадна, надад хортой биш", "mn-Cyrl"},
+    /* without comma */
+    {"Би шил идэй чадна надад хортой биш", "mn-Cyrl"},
+    /* with wide white space 0x3000 */
+    {"Би　шил　идэй　чадна，　надад　хортой　биш．", "mn-Cyrl"},
+    /* Belarusian */
+    {"Я магу есці шкло, яно мне не шкодзіць.", "be"},
+    /* Bulgarian */
+    {"Мога да ям стъкло, то не ми вреди.", "bg"},
+    /* Macedonian */
+    {"Можам да јадам стакло, а не ме штета.", "mk"},
+    /* Ukrainian */
+    {"Я можу їсти скло, і воно мені не зашкодить.", "uk"},
+    /* Serbian */ 
+    {"Љубазни фењерџија чађавог лица хоће да ми покаже штос.", "sr"},
+    /* for Autonym font: "Bulgarian language" */
+    {"български език", "bg"},
+  }
+},
+
+{
+  "Armenian", 2, L2R, (sentence_t [])
+  {
+    {"Կրնամ ապակի ուտել և ինծի անհանգիստ չըներ։", "hy"},
+    /* for Autonym font: "Armenian" */
+    {"Հայերեն", "hy"},
+  }
+},
+
+{
+  "Hebrew", 4, R2L, (sentence_t [])
+  {
+    /* right to left! period should appear on the left */
+    {"אני יכול לאכול זכוכית וזה לא מזיק לי.", "he"},
+    {"דג סקרן שט בים מאוכזב ולפתע מצא חברה", "he"},
+    {"כך התרסק נפץ על גוזל קטן, שדחף את צבי למים", "he"},
+    /* for Autonym font: "Yddish" */
+    {"ייִדיש", "he"},
+  }
+},
+
+{
+  "Arabic", 6, R2L, (sentence_t [])
+  {
+    /* right to left! period should appear on the left */ 
+    {"أنا قادر على أكل الزجاج و هذا لا يؤلمني.", "ar"},
+    {"صِف خَلقَ خَودِ كَمِثلِ الشَمسِ إِذ بَزَغَت — يَحظى الضَجيعُ بِها نَجلاءَ مِعطارِ", "ar"},
+    {"هلا سكنت بذي ضغثٍ فقد زعموا — شخصت تطلب ظبياً راح مجتازا", "ar"},
+    {"اصبر على حفظ خضر واستشر فطنا، وزج همك في بغداذ منثملا", "ar"},
+    {"ابجد هوز حطي كلمن سعفص قرشت ثخذ ضظغ", "ar"},
+    /* without space for e. g. Arabic Newspaper */
+    {"العربية،عربي،عربى", "ar"},
+  }
+},
+
+{
+  "Syriac", 1, R2L, (sentence_t [])
+  {
+    {"ܒ݁ܪܺܫܺܝܬ݂ ܐܺܝܬ݂ܰܘܗ݈ܝ ܗ݈ܘܳܐ ܡܶܠܬ݂ܳܐ ܘܗܽܘ ܡܶܠܬ݂ܳܐ ܐܺܝܬ݂ܰܘܗ݈ܝ ܗ݈ܘܳܐ ܠܘܳܬ݂ ܐܰܠܳܗܳܐ ܘܰܐܠܳܗܳܐ ܐܺܝܬ݂ܰܘܗ݈ܝ ܗ݈ܘܳܐ ܗܽܘ ܡܶܠܬ݂ܳܐ܂", "syr"},
+  }
+},
+
+{
+  "Thaana", 2, R2L, (sentence_t [])
+  {
+    {"ޤައުމީ މިއެކުވެރިކަން މަތީ ތިބެގެން ކުރީމެ ސަލާމް", "dv"},
+    /* for Autonym font: "Maldivian" */
+    {"ދިވެހި", "dv"},
+  }
+},
+
+{
+  "Devanagari", 3, L2R, (sentence_t [])
+  {
+                            /*??*/
+    {"आप भला तो सब भला ।", "hi"}, 
+    /* wide spaces */           /*??*/
+    {"आप　भला　तो　सब　भला　।", "hi"},
+    /* for Autonym font: "Hindi language" */
+    {"मानक हिन्दी", "hi"},
+  }
+},
+
+{
+  "Bengali", 2, L2R, (sentence_t [])
+  {                                                   /*??*/
+    {"আমি কাঁচ খেতে পারি, তাতে আমার কোনো ক্ষতি হয় না।", "bn"},
+    /* for Autonym font: "Bengali" */
+    {"বাংলা", "bn"},
+  }
+},
+
+{
+  "Gurmukhi", 2, L2R, (sentence_t [])
+  {
+    {"ਉਹ ਮੇਰੇ ਲਈ ਖਾਣਾ ਬਣਾਉਂਦੀ ਹੈ ।", "pa"},
+    /* for Autonym font: "Punjabi" */
+    {"ਪੰਜਾਬੀ", "pa"},
+  }
+},
+
+{
+  "Gujarati", 2, L2R, (sentence_t [])
+  {
+    {"એક ભાષા ક્યારેય પણ પુરતી નથી", "gu"}, 
+    /* for Autonym font: "Gujarati" */
+    {"ગુજરાતી", "gu"},
+  }
+},
+
+{
+  "Oriya", 2, L2R, (sentence_t [])
+  {
+    {"ଆପଣ ଓଡ଼ିଆ କୁହନ୍ତି କି", "or"},
+    {"ଉତ୍କଳ ଲିପି", "or"},
+  }
+},
+
+{ 
+  "Tamil", 5, L2R, (sentence_t [])
+  {
+    /* formal Tamil */
+    {"உங்களை பார்த்தது மிகவும் சந்தோஷம்", "ta"},
+    /* informal Tamil*/
+    {"ஒங்கள பாத்தது ரொம்ப சந்தோஷ0", "ta"},
+    {"நான் கண்ணாடி சாப்பிடுவேன், அதனால் எனக்கு ஒரு கேடும் வராது. ", "ta"},
+    {"தமிழ் அரிச்சுவடி", "ta"},
+    /* for Autonym font: "Tamil" */
+    {"தமிழ்", "ta"},
+  }
+},
+
+{
+  "Telugu", 2, L2R, (sentence_t [])
+  {
+    {"నేను గాజు తినగలను మరియు అలా చేసినా నాకు ఏమి ఇబ్బంది లేదు ", "te"},
+    /* for Autonym font: "Telugu" */
+    {"తెలుగు", "te"},
+  }
+},
+
+{
+  "Kannada", 1, L2R, (sentence_t [])
+  {
+    {"ನನಗೆ ಹಾನಿ ಆಗದೆ, ನಾನು ಗಜನ್ನು ತಿನಬಹುದು", "kn"},
+  }
+},
+
+{
+  "Malayalam", 2, L2R, (sentence_t [])
+  {
+    {"രുചിയോടെ ഭക്ഷണം ആസ്വദിക്കാന്‍ കഴിയട്ടേ ", "ml"},
+    {"മലയാളം", "ml"},
+  }
+},
+
+{
+  "Sinhala", 3, L2R, (sentence_t [])
+  {
+    {"මට වීදුරු කෑමට හැකියි. එයින් මට කිසි හානියක් සිදු නොවේ.", "si"},
+    {"ඔබ දැනගන්න ලැබිම සතුටක්", "si"},
+    /* for Autonym font: "Sinhala" */
+    {"සිංහල", "si"},
+  }
+},
+
+{
+  "Thai", 2, L2R, (sentence_t [])
+  {
+    {"ฉันกินกระจกได้ แต่มันไม่ทำให้ฉันเจ็บ", "th"},
+    {"โฮเวอร์คราฟท์ของผมเต็มไปด้วยปลาไหล", "th"},
+  }
+},
+
+{
+  "Lao", 3, L2R, (sentence_t [])
+  {
+    {"ຂອ້ຍກິນແກ້ວໄດ້ໂດຍທີ່ມັນບໍ່ໄດ້ເຮັດໃຫ້ຂອ້ຍເຈັບ.", "lo"},
+    {"ດີໃຈທີ່ຮູ້ກັບເຈົ້າ", "lo"},
+    {"ອັກສອນລາວ", "lo"},
+  }
+},
+
+{
+  "Tibetan", 3, L2R, (sentence_t [])
+  {
+    {"ཤེལ་སྒོ་ཟ་ནས་ང་ན་གི་མ་རེད།", "bo"},
+    /* for sMar-chen script, tibetan encoded (BabelStone Tibetan sMar-chen) */
+    {"ཡིག་གཟུགས་དུ་མའི་མ་ཕྱི་གཞོན་ནུ་མཛེས་པའི་ལང་ཚོ", ""},
+    /* for Autonym font: "Tibet" */
+    {"བོད", "bo"},
+  }
+},
+
+{
+  /* or Burmese */
+  "Myanmar", 1, L2R, (sentence_t [])
+  {
+    {"က္ယ္ဝန္‌တော္‌၊က္ယ္ဝန္‌မ မ္ယက္‌စားနုိင္‌သည္‌။ ၎က္ရောင္‌့ ထိခုိက္‌မ္ဟု မရ္ဟိပာ။", "my"},
+  }
+},
+
+{
+  "Georgian", 5, L2R, (sentence_t [])
+  {
+    {"მინას ვჭამ და არა მტკივა.", "ka"},
+    {"ქართული დამწერლობა", "ka"},
+    /* without space for MUTT ClearlyU Alternate Glyphs Wide */
+    {"ქართული", "ka"},
+    /* capital letters */
+    {"ႵႠႰႧႳႪႨ", "ka"},
+    {"ასომთავრული", "ka"},
+  }
+},
+
+{
+  /* Korean */
+  "Hangul", 3, L2R, (sentence_t [])
+  {
+    {"나는　유리를　먹을　수　있어요.　그래도　아프지　않아요", "ko"},
+    {"내　호버크라프트는　장어로　가득　차　있어요", "ko"},
+    /* with normal space (MUTT ClarlyU Wide)*/
+    {"나는 유리를 먹을 수 있어요. 그래도 아프지 않아요", "ko"},
+  }
+},
+
+{
+  /* or Amharic (?) */
+  "Ethiopic", 2, L2R, (sentence_t [])
+  {
+    {"መልካም፡ቀን፡ይሁንልህ።", "am"},
+    {"ስለተዋወቅን፡ደስ፡ብሎኛል", "am"},
+  }
+},
+
+{
+  /* or Iroquoian */
+  "Cherokee", 2, L2R, (sentence_t [])
+  {
+    {"ᏂᎦᏓ ᎠᏂᏴᏫ ᏂᎨᎫᏓᎸᎾ ᎠᎴ ᎤᏂᏠᏱ ᎤᎾᏕᎿ ᏚᏳᎧᏛ ᎨᏒᎢ.", "chr"},
+    /* without full stop */
+    {"ᏂᎦᏓ ᎠᏂᏴᏫ ᏂᎨᎫᏓᎸᎾ ᎠᎴ ᎤᏂᏠᏱ ᎤᎾᏕᎿ ᏚᏳᎧᏛ ᎨᏒᎢ", "chr"},
+  }
+},
+
+{
+  /* from fontaine, CanadianSyllabics.h (lang. Moose Cree) */
+  "Canadian_Aboriginal", 1, L2R, (sentence_t [])
+  {
+    {"ᐅᒪ ᐊᑕᓗᑫᐎᓐ ᐊᓕᒧᒪᑲᓋᓐ ᓇᐯᐤ ᐎᓴᑫᒐᒃ ᐁ ᐃᔑᓂᑲᓱᑦ᙮ ᑭᒋ ᐌᔅᑲᒡ ᒪᑲ, ᑭ ᐃᑕᑯᐸᓐ ᓇᐯᐤ ᐎᓴᑫᒐᒃ ᐁ ᐃᔑᓂᑲᓱᑦ᙮", "cr"},
+  }
+},
+
+{
+  "Ogham", 2, L2R, (sentence_t [])
+  { /* sga .. old irish, pgl .. primitive irish ???*/
+    {"᚛᚛ᚉᚑᚅᚔᚉᚉᚔᚋ ᚔᚈᚔ ᚍᚂᚐᚅᚑ ᚅᚔᚋᚌᚓᚅᚐ᚜", "pgl"},
+    {"᚛ᚉᚏᚏᚑᚄᚉᚉ᛬ᚅᚐᚆᚆᚈᚃᚃᚇᚇᚐᚇᚇᚄ᛬ᚇᚐᚈᚈᚏᚏ᛬ᚐᚅᚅ", "pgl"},
+  }
+},
+
+{
+  "Runic", 3, L2R, (sentence_t [])
+  {                                                                     /*??*/
+    {"ᛏᚡᛆᛋ ᛒᚱᛁᛚᛚᛁᚵ ᛆᚿᛑ ᛏᚼᛂ ᛋᛚᛁᛏᚼᚤ ᛏᚫᚡᛂᛋ ᛑᛁᛑ ᚵᚤᚱᛂ ᛆᚿᛑ ᚵᛁᛘᛒᛚᛂ ᛁᚿ ᛏᚼᛂ ᚡᛆᛒᛂ", ""},
+    {"ᛋᛒᛖ‍ᚱᚫᛞᚻᛏᛇᛒᚳᚪᛁ ᛖ‍ᚱᚻ‍ᚪᛞ‍ᚫᛒᛋ", ""},
+    {"[ᚻ]ᚱᛁᚾᚷᛁᚳᚻ‍ᚪᛏᛏ[ᚫ]", ""},
+  }
+},
+
+{
+  "Khmer", 1, L2R, (sentence_t [])
+  {
+    {"ខ្ញុំអាចញុំកញ្ចក់បាន ដោយគ្មានបញ្ហារ", "km"},
+  }
+},
+
+{
+  "Mongolian", 1, T2B, (sentence_t [])
+  {
+    {"ᠪᠢ ᠰᠢᠯᠢ ᠢᠳᠡᠶᠦ ᠴᠢᠳᠠᠨᠠ ᠂ ᠨᠠᠳᠤᠷ ᠬᠣᠤᠷᠠᠳᠠᠢ ᠪᠢᠰᠢ ", "mn"},
+  }
+},
+
+{
+  "Hiragana", 3, L2R, (sentence_t [])
+  {
+    {"いろはにほへど　ちりぬるを　わがよたれぞ　つねならむ　うゐのおくやま　けふこえて　あさきゆめみじ　ゑひもせず", "ja"},
+    /* 0x0020 as space (e. g. Caslon do not have 0x3000) */
+    {"いろはにほへど ちりぬるを わがよたれぞ つねならむ うゐのおくやま けふこえて あさきゆめみじ ゑひもせず", "ja"},
+    {"我が世誰ぞ　常ならん", "ja"},
+  }
+},
+
+{
+  "Katakana", 4, L2R, (sentence_t [])
+   {
+     {"カタカナ", "ja"},
+     {"コンピュータ", "ja"},
+     {"ロンドン", "ja"},
+     /* halfwidth for Efont Fixed */
+     {"ｶﾀｶﾅ", "ja"},
+   }
+},
+
+{
+  "Bopomofo", 1, L2R, (sentence_t [])
+  {
+    {"ㄅㄆㄇㄈ", "zh"},
+  }
+},
+
+{
+  "Han", 5, T2B, (sentence_t [])
+  {
+    /* Chinese */
+    {"我能吞下玻璃而不伤身体。", "zh"},
+    /* Chinese Traditional */
+    {"我能吞下玻璃而不傷身體。", "zh"},
+    /* Kanji */
+    {"色は匂へど　散りぬるを　我が世誰ぞ　常ならむ　有為の奥山　今日越えて　浅き夢見じ　酔ひもせず", "zh"},
+    {"我能吞玻璃而不伤身体哦", "zh"},
+    {"我能吞玻璃而不傷身體哦", "zh"},
+  }
+},
+
+{
+  "Yi", 1, L2R, (sentence_t [])
+  {
+    {"ꊿꂷꃅꄿꐨꐥ，ꌅꅍꀂꏽꐯꒈꃅꐥꌐ。ꊿꊇꉪꍆꌋꆀꁨꉌꑌꐥ，ꄷꀋꁨꂛꊨꅫꃀꃅꐥꄡꑟ", "ii"},
+  }
+},
+
+{
+  /* http://en.wikipedia.org/wiki/Old_Italic_script
+     Writing direction (right-to-left, left-to-right, or boustrophedon) varies based 
+     on the language and even the time period. For simplicity most scholars use 
+     left-to-right and this is the Unicode default direction for the Old Italic block. 
+     For this reason, the glyphs in the code chart are shown with left-to-right 
+     orientation. */
+  "Old_Italic", 1, L2R, (sentence_t [])
+  {
+    /* hope this is first line of TABLE OF AGNONE */
+    {"𐌔𐌕𐌀𐌕𐌞𐌔 𐌐𐌞𐌔 𐌔𐌄𐌕 𐌇𐌞𐌃𐌝𐌍", "it"},
+  }
+},
+
+{
+  "Gothic", 2, L2R, (sentence_t [])
+  {
+    {"𐌼𐌰𐌲 𐌲𐌻𐌴𐍃 𐌹̈𐍄𐌰𐌽, 𐌽𐌹 𐌼𐌹𐍃 𐍅𐌿 𐌽𐌳𐌰𐌽 𐌱𐍂𐌹𐌲𐌲𐌹𐌸.", "got"},
+    /* without diacritics */
+    {"𐌼𐌰𐌲 𐌲𐌻𐌴𐍃 𐌹𐍄𐌰𐌽, 𐌽𐌹 𐌼𐌹𐍃 𐍅𐌿 𐌽𐌳𐌰𐌽 𐌱𐍂𐌹𐌲𐌲𐌹𐌸.", "got"},
+  }
+},
+
+{
+  "Deseret", 1, L2R, (sentence_t [])
+  {
+    {"𐐔𐐯𐑅𐐨𐑉𐐯𐐻 𐐔𐐯𐑆𐐲𐑉𐐯𐐻", "en"},
+  }
+},
+
+{
+  "Tagalog", 1, L2R, (sentence_t [])
+  {
+    {"ᜀᜅ ᜎᜑᜆ᜔ ᜅ ᜆᜂᜌ᜔ ᜁᜐᜒᜈᜒᜎᜅ ᜈ ᜋᜎᜌ ᜀᜆ᜔ ᜉᜈ᜔ᜆᜌ᜔ ᜉᜈ᜔ᜆᜌ᜔ ᜐ ᜃᜇᜅᜎᜈ᜔ ᜀᜆ᜔ ᜋ᜔ᜄ ᜃᜇᜓᜉᜆᜈ᜔᜶ ᜐᜒᜎᜌ᜔ ᜉᜒᜈᜄ᜔ᜃᜎᜓᜊᜈ᜔ ᜅ ᜃᜆ᜔ᜏᜒᜇᜈ᜔ ᜀᜆ᜔ ᜊᜓᜇ᜔ᜑᜒ ᜀᜆ᜔ ᜇᜉᜆ᜔ ᜋᜄ᜔ᜉᜎᜄᜌᜈ᜔ ᜀᜅ ᜁᜐᜆ᜔ ᜁᜐ ᜐ ᜇᜒᜏ ᜅ ᜉᜄ᜔ᜃᜃᜉᜆᜒᜇᜈ᜔᜶", "tl"},
+  }
+},
+
+{
+  "Hanunoo", 1, L2R, (sentence_t [])
+  {
+    {"ᜱᜨᜳᜨᜳᜢ", "hnn"},
+  }
+},
+
+{
+  "Buhid", 1, L2R, (sentence_t [])
+  {
+    {"ᝊᝓᝑᝒᝇ", "bku"},
+  }
+},
+
+{
+  "Tagbanwa", 1, L2R, (sentence_t [])
+  {
+    {"ᝦᝪᝨᝯ", "tbw"},
+  }
+},
+
+{
+  "Limbu", 1, L2R, (sentence_t [])
+  {
+    {"ᤀᤡᤔᤠᤴᤛᤡᤱ ᤁᤡᤵᤋᤱᤃᤡᤵᤛᤡᤱ ᤏᤠᤛᤢᤵ", "lif"},
+  }
+},
+
+{
+  "Tai_Le", 1, L2R, (sentence_t [])
+  {
+    {"ᥖᥭᥰᥖᥬᥳᥑᥨᥒᥰ", "tdd"},
+  }
+},
+
+{
+  "Linear_B", 1, L2R, (sentence_t [])
+  {
+    {"𐀀𐀩𐀕𐀚 𐀷𐀵 𐀩𐀄𐀒𐀍 𐂂𐂃𐂀𐂁𐃌", "gmy"},
+  }
+},
+
+{
+  "Ugaritic", 1, L2R, (sentence_t [])
+  {
+    {"𐎗𐎁𐎟𐎋𐎅𐎐𐎎", "uga"},
+  }
+},
+
+{
+  "Shavian", 1, L2R, (sentence_t [])
+  {
+    {"𐑒𐑪𐑯𐑝𐑦𐑒𐑑", "en"},
+  }
+},
+
+{
+  "Osmanya", 1, L2R, (sentence_t [])
+  {
+    {"𐒋𐒘𐒈𐒑𐒛𐒒𐒕𐒀", "so"},
+  }
+},
+
+{
+  "Cypriot", 1, L2R, (sentence_t [])
+  {
+    {"𐠀𐠘𐠩𐠊𐠮𐠮𐠋𐠭𐠂𐠯𐠃𐠂𐠭𐠂𐠍𐠒𐠌𐠀𐠂", "ecy"},
+  }
+},
+
+{
+  "Braille", 1, L2R, (sentence_t [])
+  {
+    /* there is Braille whitespace 0x2800 */
+    {"⠊⠀⠉⠁⠝⠀⠑⠁⠞⠀⠛⠇⠁⠎⠎⠀⠁⠝⠙⠀⠊⠞⠀⠙⠕⠑⠎⠝⠞⠀⠓⠥⠗⠞⠀⠍⠑", ""},
+  }
+},
+
+{
+  "Buginese", 2, L2R, (sentence_t [])
+  {
+    {"ᨅᨔ ᨕᨘᨁᨗ", "bug"},
+    {"ᨀᨁᨂᨃᨄᨅᨆᨇᨈᨉ", "bug"},
+  }
+},
+
+{
+  "Coptic", 4, L2R, (sentence_t [])
+  {
+    {"ⲟⲩⲟϩ ⲛⲁⲣⲉ ⲡⲕⲁϩⲓ ⲧⲏⲣϥ ⲟⲓ ⲛ̇ⲟⲩⲥⲯⲟⲧⲟⲩ ⲛ̇ⲟⲩⲱⲧ ⲛⲉⲙ ⲟⲩⲥⲙⲏ ⲛ̇ⲟⲩⲱⲧ", "cop"},
+    {"ⲘⲉⲧⲢⲉⲙ̀ⲛⲭⲏⲙⲓ", "cop"},
+    {"ⲟⲩⲢⲉⲙ̀ⲛⲭⲏⲙⲓ ⲛ̀Ⲭⲣⲏⲥⲧⲓ̀ⲁⲛⲟⲥ", "cop"},
+    /* without diacritics */
+    {"ⲟⲩⲢⲉⲙⲛⲭⲏⲙⲓ ⲛⲬⲣⲏⲥⲧⲓⲁⲛⲟⲥ", "cop"},
+  }
+},
+
+{
+  "New_Tai_Lue", 3, L2R, (sentence_t []) 
+  {
+    {"ᦑᦺᦟᦹᧉ", "khb"},
+    {"ᦂᦱᧉ", "khb"},
+    {"ᦟᦲᧅ ᦷᦎ ᦺᦑᦟᦹᧉ", "khb"},
+  }
+},
+
+{
+  "Glagolitic", 3, L2R, (sentence_t [])
+  {
+    {"Ⰳⰵⰺ, ⱃⱁⰴⰹⱀⰰ ⰿⰹⰾⰰ́, ⰳⱁⰴⰹⱀⰰ ⱁⰴⰱⰹⰾⰰ, ⰶⰹⱕ ⰿⰰⱅⰽⰰ Ⱄⰾⰰ́ⰲⰰ", "cu"},
+    {"ⰀⰁⰂⰃⰄⰅⰆⰇⰈⰉⰊⰋⰌⰍⰎⰏⰐⰑⰒⰓⰔⰕⰖⰗⰘⰙⰚⰛⰜⰝⰞⰟⰠⰡⰢⰣⰤⰥⰦⰧⰨⰩⰪⰫ Ⱞ", "cu"},
+    {"ⰔⰎⰀⰂⰑⰐⰊⰍ", "cu"},
+  }
+},
+
+{
+  "Tifinagh", 3, L2R, (sentence_t [])
+  {
+    {"ⵉⵎⴷⴰⵏⴻⵏ, ⴰⴽⴽⴻⵏ ⵎⴰ ⵍⵍⴰⵏ ⵜⵜⵍⴰⵍⴻⵏ ⴷ ⵉⵍⴻⵍⵍⵉⵢⴻⵏ ⵎⵙⴰⵡⴰⵏ ⴷⵉ ⵍⵃⵡⴻⵕⵎⴰ ⴷ ⵢⵉⵣⴻⵔⴼⴰⵏ-ⵖⵓⵔ ⵙⴻⵏ ⵜⴰⵎⵙⴰⴽⵡⵉⵜ ⴷ ⵍⴰⵇⵓⴻⵍ ⵓ ⵢⴻⵙⵙⴻⴼⴽ ⴰⴷ-ⵜⵉⵍⵉ ⵜⴻⴳⵎⴰⵜⵜ ⴳⴰⵔ ⴰⵙⴻⵏ.", "zgh"},
+    {"ⵜⵉⴼⵉⵏⴰⵖ", "zgh"},
+    /* for Autonym font: "Tamazight" */
+    {"ⵜⴰⵎⴰⵣⵉⵖⵜ", "zgh"},
+  }
+},
+
+{
+  "Syloti_Nagri", 1, L2R, (sentence_t [])
+  {
+    /* omniglot: "Vowels can be written as independent letters, or by using a variety of diacritical marks" */
+    /* but really not sure if this is correct: */
+    {"ꠡꠁꠟꠅꠔꠁ ꠘꠀꠉꠞꠁ", "syl"},
+  }
+},
+
+{
+  "Old_Persian", 1, L2R, (sentence_t [])
+  {
+    {"𐎠𐎭𐎶𐏐𐎠𐎠𐎼𐎹𐎺𐎢𐏁𐏐𐎧𐏁𐎠𐎹𐎰𐎡𐎹𐏐𐎺𐏀𐎼𐎣𐏐", "peo"},
+  }
+},
+
+{
+  "Kharoshthi", 1, R2L, (sentence_t [])
+  {
+    {"𐨐𐨑𐨒𐨓", "pra"},
+  }
+},
+
+{
+  "Balinese", 1, L2R, (sentence_t [])
+  {
+    {"ᬅᬆᬇᬈᬉᬊᬋᬌ", "bal"},
+  }
+},
+
+{
+  "Cuneiform", 2, L2R, (sentence_t [])
+  {
+    {"𒅎𒀝𒂵𒌈", "akk"},
+              /*??*/
+    {"𒄖𒉈𒅁𒌨𒅎", "akk"},
+  }
+},
+
+{
+  "Phoenician", 1, R2L, (sentence_t [])
+  {
+    {"𐤃𐤁𐤓𐤉𐤌 𐤊𐤍𐤏𐤍𐤉𐤌", "phn"},
+  }
+},
+
+{
+  "Phags_Pa", 3, T2B, (sentence_t [])
+  {
+    {"ꡉꡟ ꡉꡟ︀ ꡪꡟ ꡪꡟ︀ ꡃꡡ ꡃꡡꡃ ꡡꡃ", "sa"},
+    {"ꡏꡟ ꡋꡞ ꡏꡟ ꡋꡞ ᠂ ꡏ ꡜꡖ ꡏꡟ ꡋꡞ ᠂ ꡓꡞ ꡏꡟ ᠁", "sa"},
+    {"ꡏꡟ ꡋꡞ ꡏꡟ ꡋꡞ ᠂ ꡏ ꡜꡖ ꡏꡟ ꡋꡞ ᠂ ꡓꡞ ꡏꡟ", "sa"},
+  }
+},
+
+{
+  "Nko", 1, R2L, (sentence_t [])
+  {
+    {"ߒߞߏ", "nqo"},
+  }
+},
+
+{
+  "Sundanese", 2, R2L, (sentence_t [])
+  {
+    {"ᮊᮧᮔ᮪ᮗᮦᮁᮞᮤ ᮃᮊ᮪ᮞᮛ ᮜᮒᮤᮔ᮪ - ᮃᮊ᮪ᮞᮛ ᮞᮥᮔ᮪ᮓ", "su"},
+    {"ᮘᮞ ᮞᮥᮔ᮪ᮓ", "su"},
+  }
+},
+
+{
+  "Lepcha", 1, L2R, (sentence_t [])
+  {
+    {"ᰀᰁᰂ", "lep"},
+  }
+},
+
+{
+  "Ol_Chiki", 1, L2R, (sentence_t [])
+  {
+    {"᱐᱑᱒", "sat"},
+  }
+},
+
+{
+  "Vai", 2, L2R, (sentence_t [])
+  {
+    {"ꕉꕜꕮ ꔔꘋ ꖸ ꔰ ꗋꘋ ꕮꕨ ꔔꘋ ꖸ ꕎ ꕉꖸꕊ ꕴꖃ ꕃꔤꘂ ꗱ, ꕉꖷ ꗪꗡ ꔻꔤ ꗏꗒꗡ ꕎ ꗪ ꕉꖸꕊ ꖏꕎ.", "vai"},
+    {"ꕙꔤ", "vai"},
+  }
+},
+
+{
+  "Saurashtra", 2, L2R, (sentence_t [])
+  {
+    {"ꢱꣃꢬꢵꢰ꣄ꢜ꣄ꢬꢵ", "saz"},
+    /* the string above doesn't fit Autonym font for some reason,
+       following was taken from autonym.txt of Autonym Font project  */
+    {"ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ", "saz"},
+  }
+},
+
+{
+  "Kayah_Li", 1, L2R, (sentence_t [])
+  {
+    /* omniglot: ".. people who speak it are also known as Western Kayah, .. " */
+    {"ꤏꤢꤧ꤬ꤢꤩ꤬ꤏꤢꤧ꤬ꤥ꤭", "kyu"},
+  }
+},
+
+{
+  "Rejang", 0, L2R, (sentence_t [])
+  {
+  }
+},
+
+{
+  "Lycian", 1, L2R, (sentence_t [])
+  {
+    {"𐊁𐊂𐊚𐊑𐊏𐊚", "xlc"},
+  }
+},
+
+{
+  "Carian", 1, L2R, (sentence_t [])
+  {
+    {"𐊠𐊥𐊣𐊹𐊮𐊸 𐊲𐊥𐊰𐊴𐊣𐊺𐊸 𐊽𐊹𐊾𐊩𐊰𐊹𐊸", "xcr"},
+  }
+},
+
+{
+  "Lydian", 1, R2L, (sentence_t [])
+  {
+    /* month house wall*/
+    {"𐤬𐤭𐤠𐤿𐤠𐤭𐤦𐤡𐤿𐤩𐤠𐤲𐤭𐤦𐤳𐤠", "xld"},
+  }
+},
+
+{
+  "Cham", 1, L2R, (sentence_t [])
+  {
+     /*cjm or cja?*//*??*/
+    {"ꨀꨁꨂꨃꨄꨅꨆꨇꨉ", ""},
+  }
+},
+
+{
+  "Tai_Tham", 2, L2R, (sentence_t [])
+  {
+    {"ᨲ᩠ᩅᩫᨾᩮᩬᨦ", "nod"},
+                    /*??*/
+    {"ᨯᩣ᩠ᩅᨶ᩺ᩉᩖᩰᨯᨼᩬᩁ᩠ᨲ᩺ᨲᩫ᩠ᩅᨾᩮᩥᩬᨦ", ""},
+  } 
+},
+
+{
+  "Tai_Viet", 1, L2R, (sentence_t [])
+  {
+    {"ꪀꪁꪂꪃꪄꪅꪆꪇꪈꪉ", "blt"},
+  }
+},
+
+{
+  "Avestan", 1, R2L, (sentence_t [])
+  {
+    {"𐬀𐬙 𐬟𐬭𐬀𐬎𐬎𐬀𐬑𐬴𐬌𐬌𐬁 𐬥𐬏 𐬔𐬏𐬴𐬋𐬛𐬏𐬨 𐬥𐬏 𐬯𐬭𐬀𐬊𐬝𐬁", "ae"},
+  }
+},
+
+{
+  "Egyptian_Hieroglyphs", 1, L2R, (sentence_t [])
+  {
+    /* "Cleopatra" */
+    {"𓈎𓃭𓇋𓍯𓊪𓂧𓂋𓄿𓏏𓆇", "egy"},
+  }
+},
+
+{
+  "Samaritan", 0, R2L, (sentence_t [])
+  {
+  }
+},
+
+{
+  "Lisu", 1, L2R, (sentence_t [])
+  {
+    {"ꓡꓲꓢꓴ", "lis"},
+  }
+},
+
+{
+  "Bamum", 0, L2R, (sentence_t [])
+  {
+  }
+},
+
+{
+  "Javanese", 2, L2R, (sentence_t [])
+  {
+    {"꧋ ꦲꦤꦕꦫꦏ꧈ ꦢꦠꦱꦮꦭ꧈ ꦥꦝꦗꦪꦚ꧈ ꦩꦒꦧꦛꦔ꧉", "jv"},
+    /* for Autonym font: "Javanese language" */
+    {"ꦧꦱꦗꦮ", "jv"},
+  }
+},
+
+{
+  "Meetei_Mayek", 1, L2R, (sentence_t [])
+  {
+    {"ꯑꯌꯨꯛꯀꯤꯃꯦꯡꯂꯃꯉꯥꯙꯅ", "mni"},
+  }
+},
+
+{
+  "Imperial_Aramaic", 1, R2L, (sentence_t [])
+  {
+    {"𐡀𐡊𐡀𐡌𐡉𐡕", "arc"}
+  }
+},
+
+{
+  "Old_South_Arabian", 1, R2L, (sentence_t [])
+  {
+                         /*??*/
+    {"𐩱𐩬𐩵𐩸𐩽𐩥𐩫𐩠𐩬𐩸𐩽𐩥𐩱𐩵𐩬𐩸", ""},
+  }
+},
+
+{
+  "Old_Turkic", 3, R2L, (sentence_t [])
+  {
+    {"𐰜𐰇𐰛 𐱅𐰇𐰼𐰜", "otk"},
+    /* without space */
+    {"𐰜𐰇𐰛𐱅𐰇𐰼𐰜", "otk"},
+    {"𐰃𐰺𐰴 𐰋𐰃𐱅𐰃𐰏", "otk"},
+  }
+},
+
+{
+  "Inscriptional_Parthian", 0, R2L, (sentence_t [])
+  {
+  }
+},
+
+{
+  "Inscriptional_Pahlavi", 0, R2L, (sentence_t [])
+  {
+  }
+},
+
+{
+  "Kaithi", 0, L2R, (sentence_t [])
+  {
+  }
+},
+
+{
+   "Batak", 0, B2T, (sentence_t [])
+  {
+  }
+},
+
+{
+   "Brahmi", 1, L2R, (sentence_t [])
+  {
+    /* Tamil-Brahmi*/
+    {"𑀆𑀢𑀺𑀦𑀸𑀢", "oty"},
+  }
+},
+
+{
+   "Mandaic", 0, R2L, (sentence_t [])
+  {
+  }
+},
+
+{
+   "Chakma", 0, L2R, (sentence_t [])
+  {
+  }
+},
+
+{
+   "Meroitic_Cursive", 0, L2R, (sentence_t [])
+  {
+  }
+},
+
+{
+   "Meroitic_Hieroglyphs", 0, L2R, (sentence_t [])
+  {
+  }
+},
+
+{
+   "Miao", 1, L2R, (sentence_t [])
+  {
+    {"𖼐𖽪 𖼯𖽪 𖼷𖽷 𖼐𖼊𖽪 𖼷𖽷𖼊𖽡 . 𖼽𖾔 𖼯𖽷 𖼨𖽹𖽪", "hmn"},
+  }
+},
+
+{
+   "Sharada", 0, L2R, (sentence_t [])
+  {
+  }
+},
+
+{
+   "Sora_Sompeng", 0, L2R, (sentence_t [])
+  {
+  }
+},
+
+{
+   "Takri", 0, L2R, (sentence_t [])
+  {
+  }
+},
+
+/* collections */
+{
+   "Math", 8, L2R, (sentence_t [])
+  {
+    {"∀𝑃[[𝑃(0) ⋀ ∀𝑘∈ℕ(𝑃(𝑘) ⇒ 𝑃(𝑘+1))] ⇒ ∀𝑛∈ℕ[𝑃(𝑛)]]", ""},
+    {"∀P[[P(0) ⋀ ∀k∈ℕ(P(k) ⇒ P(k+1))] ⇒ ∀n∈ℕ[P(n)]]", ""},
+    /* some fonts, e. g. STIX Regular Bold carry only */
+    /* mathematical letters of some weight/slant */
+    {"𝑠𝑖𝑛 𝑐𝑜𝑠 𝑡𝑎𝑛 𝑙𝑜𝑔 𝑒𝑥𝑝 𝑓𝑔", ""},
+    {"𝒔𝒊𝒏 𝒄𝒐𝒔 𝒕𝒂𝒏 𝒍𝒐𝒈 𝒆𝒙𝒑 𝒇𝒈", ""},
+    {"𝐬𝐢𝐧 𝐜𝐨𝐬 𝐭𝐚𝐧 𝐥𝐨𝐠 𝐞𝐱𝐩 𝐟𝐠", ""},
+    {"𝚜𝚒𝚗 𝚌𝚘𝚜 𝚝𝚊𝚗 𝚕𝚘𝚐 𝚎𝚡𝚙 𝚏𝚐", ""},
+    {"(∃e∈ℕ)(∀k∈ℕ) ke = k", ""},
+    {"(∃e∈N)(∀k∈N) ke = k", ""},
+  }
+},
+
+{
+   "Musical_Symbols", 2, L2R, (sentence_t [])
+  {
+    {"𝄚𝄢𝄚𝄡𝄚𝄞𝄚𝄞𝄢♭♮♯𝅗𝅥♩♪𝅘𝅥𝅯𝅘𝅥𝅰♫♬𝆐𝆑𝆒𝆓", ""},
+    /* byzantine */
+    {"𝁜𝁉𝁐 𝁑 𝁆 𝁇 𝁚𝁇𝂏 𝁑𝁗 𝁑 𝁑𝁗 𝁜𝁉 𝁑 𝁜𝁆 𝁑 𝂏𝁇𝁎 𝀜𝁆 𝁆 𝁜𝁉 𝁑 𝁜𝁉𝁆 𝁑 𝁚𝁇 𝁑 𝁒", ""},
+  }
+},
+

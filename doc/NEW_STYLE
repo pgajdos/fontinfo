@@ -1,0 +1,20 @@
+How to add new style:
+
+1. duplicate nearest existing foo-style.c and foo-style.h to bar-style.c 
+   and bar-style.h respectively
+2. adjust new bar-style.c bar-style.h to your needs:
+   a. change foo_*() functions to bar_*()
+   b. on CSS level, it should be enough to adjust bar_page() function
+   c. if needed, main contents of page is to be adjusted in static content_*() 
+      functions
+3. adjust fontinfo.c to reflect new style
+   a. include bar-style.h there
+   b. define BAR_STYLE constant string
+   c. adjust usage() function to add new possibility for style option (-y
+      at the time of writing)
+   d. adjust main() to call bar_*() functions
+4. adjust Makefile rules to build new files and link result to fontinfo
+
+In case of problems, improvements, suggestions, ideas, etc. drop me a mail
+on pgajdos at suse company.
+
