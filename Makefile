@@ -91,7 +91,7 @@ clean:
 
 release:	
 		mkdir fontinfo-$(VERSION)
-		cp *.c *.h *.sh COPYING CHANGES Makefile fontinfo-$(VERSION)
+		cp *.c *.h *.sh COPYING CHANGES Makefile README.md fontinfo-$(VERSION)
 		mkdir fontinfo-$(VERSION)/doc
 		cp doc/NEW* fontinfo-$(VERSION)/doc
 		cp doc/THANKS.md fontinfo-$(VERSION)/doc
