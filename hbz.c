@@ -65,7 +65,7 @@ unsigned hbz_glyphs(uint32_t s[],
   hb_buf = hb_buffer_create();
 
   hb_buffer_set_direction(hb_buf, hbz_direction(dir));
-  hb_buffer_set_script(hb_buf, hb_script_from_string(script, strlen(script)));
+  hb_buffer_set_script(hb_buf, unicode_script_tag(script));
   hb_buffer_set_language(hb_buf, 
                          hb_language_from_string(lang, strlen(lang)));
 

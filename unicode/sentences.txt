@@ -96,7 +96,7 @@
  */
 
 {
-  "Latin", 5, L2R, (sentence_t [])
+  "Latin", TAG('L','a','t','n'), 5, L2R, (sentence_t [])
   {
     {"Vitrum edere possum; mihi non nocet.", "la"},
     {"VITRUM EDERE POSSUM; MIHI NON NOCET.", "la"},
@@ -109,7 +109,7 @@
 },
 
 {
-  "Greek", 9, L2R, (sentence_t [])
+  "Greek", TAG('G','r','e','k'), 9, L2R, (sentence_t [])
   {
     /* Classical Greek */
     {"ὕαλον ϕαγεῖν δύναμαι· τοῦτο οὔ με βλάπτει.", "el"},
@@ -128,7 +128,7 @@
 },
 
 {
-  "Cyrillic", 10, L2R, (sentence_t [])
+  "Cyrillic", TAG('C','y','r','l'), 10, L2R, (sentence_t [])
   {
     /* Russian */
     {"В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!", "ru"},
@@ -154,7 +154,7 @@
 },
 
 {
-  "Armenian", 2, L2R, (sentence_t [])
+  "Armenian", TAG('A','r','m','n'), 2, L2R, (sentence_t [])
   {
     {"Կրնամ ապակի ուտել և ինծի անհանգիստ չըներ։", "hy"},
     /* for Autonym font: "Armenian" */
@@ -163,7 +163,7 @@
 },
 
 {
-  "Hebrew", 4, R2L, (sentence_t [])
+  "Hebrew", TAG('H','e','b','r'), 4, R2L, (sentence_t [])
   {
     /* right to left! period should appear on the left */
     {"אני יכול לאכול זכוכית וזה לא מזיק לי.", "he"},
@@ -175,7 +175,7 @@
 },
 
 {
-  "Arabic", 6, R2L, (sentence_t [])
+  "Arabic", TAG('A','r','a','b'), 6, R2L, (sentence_t [])
   {
     /* right to left! period should appear on the left */ 
     {"أنا قادر على أكل الزجاج و هذا لا يؤلمني.", "ar"},
@@ -189,14 +189,14 @@
 },
 
 {
-  "Syriac", 1, R2L, (sentence_t [])
+  "Syriac", TAG('S','y','r','c'), 1, R2L, (sentence_t [])
   {
     {"ܒ݁ܪܺܫܺܝܬ݂ ܐܺܝܬ݂ܰܘܗ݈ܝ ܗ݈ܘܳܐ ܡܶܠܬ݂ܳܐ ܘܗܽܘ ܡܶܠܬ݂ܳܐ ܐܺܝܬ݂ܰܘܗ݈ܝ ܗ݈ܘܳܐ ܠܘܳܬ݂ ܐܰܠܳܗܳܐ ܘܰܐܠܳܗܳܐ ܐܺܝܬ݂ܰܘܗ݈ܝ ܗ݈ܘܳܐ ܗܽܘ ܡܶܠܬ݂ܳܐ܂", "syr"},
   }
 },
 
 {
-  "Thaana", 2, R2L, (sentence_t [])
+  "Thaana", TAG('T','h','a','a'), 2, R2L, (sentence_t [])
   {
     {"ޤައުމީ މިއެކުވެރިކަން މަތީ ތިބެގެން ކުރީމެ ސަލާމް", "dv"},
     /* for Autonym font: "Maldivian" */
@@ -205,7 +205,7 @@
 },
 
 {
-  "Devanagari", 3, L2R, (sentence_t [])
+  "Devanagari", TAG('D','e','v','a'), 3, L2R, (sentence_t [])
   {
                             /*??*/
     {"आप भला तो सब भला ।", "hi"}, 
@@ -217,7 +217,7 @@
 },
 
 {
-  "Bengali", 2, L2R, (sentence_t [])
+  "Bengali", TAG('B','e','n','g'), 2, L2R, (sentence_t [])
   {                                                   /*??*/
     {"আমি কাঁচ খেতে পারি, তাতে আমার কোনো ক্ষতি হয় না।", "bn"},
     /* for Autonym font: "Bengali" */
@@ -226,7 +226,7 @@
 },
 
 {
-  "Gurmukhi", 2, L2R, (sentence_t [])
+  "Gurmukhi", TAG('G','u','r','u'), 2, L2R, (sentence_t [])
   {
     {"ਉਹ ਮੇਰੇ ਲਈ ਖਾਣਾ ਬਣਾਉਂਦੀ ਹੈ ।", "pa"},
     /* for Autonym font: "Punjabi" */
@@ -235,7 +235,7 @@
 },
 
 {
-  "Gujarati", 2, L2R, (sentence_t [])
+  "Gujarati", TAG('G','u','j','r'), 2, L2R, (sentence_t [])
   {
     {"એક ભાષા ક્યારેય પણ પુરતી નથી", "gu"}, 
     /* for Autonym font: "Gujarati" */
@@ -244,7 +244,7 @@
 },
 
 {
-  "Oriya", 2, L2R, (sentence_t [])
+  "Oriya", TAG('O','r','y','a'), 2, L2R, (sentence_t [])
   {
     {"ଆପଣ ଓଡ଼ିଆ କୁହନ୍ତି କି", "or"},
     {"ଉତ୍କଳ ଲିପି", "or"},
@@ -252,7 +252,7 @@
 },
 
 { 
-  "Tamil", 5, L2R, (sentence_t [])
+  "Tamil", TAG('T','a','m','l'), 5, L2R, (sentence_t [])
   {
     /* formal Tamil */
     {"உங்களை பார்த்தது மிகவும் சந்தோஷம்", "ta"},
@@ -266,7 +266,7 @@
 },
 
 {
-  "Telugu", 2, L2R, (sentence_t [])
+  "Telugu", TAG('T','e','l','u'), 2, L2R, (sentence_t [])
   {
     {"నేను గాజు తినగలను మరియు అలా చేసినా నాకు ఏమి ఇబ్బంది లేదు ", "te"},
     /* for Autonym font: "Telugu" */
@@ -275,14 +275,14 @@
 },
 
 {
-  "Kannada", 1, L2R, (sentence_t [])
+  "Kannada", TAG('K','n','d','a'), 1, L2R, (sentence_t [])
   {
     {"ನನಗೆ ಹಾನಿ ಆಗದೆ, ನಾನು ಗಜನ್ನು ತಿನಬಹುದು", "kn"},
   }
 },
 
 {
-  "Malayalam", 2, L2R, (sentence_t [])
+  "Malayalam", TAG('M','l','y','m'), 2, L2R, (sentence_t [])
   {
     {"രുചിയോടെ ഭക്ഷണം ആസ്വദിക്കാന്‍ കഴിയട്ടേ ", "ml"},
     {"മലയാളം", "ml"},
@@ -290,7 +290,7 @@
 },
 
 {
-  "Sinhala", 3, L2R, (sentence_t [])
+  "Sinhala", TAG('S','i','n','h'), 3, L2R, (sentence_t [])
   {
     {"මට වීදුරු කෑමට හැකියි. එයින් මට කිසි හානියක් සිදු නොවේ.", "si"},
     {"ඔබ දැනගන්න ලැබිම සතුටක්", "si"},
@@ -300,7 +300,7 @@
 },
 
 {
-  "Thai", 2, L2R, (sentence_t [])
+  "Thai", TAG('T','h','a','i'), 2, L2R, (sentence_t [])
   {
     {"ฉันกินกระจกได้ แต่มันไม่ทำให้ฉันเจ็บ", "th"},
     {"โฮเวอร์คราฟท์ของผมเต็มไปด้วยปลาไหล", "th"},
@@ -308,7 +308,7 @@
 },
 
 {
-  "Lao", 3, L2R, (sentence_t [])
+  "Lao", TAG('L','a','o','o'), 3, L2R, (sentence_t [])
   {
     {"ຂອ້ຍກິນແກ້ວໄດ້ໂດຍທີ່ມັນບໍ່ໄດ້ເຮັດໃຫ້ຂອ້ຍເຈັບ.", "lo"},
     {"ດີໃຈທີ່ຮູ້ກັບເຈົ້າ", "lo"},
@@ -317,7 +317,7 @@
 },
 
 {
-  "Tibetan", 3, L2R, (sentence_t [])
+  "Tibetan", TAG('T','i','b','t'), 3, L2R, (sentence_t [])
   {
     {"ཤེལ་སྒོ་ཟ་ནས་ང་ན་གི་མ་རེད།", "bo"},
     /* for sMar-chen script, tibetan encoded (BabelStone Tibetan sMar-chen) */
@@ -329,14 +329,14 @@
 
 {
   /* or Burmese */
-  "Myanmar", 1, L2R, (sentence_t [])
+  "Myanmar", TAG('M','y','m','r'), 1, L2R, (sentence_t [])
   {
     {"က္ယ္ဝန္‌တော္‌၊က္ယ္ဝန္‌မ မ္ယက္‌စားနုိင္‌သည္‌။ ၎က္ရောင္‌့ ထိခုိက္‌မ္ဟု မရ္ဟိပာ။", "my"},
   }
 },
 
 {
-  "Georgian", 5, L2R, (sentence_t [])
+  "Georgian", TAG('G','e','o','r'), 5, L2R, (sentence_t [])
   {
     {"მინას ვჭამ და არა მტკივა.", "ka"},
     {"ქართული დამწერლობა", "ka"},
@@ -350,7 +350,7 @@
 
 {
   /* Korean */
-  "Hangul", 3, L2R, (sentence_t [])
+  "Hangul", TAG('H','a','n','g'), 3, L2R, (sentence_t [])
   {
     {"나는　유리를　먹을　수　있어요.　그래도　아프지　않아요", "ko"},
     {"내　호버크라프트는　장어로　가득　차　있어요", "ko"},
@@ -361,7 +361,7 @@
 
 {
   /* or Amharic (?) */
-  "Ethiopic", 2, L2R, (sentence_t [])
+  "Ethiopic", TAG('E','t','h','i'), 2, L2R, (sentence_t [])
   {
     {"መልካም፡ቀን፡ይሁንልህ።", "am"},
     {"ስለተዋወቅን፡ደስ፡ብሎኛል", "am"},
@@ -370,7 +370,7 @@
 
 {
   /* or Iroquoian */
-  "Cherokee", 2, L2R, (sentence_t [])
+  "Cherokee", TAG('C','h','e','r'), 2, L2R, (sentence_t [])
   {
     {"ᏂᎦᏓ ᎠᏂᏴᏫ ᏂᎨᎫᏓᎸᎾ ᎠᎴ ᎤᏂᏠᏱ ᎤᎾᏕᎿ ᏚᏳᎧᏛ ᎨᏒᎢ.", "chr"},
     /* without full stop */
@@ -380,14 +380,14 @@
 
 {
   /* from fontaine, CanadianSyllabics.h (lang. Moose Cree) */
-  "Canadian_Aboriginal", 1, L2R, (sentence_t [])
+  "Canadian_Aboriginal", TAG('C','a','n','s'), 1, L2R, (sentence_t [])
   {
     {"ᐅᒪ ᐊᑕᓗᑫᐎᓐ ᐊᓕᒧᒪᑲᓋᓐ ᓇᐯᐤ ᐎᓴᑫᒐᒃ ᐁ ᐃᔑᓂᑲᓱᑦ᙮ ᑭᒋ ᐌᔅᑲᒡ ᒪᑲ, ᑭ ᐃᑕᑯᐸᓐ ᓇᐯᐤ ᐎᓴᑫᒐᒃ ᐁ ᐃᔑᓂᑲᓱᑦ᙮", "cr"},
   }
 },
 
 {
-  "Ogham", 2, L2R, (sentence_t [])
+  "Ogham", TAG('O','g','a','m'), 2, L2R, (sentence_t [])
   { /* sga .. old irish, pgl .. primitive irish ???*/
     {"᚛᚛ᚉᚑᚅᚔᚉᚉᚔᚋ ᚔᚈᚔ ᚍᚂᚐᚅᚑ ᚅᚔᚋᚌᚓᚅᚐ᚜", "pgl"},
     {"᚛ᚉᚏᚏᚑᚄᚉᚉ᛬ᚅᚐᚆᚆᚈᚃᚃᚇᚇᚐᚇᚇᚄ᛬ᚇᚐᚈᚈᚏᚏ᛬ᚐᚅᚅ", "pgl"},
@@ -395,7 +395,7 @@
 },
 
 {
-  "Runic", 3, L2R, (sentence_t [])
+  "Runic", TAG('R','u','n','r'), 3, L2R, (sentence_t [])
   {                                                                     /*??*/
     {"ᛏᚡᛆᛋ ᛒᚱᛁᛚᛚᛁᚵ ᛆᚿᛑ ᛏᚼᛂ ᛋᛚᛁᛏᚼᚤ ᛏᚫᚡᛂᛋ ᛑᛁᛑ ᚵᚤᚱᛂ ᛆᚿᛑ ᚵᛁᛘᛒᛚᛂ ᛁᚿ ᛏᚼᛂ ᚡᛆᛒᛂ", ""},
     {"ᛋᛒᛖ‍ᚱᚫᛞᚻᛏᛇᛒᚳᚪᛁ ᛖ‍ᚱᚻ‍ᚪᛞ‍ᚫᛒᛋ", ""},
@@ -404,21 +404,21 @@
 },
 
 {
-  "Khmer", 1, L2R, (sentence_t [])
+  "Khmer", TAG('K','h','m','r'), 1, L2R, (sentence_t [])
   {
     {"ខ្ញុំអាចញុំកញ្ចក់បាន ដោយគ្មានបញ្ហារ", "km"},
   }
 },
 
 {
-  "Mongolian", 1, T2B, (sentence_t [])
+  "Mongolian", TAG('M','o','n','g'), 1, T2B, (sentence_t [])
   {
     {"ᠪᠢ ᠰᠢᠯᠢ ᠢᠳᠡᠶᠦ ᠴᠢᠳᠠᠨᠠ ᠂ ᠨᠠᠳᠤᠷ ᠬᠣᠤᠷᠠᠳᠠᠢ ᠪᠢᠰᠢ ", "mn"},
   }
 },
 
 {
-  "Hiragana", 3, L2R, (sentence_t [])
+  "Hiragana", TAG('H','i','r','a'), 3, L2R, (sentence_t [])
   {
     {"いろはにほへど　ちりぬるを　わがよたれぞ　つねならむ　うゐのおくやま　けふこえて　あさきゆめみじ　ゑひもせず", "ja"},
     /* 0x0020 as space (e. g. Caslon do not have 0x3000) */
@@ -428,7 +428,7 @@
 },
 
 {
-  "Katakana", 4, L2R, (sentence_t [])
+  "Katakana", TAG('K','a','n','a'), 4, L2R, (sentence_t [])
    {
      {"カタカナ", "ja"},
      {"コンピュータ", "ja"},
@@ -439,14 +439,14 @@
 },
 
 {
-  "Bopomofo", 1, L2R, (sentence_t [])
+  "Bopomofo", TAG('B','o','p','o'), 1, L2R, (sentence_t [])
   {
     {"ㄅㄆㄇㄈ", "zh"},
   }
 },
 
 {
-  "Han", 5, T2B, (sentence_t [])
+  "Han", TAG('H','a','n','i'), 5, T2B, (sentence_t [])
   {
     /* Chinese */
     {"我能吞下玻璃而不伤身体。", "zh"},
@@ -460,7 +460,7 @@
 },
 
 {
-  "Yi", 1, L2R, (sentence_t [])
+  "Yi", TAG('Y','i','i','i'), 1, L2R, (sentence_t [])
   {
     {"ꊿꂷꃅꄿꐨꐥ，ꌅꅍꀂꏽꐯꒈꃅꐥꌐ。ꊿꊇꉪꍆꌋꆀꁨꉌꑌꐥ，ꄷꀋꁨꂛꊨꅫꃀꃅꐥꄡꑟ", "ii"},
   }
@@ -473,7 +473,7 @@
      left-to-right and this is the Unicode default direction for the Old Italic block. 
      For this reason, the glyphs in the code chart are shown with left-to-right 
      orientation. */
-  "Old_Italic", 1, L2R, (sentence_t [])
+  "Old_Italic", TAG('I','t','a','l'), 1, L2R, (sentence_t [])
   {
     /* hope this is first line of TABLE OF AGNONE */
     {"𐌔𐌕𐌀𐌕𐌞𐌔 𐌐𐌞𐌔 𐌔𐌄𐌕 𐌇𐌞𐌃𐌝𐌍", "it"},
@@ -481,7 +481,7 @@
 },
 
 {
-  "Gothic", 2, L2R, (sentence_t [])
+  "Gothic", TAG('G','o','t','h'), 2, L2R, (sentence_t [])
   {
     {"𐌼𐌰𐌲 𐌲𐌻𐌴𐍃 𐌹̈𐍄𐌰𐌽, 𐌽𐌹 𐌼𐌹𐍃 𐍅𐌿 𐌽𐌳𐌰𐌽 𐌱𐍂𐌹𐌲𐌲𐌹𐌸.", "got"},
     /* without diacritics */
@@ -490,91 +490,91 @@
 },
 
 {
-  "Deseret", 1, L2R, (sentence_t [])
+  "Deseret", TAG('D','s','r','t'), 1, L2R, (sentence_t [])
   {
     {"𐐔𐐯𐑅𐐨𐑉𐐯𐐻 𐐔𐐯𐑆𐐲𐑉𐐯𐐻", "en"},
   }
 },
 
 {
-  "Tagalog", 1, L2R, (sentence_t [])
+  "Tagalog", TAG('T','g','l','g'), 1, L2R, (sentence_t [])
   {
     {"ᜀᜅ ᜎᜑᜆ᜔ ᜅ ᜆᜂᜌ᜔ ᜁᜐᜒᜈᜒᜎᜅ ᜈ ᜋᜎᜌ ᜀᜆ᜔ ᜉᜈ᜔ᜆᜌ᜔ ᜉᜈ᜔ᜆᜌ᜔ ᜐ ᜃᜇᜅᜎᜈ᜔ ᜀᜆ᜔ ᜋ᜔ᜄ ᜃᜇᜓᜉᜆᜈ᜔᜶ ᜐᜒᜎᜌ᜔ ᜉᜒᜈᜄ᜔ᜃᜎᜓᜊᜈ᜔ ᜅ ᜃᜆ᜔ᜏᜒᜇᜈ᜔ ᜀᜆ᜔ ᜊᜓᜇ᜔ᜑᜒ ᜀᜆ᜔ ᜇᜉᜆ᜔ ᜋᜄ᜔ᜉᜎᜄᜌᜈ᜔ ᜀᜅ ᜁᜐᜆ᜔ ᜁᜐ ᜐ ᜇᜒᜏ ᜅ ᜉᜄ᜔ᜃᜃᜉᜆᜒᜇᜈ᜔᜶", "tl"},
   }
 },
 
 {
-  "Hanunoo", 1, L2R, (sentence_t [])
+  "Hanunoo", TAG('H','a','n','o'), 1, L2R, (sentence_t [])
   {
     {"ᜱᜨᜳᜨᜳᜢ", "hnn"},
   }
 },
 
 {
-  "Buhid", 1, L2R, (sentence_t [])
+  "Buhid", TAG('B','u','h','d'), 1, L2R, (sentence_t [])
   {
     {"ᝊᝓᝑᝒᝇ", "bku"},
   }
 },
 
 {
-  "Tagbanwa", 1, L2R, (sentence_t [])
+  "Tagbanwa", TAG('T','a','g','b'), 1, L2R, (sentence_t [])
   {
     {"ᝦᝪᝨᝯ", "tbw"},
   }
 },
 
 {
-  "Limbu", 1, L2R, (sentence_t [])
+  "Limbu", TAG('L','i','m','b'), 1, L2R, (sentence_t [])
   {
     {"ᤀᤡᤔᤠᤴᤛᤡᤱ ᤁᤡᤵᤋᤱᤃᤡᤵᤛᤡᤱ ᤏᤠᤛᤢᤵ", "lif"},
   }
 },
 
 {
-  "Tai_Le", 1, L2R, (sentence_t [])
+  "Tai_Le", TAG('T','a','l','e'), 1, L2R, (sentence_t [])
   {
     {"ᥖᥭᥰᥖᥬᥳᥑᥨᥒᥰ", "tdd"},
   }
 },
 
 {
-  "Linear_B", 1, L2R, (sentence_t [])
+  "Linear_B", TAG('L','i','n','b'), 1, L2R, (sentence_t [])
   {
     {"𐀀𐀩𐀕𐀚 𐀷𐀵 𐀩𐀄𐀒𐀍 𐂂𐂃𐂀𐂁𐃌", "gmy"},
   }
 },
 
 {
-  "Ugaritic", 1, L2R, (sentence_t [])
+  "Ugaritic", TAG('U','g','a','r'), 1, L2R, (sentence_t [])
   {
     {"𐎗𐎁𐎟𐎋𐎅𐎐𐎎", "uga"},
   }
 },
 
 {
-  "Shavian", 1, L2R, (sentence_t [])
+  "Shavian", TAG('S','h','a','w'), 1, L2R, (sentence_t [])
   {
     {"𐑒𐑪𐑯𐑝𐑦𐑒𐑑", "en"},
   }
 },
 
 {
-  "Osmanya", 1, L2R, (sentence_t [])
+  "Osmanya", TAG('O','s','m','a'), 1, L2R, (sentence_t [])
   {
     {"𐒋𐒘𐒈𐒑𐒛𐒒𐒕𐒀", "so"},
   }
 },
 
 {
-  "Cypriot", 1, L2R, (sentence_t [])
+  "Cypriot", TAG('C','p','r','t'), 1, L2R, (sentence_t [])
   {
     {"𐠀𐠘𐠩𐠊𐠮𐠮𐠋𐠭𐠂𐠯𐠃𐠂𐠭𐠂𐠍𐠒𐠌𐠀𐠂", "ecy"},
   }
 },
 
 {
-  "Braille", 1, L2R, (sentence_t [])
+  "Braille", TAG('B','r','a','i'), 1, L2R, (sentence_t [])
   {
     /* there is Braille whitespace 0x2800 */
     {"⠊⠀⠉⠁⠝⠀⠑⠁⠞⠀⠛⠇⠁⠎⠎⠀⠁⠝⠙⠀⠊⠞⠀⠙⠕⠑⠎⠝⠞⠀⠓⠥⠗⠞⠀⠍⠑", ""},
@@ -582,7 +582,7 @@
 },
 
 {
-  "Buginese", 2, L2R, (sentence_t [])
+  "Buginese", TAG('B','u','g','i'), 2, L2R, (sentence_t [])
   {
     {"ᨅᨔ ᨕᨘᨁᨗ", "bug"},
     {"ᨀᨁᨂᨃᨄᨅᨆᨇᨈᨉ", "bug"},
@@ -590,7 +590,7 @@
 },
 
 {
-  "Coptic", 4, L2R, (sentence_t [])
+  "Coptic", TAG('C','o','p','t'), 4, L2R, (sentence_t [])
   {
     {"ⲟⲩⲟϩ ⲛⲁⲣⲉ ⲡⲕⲁϩⲓ ⲧⲏⲣϥ ⲟⲓ ⲛ̇ⲟⲩⲥⲯⲟⲧⲟⲩ ⲛ̇ⲟⲩⲱⲧ ⲛⲉⲙ ⲟⲩⲥⲙⲏ ⲛ̇ⲟⲩⲱⲧ", "cop"},
     {"ⲘⲉⲧⲢⲉⲙ̀ⲛⲭⲏⲙⲓ", "cop"},
@@ -601,7 +601,7 @@
 },
 
 {
-  "New_Tai_Lue", 3, L2R, (sentence_t []) 
+  "New_Tai_Lue", TAG('T','a','l','u'), 3, L2R, (sentence_t []) 
   {
     {"ᦑᦺᦟᦹᧉ", "khb"},
     {"ᦂᦱᧉ", "khb"},
@@ -610,7 +610,7 @@
 },
 
 {
-  "Glagolitic", 3, L2R, (sentence_t [])
+  "Glagolitic", TAG('G','l','a','g'), 3, L2R, (sentence_t [])
   {
     {"Ⰳⰵⰺ, ⱃⱁⰴⰹⱀⰰ ⰿⰹⰾⰰ́, ⰳⱁⰴⰹⱀⰰ ⱁⰴⰱⰹⰾⰰ, ⰶⰹⱕ ⰿⰰⱅⰽⰰ Ⱄⰾⰰ́ⰲⰰ", "cu"},
     {"ⰀⰁⰂⰃⰄⰅⰆⰇⰈⰉⰊⰋⰌⰍⰎⰏⰐⰑⰒⰓⰔⰕⰖⰗⰘⰙⰚⰛⰜⰝⰞⰟⰠⰡⰢⰣⰤⰥⰦⰧⰨⰩⰪⰫ Ⱞ", "cu"},
@@ -619,7 +619,7 @@
 },
 
 {
-  "Tifinagh", 3, L2R, (sentence_t [])
+  "Tifinagh", TAG('T','f','n','g'), 3, L2R, (sentence_t [])
   {
     {"ⵉⵎⴷⴰⵏⴻⵏ, ⴰⴽⴽⴻⵏ ⵎⴰ ⵍⵍⴰⵏ ⵜⵜⵍⴰⵍⴻⵏ ⴷ ⵉⵍⴻⵍⵍⵉⵢⴻⵏ ⵎⵙⴰⵡⴰⵏ ⴷⵉ ⵍⵃⵡⴻⵕⵎⴰ ⴷ ⵢⵉⵣⴻⵔⴼⴰⵏ-ⵖⵓⵔ ⵙⴻⵏ ⵜⴰⵎⵙⴰⴽⵡⵉⵜ ⴷ ⵍⴰⵇⵓⴻⵍ ⵓ ⵢⴻⵙⵙⴻⴼⴽ ⴰⴷ-ⵜⵉⵍⵉ ⵜⴻⴳⵎⴰⵜⵜ ⴳⴰⵔ ⴰⵙⴻⵏ.", "zgh"},
     {"ⵜⵉⴼⵉⵏⴰⵖ", "zgh"},
@@ -629,7 +629,7 @@
 },
 
 {
-  "Syloti_Nagri", 1, L2R, (sentence_t [])
+  "Syloti_Nagri", TAG('S','y','l','o'), 1, L2R, (sentence_t [])
   {
     /* omniglot: "Vowels can be written as independent letters, or by using a variety of diacritical marks" */
     /* but really not sure if this is correct: */
@@ -638,28 +638,28 @@
 },
 
 {
-  "Old_Persian", 1, L2R, (sentence_t [])
+  "Old_Persian", TAG('X','p','e','o'), 1, L2R, (sentence_t [])
   {
     {"𐎠𐎭𐎶𐏐𐎠𐎠𐎼𐎹𐎺𐎢𐏁𐏐𐎧𐏁𐎠𐎹𐎰𐎡𐎹𐏐𐎺𐏀𐎼𐎣𐏐", "peo"},
   }
 },
 
 {
-  "Kharoshthi", 1, R2L, (sentence_t [])
+  "Kharoshthi", TAG('K','h','a','r'), 1, R2L, (sentence_t [])
   {
     {"𐨐𐨑𐨒𐨓", "pra"},
   }
 },
 
 {
-  "Balinese", 1, L2R, (sentence_t [])
+  "Balinese", TAG('B','a','l','i'), 1, L2R, (sentence_t [])
   {
     {"ᬅᬆᬇᬈᬉᬊᬋᬌ", "bal"},
   }
 },
 
 {
-  "Cuneiform", 2, L2R, (sentence_t [])
+  "Cuneiform", TAG('X','s','u','x'), 2, L2R, (sentence_t [])
   {
     {"𒅎𒀝𒂵𒌈", "akk"},
               /*??*/
@@ -668,14 +668,14 @@
 },
 
 {
-  "Phoenician", 1, R2L, (sentence_t [])
+  "Phoenician", TAG('P','h','n','x'), 1, R2L, (sentence_t [])
   {
     {"𐤃𐤁𐤓𐤉𐤌 𐤊𐤍𐤏𐤍𐤉𐤌", "phn"},
   }
 },
 
 {
-  "Phags_Pa", 3, T2B, (sentence_t [])
+  "Phags_Pa", TAG('P','h','a','g'), 3, T2B, (sentence_t [])
   {
     {"ꡉꡟ ꡉꡟ︀ ꡪꡟ ꡪꡟ︀ ꡃꡡ ꡃꡡꡃ ꡡꡃ", "sa"},
     {"ꡏꡟ ꡋꡞ ꡏꡟ ꡋꡞ ᠂ ꡏ ꡜꡖ ꡏꡟ ꡋꡞ ᠂ ꡓꡞ ꡏꡟ ᠁", "sa"},
@@ -684,14 +684,14 @@
 },
 
 {
-  "Nko", 1, R2L, (sentence_t [])
+  "Nko", TAG('N','k','o','o'), 1, R2L, (sentence_t [])
   {
     {"ߒߞߏ", "nqo"},
   }
 },
 
 {
-  "Sundanese", 2, R2L, (sentence_t [])
+  "Sundanese", TAG('S','u','n','d'), 2, R2L, (sentence_t [])
   {
     {"ᮊᮧᮔ᮪ᮗᮦᮁᮞᮤ ᮃᮊ᮪ᮞᮛ ᮜᮒᮤᮔ᮪ - ᮃᮊ᮪ᮞᮛ ᮞᮥᮔ᮪ᮓ", "su"},
     {"ᮘᮞ ᮞᮥᮔ᮪ᮓ", "su"},
@@ -699,21 +699,21 @@
 },
 
 {
-  "Lepcha", 1, L2R, (sentence_t [])
+  "Lepcha", TAG('L','e','p','c'), 1, L2R, (sentence_t [])
   {
     {"ᰀᰁᰂ", "lep"},
   }
 },
 
 {
-  "Ol_Chiki", 1, L2R, (sentence_t [])
+  "Ol_Chiki", TAG('O','l','c','k'), 1, L2R, (sentence_t [])
   {
     {"᱐᱑᱒", "sat"},
   }
 },
 
 {
-  "Vai", 2, L2R, (sentence_t [])
+  "Vai", TAG('V','a','i','i'), 2, L2R, (sentence_t [])
   {
     {"ꕉꕜꕮ ꔔꘋ ꖸ ꔰ ꗋꘋ ꕮꕨ ꔔꘋ ꖸ ꕎ ꕉꖸꕊ ꕴꖃ ꕃꔤꘂ ꗱ, ꕉꖷ ꗪꗡ ꔻꔤ ꗏꗒꗡ ꕎ ꗪ ꕉꖸꕊ ꖏꕎ.", "vai"},
     {"ꕙꔤ", "vai"},
@@ -721,7 +721,7 @@
 },
 
 {
-  "Saurashtra", 2, L2R, (sentence_t [])
+  "Saurashtra", TAG('S','a','u','r'), 2, L2R, (sentence_t [])
   {
     {"ꢱꣃꢬꢵꢰ꣄ꢜ꣄ꢬꢵ", "saz"},
     /* the string above doesn't fit Autonym font for some reason,
@@ -731,7 +731,7 @@
 },
 
 {
-  "Kayah_Li", 1, L2R, (sentence_t [])
+  "Kayah_Li", TAG('K','a','l','i'), 1, L2R, (sentence_t [])
   {
     /* omniglot: ".. people who speak it are also known as Western Kayah, .. " */
     {"ꤏꤢꤧ꤬ꤢꤩ꤬ꤏꤢꤧ꤬ꤥ꤭", "kyu"},
@@ -739,27 +739,27 @@
 },
 
 {
-  "Rejang", 0, L2R, (sentence_t [])
+  "Rejang", TAG('R','j','n','g'), 0, L2R, (sentence_t [])
   {
   }
 },
 
 {
-  "Lycian", 1, L2R, (sentence_t [])
+  "Lycian", TAG('L','y','c','i'), 1, L2R, (sentence_t [])
   {
     {"𐊁𐊂𐊚𐊑𐊏𐊚", "xlc"},
   }
 },
 
 {
-  "Carian", 1, L2R, (sentence_t [])
+  "Carian", TAG('C','a','r','i'), 1, L2R, (sentence_t [])
   {
     {"𐊠𐊥𐊣𐊹𐊮𐊸 𐊲𐊥𐊰𐊴𐊣𐊺𐊸 𐊽𐊹𐊾𐊩𐊰𐊹𐊸", "xcr"},
   }
 },
 
 {
-  "Lydian", 1, R2L, (sentence_t [])
+  "Lydian", TAG('L','y','d','i'), 1, R2L, (sentence_t [])
   {
     /* month house wall*/
     {"𐤬𐤭𐤠𐤿𐤠𐤭𐤦𐤡𐤿𐤩𐤠𐤲𐤭𐤦𐤳𐤠", "xld"},
@@ -767,7 +767,7 @@
 },
 
 {
-  "Cham", 1, L2R, (sentence_t [])
+  "Cham", TAG('C','h','a','m'), 1, L2R, (sentence_t [])
   {
      /*cjm or cja?*//*??*/
     {"ꨀꨁꨂꨃꨄꨅꨆꨇꨉ", ""},
@@ -775,7 +775,7 @@
 },
 
 {
-  "Tai_Tham", 2, L2R, (sentence_t [])
+  "Tai_Tham", TAG('L','a','n','a'), 2, L2R, (sentence_t [])
   {
     {"ᨲ᩠ᩅᩫᨾᩮᩬᨦ", "nod"},
                     /*??*/
@@ -784,21 +784,21 @@
 },
 
 {
-  "Tai_Viet", 1, L2R, (sentence_t [])
+  "Tai_Viet", TAG('T','a','v','t'), 1, L2R, (sentence_t [])
   {
     {"ꪀꪁꪂꪃꪄꪅꪆꪇꪈꪉ", "blt"},
   }
 },
 
 {
-  "Avestan", 1, R2L, (sentence_t [])
+  "Avestan", TAG('A','v','s','t'), 1, R2L, (sentence_t [])
   {
     {"𐬀𐬙 𐬟𐬭𐬀𐬎𐬎𐬀𐬑𐬴𐬌𐬌𐬁 𐬥𐬏 𐬔𐬏𐬴𐬋𐬛𐬏𐬨 𐬥𐬏 𐬯𐬭𐬀𐬊𐬝𐬁", "ae"},
   }
 },
 
 {
-  "Egyptian_Hieroglyphs", 1, L2R, (sentence_t [])
+  "Egyptian_Hieroglyphs", TAG('E','g','y','p'), 1, L2R, (sentence_t [])
   {
     /* "Cleopatra" */
     {"𓈎𓃭𓇋𓍯𓊪𓂧𓂋𓄿𓏏𓆇", "egy"},
@@ -806,26 +806,26 @@
 },
 
 {
-  "Samaritan", 0, R2L, (sentence_t [])
+  "Samaritan", TAG('S','a','m','r'), 0, R2L, (sentence_t [])
   {
   }
 },
 
 {
-  "Lisu", 1, L2R, (sentence_t [])
+  "Lisu", TAG('L','i','s','u'), 1, L2R, (sentence_t [])
   {
     {"ꓡꓲꓢꓴ", "lis"},
   }
 },
 
 {
-  "Bamum", 0, L2R, (sentence_t [])
+  "Bamum", TAG('B','a','m','u'), 0, L2R, (sentence_t [])
   {
   }
 },
 
 {
-  "Javanese", 2, L2R, (sentence_t [])
+  "Javanese", TAG('J','a','v','a'), 2, L2R, (sentence_t [])
   {
     {"꧋ ꦲꦤꦕꦫꦏ꧈ ꦢꦠꦱꦮꦭ꧈ ꦥꦝꦗꦪꦚ꧈ ꦩꦒꦧꦛꦔ꧉", "jv"},
     /* for Autonym font: "Javanese language" */
@@ -834,21 +834,21 @@
 },
 
 {
-  "Meetei_Mayek", 1, L2R, (sentence_t [])
+  "Meetei_Mayek", TAG('M','t','e','i'), 1, L2R, (sentence_t [])
   {
     {"ꯑꯌꯨꯛꯀꯤꯃꯦꯡꯂꯃꯉꯥꯙꯅ", "mni"},
   }
 },
 
 {
-  "Imperial_Aramaic", 1, R2L, (sentence_t [])
+  "Imperial_Aramaic", TAG('A','r','m','i'), 1, R2L, (sentence_t [])
   {
     {"𐡀𐡊𐡀𐡌𐡉𐡕", "arc"}
   }
 },
 
 {
-  "Old_South_Arabian", 1, R2L, (sentence_t [])
+  "Old_South_Arabian", TAG('S','a','r','b'), 1, R2L, (sentence_t [])
   {
                          /*??*/
     {"𐩱𐩬𐩵𐩸𐩽𐩥𐩫𐩠𐩬𐩸𐩽𐩥𐩱𐩵𐩬𐩸", ""},
@@ -856,7 +856,7 @@
 },
 
 {
-  "Old_Turkic", 3, R2L, (sentence_t [])
+  "Old_Turkic", TAG('O','r','k','h'), 3, R2L, (sentence_t [])
   {
     {"𐰜𐰇𐰛 𐱅𐰇𐰼𐰜", "otk"},
     /* without space */
@@ -866,31 +866,31 @@
 },
 
 {
-  "Inscriptional_Parthian", 0, R2L, (sentence_t [])
+  "Inscriptional_Parthian", TAG('P','r','t','i'), 0, R2L, (sentence_t [])
   {
   }
 },
 
 {
-  "Inscriptional_Pahlavi", 0, R2L, (sentence_t [])
+  "Inscriptional_Pahlavi", TAG('P','h','l','i'), 0, R2L, (sentence_t [])
   {
   }
 },
 
 {
-  "Kaithi", 0, L2R, (sentence_t [])
+  "Kaithi", TAG('K','t','h','i'), 0, L2R, (sentence_t [])
   {
   }
 },
 
 {
-   "Batak", 0, B2T, (sentence_t [])
+  "Batak", TAG('B','a','t','k'), 0, B2T, (sentence_t [])
   {
   }
 },
 
 {
-   "Brahmi", 1, L2R, (sentence_t [])
+  "Brahmi", TAG('B','r','a','h'), 1, L2R, (sentence_t [])
   {
     /* Tamil-Brahmi*/
     {"𑀆𑀢𑀺𑀦𑀸𑀢", "oty"},
@@ -898,57 +898,57 @@
 },
 
 {
-   "Mandaic", 0, R2L, (sentence_t [])
+  "Mandaic", TAG('M','a','n','d'), 0, R2L, (sentence_t [])
   {
   }
 },
 
 {
-   "Chakma", 0, L2R, (sentence_t [])
+  "Chakma", TAG('C','a','k','m'), 0, L2R, (sentence_t [])
   {
   }
 },
 
 {
-   "Meroitic_Cursive", 0, L2R, (sentence_t [])
+  "Meroitic_Cursive", TAG('M','e','r','c'), 0, L2R, (sentence_t [])
   {
   }
 },
 
 {
-   "Meroitic_Hieroglyphs", 0, L2R, (sentence_t [])
+  "Meroitic_Hieroglyphs", TAG('M','e','r','o'), 0, L2R, (sentence_t [])
   {
   }
 },
 
 {
-   "Miao", 1, L2R, (sentence_t [])
+  "Miao", TAG('P','l','r','d'), 1, L2R, (sentence_t [])
   {
     {"𖼐𖽪 𖼯𖽪 𖼷𖽷 𖼐𖼊𖽪 𖼷𖽷𖼊𖽡 . 𖼽𖾔 𖼯𖽷 𖼨𖽹𖽪", "hmn"},
   }
 },
 
 {
-   "Sharada", 0, L2R, (sentence_t [])
+  "Sharada", TAG('S','h','r','d'), 0, L2R, (sentence_t [])
   {
   }
 },
 
 {
-   "Sora_Sompeng", 0, L2R, (sentence_t [])
+  "Sora_Sompeng", TAG('S','o','r','a'), 0, L2R, (sentence_t [])
   {
   }
 },
 
 {
-   "Takri", 0, L2R, (sentence_t [])
+  "Takri", TAG('T','a','k','r'), 0, L2R, (sentence_t [])
   {
   }
 },
 
 /* collections */
 {
-   "Math", 8, L2R, (sentence_t [])
+  "Math", 1, 8, L2R, (sentence_t [])
   {
     {"∀𝑃[[𝑃(0) ⋀ ∀𝑘∈ℕ(𝑃(𝑘) ⇒ 𝑃(𝑘+1))] ⇒ ∀𝑛∈ℕ[𝑃(𝑛)]]", ""},
     {"∀P[[P(0) ⋀ ∀k∈ℕ(P(k) ⇒ P(k+1))] ⇒ ∀n∈ℕ[P(n)]]", ""},
@@ -964,7 +964,7 @@
 },
 
 {
-   "Musical_Symbols", 2, L2R, (sentence_t [])
+  "Musical_Symbols", 1, 2, L2R, (sentence_t [])
   {
     {"𝄚𝄢𝄚𝄡𝄚𝄞𝄚𝄞𝄢♭♮♯𝅗𝅥♩♪𝅘𝅥𝅯𝅘𝅥𝅰♫♬𝆐𝆑𝆒𝆓", ""},
     /* byzantine */

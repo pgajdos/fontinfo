@@ -24,6 +24,7 @@
 # define FCINFO_CONSTANTS_H
 
 #include <fontconfig/fontconfig.h>
+#include <stdint.h>
 
 typedef struct _FcStringConst 
 {
@@ -204,9 +205,12 @@ typedef struct
 #define T2B 2
 #define B2T 3
 
+#define TAG(c1,c2,c3,c4) ((uint32_t)((((uint8_t)(c1))<<24)|(((uint8_t)(c2))<<16)|(((uint8_t)(c3))<<8)|((uint8_t)(c4))))
+
 typedef struct
 {
   const char *script;
+  uint32_t tag;
   int nsentences;
   int dir;
   sentence_t *sentences;
@@ -253,7 +257,8 @@ const FcChar8 * const_name(int c, const FcStringConst * consts, int nc);
 const FcChar8 *lang_name(const FcChar8 *l);
 const FcChar8 *unicode_char_name(FcChar32 ch);
 int fc_to_css_weight(int fc_weight);
-int unicode_script_exists(const char *script);
+uint32_t unicode_script_tag(const char *script);
+uint32_t unicode_script_exists(const char *script);
 int unicode_script_contains(const char *script, FcChar32 ch);
 void unicode_script_sentences(const char *script,
                               int *nsentences,

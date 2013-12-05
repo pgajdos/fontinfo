@@ -97,14 +97,19 @@ int fc_to_css_weight(int fc_weight)
   }
 }
 
-int unicode_script_exists(const char *script)
+uint32_t unicode_script_tag(const char *script)
 {
   int s;
   for (s = 0; s < NUMSCRIPTS; s++)
     if (strcmp(script_consts[s].name, script) == 0)
-      return 1;
+      return script_data_consts[s].tag;
 
   return 0;
+}
+
+uint32_t unicode_script_exists(const char *script)
+{
+  return unicode_script_tag(script);
 }
 
 int unicode_script_contains(const char *script, FcChar32 ch)

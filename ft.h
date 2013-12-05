@@ -23,6 +23,8 @@
 #ifndef FT_H
 # define FT_H
 
+#include <stdint.h>
+
 #include <fontconfig/fontconfig.h>
 
 #include <ft2build.h>
@@ -125,6 +127,7 @@ typedef struct
   int text_direction;
   FT_Bool use_harfbuzz;
   const char *script;
+  uint32_t script_tag;
   const char *lang;
   FT_Int32 load_flags;
   FT_Render_Mode render_mode;
