@@ -184,9 +184,9 @@ void timestamp(char *dest, ts_output_t o)
 }
 
 int specimen_sentence(config_t config, FcCharSet *charset,
-                      const char *script, int *dir, 
-                      const char **lang, int *random,
-                      FcChar32 *ucs4str, int maxlen)
+                      const char *wanted_script, int *dir, 
+                      const char **lang, const char **sentence_script,
+                      int *random,  FcChar32 *ucs4str, int maxlen)
 {
   int n;
 
@@ -204,7 +204,7 @@ int specimen_sentence(config_t config, FcCharSet *charset,
       if (config.debug)
         fprintf(stdout, "missing #%d 0x%04x: ", missing, ucs4str[missing]);
 
-      n = fcinfo_charset_generate_sentence(charset, script, ucs4str, maxlen - 1);
+      n = fcinfo_charset_generate_sentence(charset, wanted_script, ucs4str, maxlen - 1);
       *random = 1;
       if (n < SCRIPT_SENTENCE_LEN_MIN)  
       { /* there's nearly nothing in charset defined by script */
@@ -216,6 +216,7 @@ int specimen_sentence(config_t config, FcCharSet *charset,
       ucs4str[n] = 0;
       *dir = 0;
       *lang = NO_LANG;
+      *sentence_script = NO_SCRIPT;
       return n;
     }
 
@@ -226,13 +227,14 @@ int specimen_sentence(config_t config, FcCharSet *charset,
     ucs4str[n] = 0;
     *dir = config.specimen_textdir;
     *lang = config.specimen_lang;
+    *sentence_script = config.specimen_script;
     *random = 0;
     return n;
   }
 
-  if (script && unicode_script_exists(script))
+  if (wanted_script && unicode_script_exists(wanted_script))
   {
-    unicode_script_sentences(script, &nsentences, &sentences, dir);
+    unicode_script_sentences(wanted_script, &nsentences, &sentences, dir);
   }
   else /* no or unknown script */
   {
@@ -248,6 +250,7 @@ int specimen_sentence(config_t config, FcCharSet *charset,
 
     *dir = 0;
     *lang = NO_LANG;
+    *sentence_script = NO_SCRIPT;
     *random = 2;
     return n;
   }
@@ -255,8 +258,9 @@ int specimen_sentence(config_t config, FcCharSet *charset,
   for (s = 0; s < nsentences; s++)
   {
     n = fcinfo_utf8toucs4((FcChar8 *)sentences[s].sent, ucs4str, maxlen - 1);
-    if ((missing = fcinfo_charset_coveres_sentence(charset, ucs4str, n, 
-                                                    script, &charsfromscript)) == n)
+    if ((missing = 
+          fcinfo_charset_coveres_sentence(charset, ucs4str, n, 
+                                          wanted_script, &charsfromscript)) == n)
     {
       /* sentence must have at least one character from requested script */
       /* otherwise it is probably sentence from other script */
@@ -266,6 +270,7 @@ int specimen_sentence(config_t config, FcCharSet *charset,
                 sentences[s].sent, sentences[s].lang);
       ucs4str[n] = 0;
       *lang = sentences[s].lang;
+      *sentence_script = wanted_script;
       /* dir set in unicode_script_sentences() */
       *random = 0;
       return n;
@@ -274,7 +279,8 @@ int specimen_sentence(config_t config, FcCharSet *charset,
       fprintf(stdout, "missing #%d 0x%04x: ", missing, ucs4str[missing]);
   }
 
-  n = fcinfo_charset_generate_sentence(charset, script, ucs4str, maxlen - 1);
+  n = fcinfo_charset_generate_sentence(charset, wanted_script, 
+                                       ucs4str, maxlen - 1);
   *random = 1;
   if (n < SCRIPT_SENTENCE_LEN_MIN) 
   { /* there's nearly nothing in charset defined by script */
@@ -298,6 +304,7 @@ int specimen_sentence(config_t config, FcCharSet *charset,
 
   *dir = 0;
   *lang = NO_LANG;
+  *sentence_script = NO_SCRIPT;
   return n;
 }
 

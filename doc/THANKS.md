@@ -14,6 +14,7 @@ Ideas, bugreports
 * Mike Fabian
 * Marguerite Su
 * Alin Marin Elena
+* Behdad Esfahbod
 
 Patches, data
 -------------
@@ -25,4 +26,12 @@ Technical support
 * Marcus Rückert
 
 I hope I haven't forgot anyone.
+
+Involved libraries
+--------------------
+* [fontconfig](http://www.freedesktop.org/wiki/Software/fontconfig/)
+* [libpng](http://www.libpng.org/pub/png/libpng.html)
+* [freetype](http://www.freetype.org/)
+* [harfbuzz](http://www.freedesktop.org/wiki/Software/HarfBuzz/)
+
 

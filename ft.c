@@ -52,6 +52,11 @@ char *freetype_version(char *string, int maxlen)
   return string;
 }
 
+const char *harfbuzz_version(void)
+{
+  return hbz_version();
+}
+
 void ft_initialize_bitmap(bitmap_t *bitmap, int height, int width)
 {
   int row;

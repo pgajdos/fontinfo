@@ -42,6 +42,11 @@ static int hbz_direction(int dir)
   }
 }
 
+const char *hbz_version(void)
+{
+  return HB_VERSION_STRING;
+}
+
 unsigned hbz_glyphs(uint32_t s[], 
                     int slen,
                     const char *script, 
@@ -64,10 +69,14 @@ unsigned hbz_glyphs(uint32_t s[],
   hb_ft_font = hb_ft_font_create(face, NULL);
   hb_buf = hb_buffer_create();
 
+  //fprintf(stderr, "[%s] [%s] %x %x\n", script, lang, HB_TAG('A', 'r', 'a', 'b'), unicode_script_tag(script));
+
   hb_buffer_set_direction(hb_buf, hbz_direction(dir));
-  hb_buffer_set_script(hb_buf, unicode_script_tag(script));
-  hb_buffer_set_language(hb_buf, 
-                         hb_language_from_string(lang, strlen(lang)));
+  if (script[0])
+    hb_buffer_set_script(hb_buf, unicode_script_tag(script));
+  if (lang[0])
+    hb_buffer_set_language(hb_buf, 
+                           hb_language_from_string(lang, strlen(lang)));
 
   hb_buffer_add_utf32(hb_buf, s, slen, 0, slen);
   hb_shape(hb_ft_font, hb_buf, NULL, 0);

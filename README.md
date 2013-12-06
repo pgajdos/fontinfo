@@ -9,6 +9,9 @@ generates, it is possible to directly install font packages
 or switch between default and system rendering of specimen
 and see differences.
 
+Git Repository: [fontinfo](https://github.com/pgajdos/fontinfo/)
+
 Authors
 =======
 Petr Gajdos
+

@@ -148,6 +148,7 @@ typedef struct
 
 /* pxsize == 0 -> don't initialize face */
 char *freetype_version(char *string, int maxlen);
+const char *harfbuzz_version(void);
 void ft_initialize_bitmap(bitmap_t *bitmap, int height, int width);
 void ft_bitmap_set_font(bitmap_t *bitmap, 
                         FcPattern *pattern, 

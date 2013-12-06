@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 DIRS		= languages
-VERSION		 = 20131203
+VERSION		 = 20131206
 PKGMAN_CFLAGS	 = $(shell sh ./package-manager.sh --cflags)
 PKGMAN_LIBS	 = $(shell sh ./package-manager.sh --libs)
 LIBPNG_CFLAGS	 = $(shell pkg-config --cflags libpng)
@@ -76,7 +76,7 @@ unicode/scripts-map.txt:	unicode/Scripts.txt unicode/scripts-map.sh unicode/coll
 unicode/blocks-map.txt:		unicode/Blocks.txt unicode/blocks.sh
 				cd unicode; cat Blocks.txt | sh blocks.sh > blocks-map.txt
 doc/thanks.txt:			doc/THANKS.md
-				cd doc; cat THANKS.md | $(MARKDOWN_COMMAND) | sed 's:\(.*\):  \"\1\", :' > thanks.txt
+				cd doc; cat THANKS.md | $(MARKDOWN_COMMAND) | sed 's:":\\":g' | sed 's:\(.*\):  \"\1\", :' > thanks.txt
 styles-commons.h:		doc/thanks.txt
 				touch styles-commons.h
 

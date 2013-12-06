@@ -192,7 +192,8 @@ static const uinterval_map_t block_map_consts[] =
 #define uinterval_name(index, uintype) \
   (uintype == SCRIPT ? script_consts[index].name \
                      : block_map_consts[index].interval_name)
-#define NO_LANG ""
+#define NO_LANG     ""
+#define NO_SCRIPT   ""
 
 typedef struct 
 {
@@ -258,7 +259,7 @@ const FcChar8 *lang_name(const FcChar8 *l);
 const FcChar8 *unicode_char_name(FcChar32 ch);
 int fc_to_css_weight(int fc_weight);
 uint32_t unicode_script_tag(const char *script);
-uint32_t unicode_script_exists(const char *script);
+int unicode_script_exists(const char *script);
 int unicode_script_contains(const char *script, FcChar32 ch);
 void unicode_script_sentences(const char *script,
                               int *nsentences,

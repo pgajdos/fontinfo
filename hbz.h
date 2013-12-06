@@ -30,6 +30,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+const char *hbz_version(void);
 unsigned hbz_glyphs(uint32_t s[], 
                     int slen,
                     const char *script, 

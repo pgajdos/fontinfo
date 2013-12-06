@@ -100,16 +100,21 @@ int fc_to_css_weight(int fc_weight)
 uint32_t unicode_script_tag(const char *script)
 {
   int s;
-  for (s = 0; s < NUMSCRIPTS; s++)
-    if (strcmp(script_consts[s].name, script) == 0)
+  for (s = 0; s < NUM_CONSTS(script_data_consts); s++)
+    if (strcmp(script_data_consts[s].script, script) == 0)
       return script_data_consts[s].tag;
 
   return 0;
 }
 
-uint32_t unicode_script_exists(const char *script)
+int unicode_script_exists(const char *script)
 {
-  return unicode_script_tag(script);
+  int s;
+  for (s = 0; s < NUMSCRIPTS; s++)
+    if (strcmp(script_consts[s].name, script) == 0)
+      return 1;
+
+  return 0;
 }
 
 int unicode_script_contains(const char *script, FcChar32 ch)
@@ -187,7 +192,6 @@ double charset_uinterval_coverage(FcCharSet *charset,
   /* could be done with FcCharSetIsSubset(), but this is without */
   /* allocating memory */
   uinterval_size = charset_success = 0;
-  //fprintf(stdout, "num consts: %d\n", uinterval_num_maps(uintype));
   for (m = 0; m < uinterval_num_maps(uintype); m++)
   {
     if (! strcmp(uinname, uinterval_maps(uintype)[m].interval_name))
@@ -198,7 +202,6 @@ double charset_uinterval_coverage(FcCharSet *charset,
           charset_success++;
         uinterval_size++;
       }
-    //fprintf(stdout, "%s\n", uinterval_consts(uintype)[m].interval_name);
   }
   assert(uinterval_size > 0);
   return (double)charset_success/(double)uinterval_size*100.0;
