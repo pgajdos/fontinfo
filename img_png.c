@@ -284,7 +284,7 @@ void write_png_specimen(const char *subdir,
         break;
       case 1: /* right to left */
         x = png_width;
-        y = SPECIMEN_PNG_DIST;
+        y = config.specimen_from_px + SPECIMEN_PNG_DIST;
         break;
       case 2: /* top to bottom */
         x = config.specimen_from_px + SPECIMEN_PNG_DIST; 

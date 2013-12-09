@@ -271,19 +271,19 @@ void write_svg_specimen(FILE *html,
       case 0: /* left to right */
         x = 0;
         y = config.specimen_from_px + SPECIMEN_SVG_DIST;
-        writing_mode = "lr";
+        writing_mode = ""; /* autodetection seems to do better */
         text_anchor = "start";
         break;
       case 1: /* right to left */
         x = svg_width;
         y = config.specimen_from_px + SPECIMEN_SVG_DIST;
-        writing_mode = "rl";
+        writing_mode = ""; /* autodetection seems to do better */
         text_anchor = "end";
         break;
       case 2: /* top to bottom */
         x = SPECIMEN_SVG_DIST;
         y = 0;
-        writing_mode = "tb";
+        writing_mode = "tb-rl";
         text_anchor = "start";
         break;
       case 3: /* bottom to top */
