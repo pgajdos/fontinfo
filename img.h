@@ -38,7 +38,9 @@ void write_specimen(FILE *html,
                     int dir, 
                     const char *html_indent, 
                     const char *mapname_prefix,
-                    int maxwidth);
+                    int maxwidth,
+                    int *width,
+                    int *height);
 
 void write_minispecimen(FILE *html, 
                         FcPattern *font,
@@ -51,7 +53,9 @@ void write_minispecimen(FILE *html,
                         const char *html_indent,
                         int create_png, 
                         const char *mapname_prefix,
-                        int maxwidth);
+                        int maxwidth,
+                        int *width,
+                        int *height);
 
 void write_charset(FILE *html, 
                    FcPattern *font,

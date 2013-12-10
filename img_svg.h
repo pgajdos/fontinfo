@@ -37,7 +37,9 @@ void write_svg_specimen(FILE *html,
                         const char *lang,
                         int dir, 
                         const char *html_indent,
-                        int maxwidth);
+                        int maxwidth,
+                        int *width,
+                        int *height);
 void write_svg_charset(FILE *html, 
                        FcPattern *pattern, 
                        config_t config,

@@ -25,57 +25,16 @@
 #include <assert.h>
 
 #include "img_svg.h"
+#include "img_common.h"
 #include "constants.h"
 #include "fcinfo.h"
-#include "ft.h"
-
-#define SPECIMEN_SVG_DIST  10
 
 #define CHARSET_SVG_VDIST   10
 #define CHARSET_SVG_HDIST   10
 #define CHARSET_LINE_LEN    16
 
-#define SIZES_MAX           64
 
 #if 0
-static int best_size(const FcBool *sizes, int size)
-{
-  int dist = 0;
-
-  while (0 < size - dist || size + dist <= SIZES_MAX)
-  {
-    if (size + dist <= SIZES_MAX && sizes[size + dist] == FcTrue)
-      return size + dist;
-    if (size - dist > 0 && sizes[size - dist] == FcTrue)
-      return size - dist;
-
-    dist++;
-  }
-
-  return 0;
-}
-#endif
-
-static int best_size(FcPattern *font, int size)
-{
-  FcBool scalable;
-  double s;
-
-  assert(FcPatternGetBool(font, FC_SCALABLE, 0, &scalable)
-         == FcResultMatch);
-
-  if (scalable)
-    return size;
-
-  /* for !scalable fonts, first entry in pixelsize element */
-  /* has the widest charset support */
-  /* (thanks to how fcinfo sorts its output) */
-  assert(FcPatternGetDouble(font, FC_PIXEL_SIZE, 0, &s)
-         == FcResultMatch);
-
-  return (int)s;
-}
-
 static void get_pattern_info(FcPattern *pattern, 
                       FcChar8 **family,
                       FcCharSet **charset,
@@ -133,7 +92,7 @@ static void get_pattern_info(FcPattern *pattern,
 
   return;
 }
-
+#endif
 
 void write_svg_specimen(FILE *html, 
                         FcPattern *font, 
@@ -144,91 +103,31 @@ void write_svg_specimen(FILE *html,
                         const char *lang,
                         int dir, 
                         const char *html_indent,
-                        int maxwidth)
+                        int maxwidth,
+                        int *ret_width,
+                        int *ret_height)
 {
   int x, y;
   int px, c;
-  int svg_height = SPECIMEN_SVG_DIST;
   int svg_width;
+  int svg_height;
+  int wanted_size;
+  int bs;
 
   const char *text_anchor;
   const char *writing_mode;
   
   FcChar8 *family; 
   int weight, slant, width;
-  FcBool sizes[SIZES_MAX + 1], bs;
+  int sizes[SIZES_MAX + 1];
   FcChar8 *files[SIZES_MAX + 1];
 
-  get_pattern_info(font, &family, NULL, &slant, &weight, 
-                   &width, sizes, files, config);
-
-  if (mini)
-  {
-    px = bs = best_size(font, config.minispecimen_pxsize);
-  }
-  else
-  {
-    for (px = SIZES_MAX; px >= 0; px--)
-      if (sizes[px])
-        break;
-    assert (px >= 0);
-  }
-  
-  if (dir < 2)
-  {
-    svg_width = ft_text_length(sentence, font, px,
-                               files[px], 1, /* browser rendering will use hb */
-                               dir, script, lang);
-    if (svg_width <= 0)
-      svg_width = maxwidth;
- 
-  }
-  else
-  {
-    svg_width = SPECIMEN_SVG_DIST;
-    for (px = 1; px <= SIZES_MAX; px++)
-      if (sizes[px])
-      {
-        svg_width += (px + SPECIMEN_SVG_DIST);
-
-        /* one entry above config.specimen_to_px is enough */
-        /* for minispecimen and for specimen too */
-        if (px > config.specimen_to_px)
-          break;
-      }
-
-  }
-
-  if (maxwidth && svg_width > maxwidth)
-    svg_width = maxwidth;
-
-  /* e. g. 'Arabic Newspaper' reports only size 32 */
-  /* that's why we consider specimen entries over */
-  /* config.specimen_to_px */
-  if (mini)
-  {
-    svg_height = bs + SPECIMEN_SVG_DIST;
-  }
-  else
-  {
-    /* svg_height for vertical layouts could be computed as 
-       svg_width  for horizontal layouts (ft_text_length
-       supports vertical layouts); but it doesn't look good 
-       when switching between specimen of horizontal and
-       vertical layouts -> we want specimens to have same 
-       height or ? */
-    svg_height = SPECIMEN_SVG_DIST;
-    for (px = 1; px <= SIZES_MAX; px++)
-      if (sizes[px])
-      {
-        svg_height += (px + SPECIMEN_SVG_DIST);
-
-        /* one entry above config.specimen_to_px is enough */
-        /* for minispecimen and for specimen too */
-        if (px > config.specimen_to_px)
-         break;
-      }
-  }
+  wanted_size = mini ? config.minispecimen_pxsize : 0;
+  bs = get_pattern_info(font, &family, NULL, NULL, &slant, &weight, 
+                        &width, sizes, files, config, wanted_size);
+  specimen_img_size(sentence, font, sizes, files,
+                    bs, config.use_harfbuzz, dir, script, lang,
+                    maxwidth, config, &svg_width, &svg_height);
 
   fprintf(html, 
           "%s<svg width=\"%dpx\" height=\"%dpx\" version = \"1.1\">\n", 
@@ -237,108 +136,82 @@ void write_svg_specimen(FILE *html,
   /* e. g. 'Arabic Newspaper' reports only size 32 */
   /* that's why we consider specimen entries over */
   /* config.specimen_to_px */
-  if (mini)
+  switch (dir)
   {
-    y = config.specimen_from_px + SPECIMEN_SVG_DIST;
-    fprintf(html,
-            "%s  <text x = \"0px\" y = \"%dpx\" %s font-family = \"",
-            html_indent, y, dir == 1 ? "text-anchor=\"end\"" : "");
-    for (c = 0; c < strlen((char *)family); c++)
-    {
-      if (family[c] == '/')  /* e. g. Anka/Coder */
-        fputc('\\', html);
-      fputc(family[c], html);
-      if (family[c] == '&') /* e. g. B&H Lucida */
-        fprintf(html, "amp;");
-    }
-    fprintf(html, "\" font-size = \"%dpx\" font-weight = \"%d\" "
-                 "font-style = \"%s\" font-stretch = \"%s\"",
-                 bs, 
-                 fc_to_css_weight(weight), style_name(slant),
-                 stretch_name(width));
-    if (config.generate_stooltips)
-      fprintf(html, " title = \"%d px\"", bs);
-    fprintf(html, ">");
-    c = 0;
-    while (sentence[c])
-      fprintf(html, "&#x%04x;", sentence[c++]);
-    fprintf(html, "</text>\n");
+    case 0: /* left to right */
+      x = 0;
+      y = (bs ? bs : config.specimen_from_px) + SPECIMEN_DIST;
+      writing_mode = ""; /* autodetection seems to do better */
+      text_anchor = "start";
+      break;
+    case 1: /* right to left */
+      x = svg_width;
+      y = (bs ? bs : config.specimen_from_px) + SPECIMEN_DIST;
+      writing_mode = ""; /* autodetection seems to do better */
+      text_anchor = "end";
+      break;
+    case 2: /* top to bottom */
+      x = SPECIMEN_DIST;
+      y = 0;
+      writing_mode = "tb-rl";
+      text_anchor = "start";
+      break;
+    case 3: /* bottom to top */
+      x = (bs ? bs : config.specimen_from_px) + SPECIMEN_DIST;
+      y = svg_height;
+      writing_mode = "tb"; /* it seems there isn't "bt" */
+      text_anchor = "end";
+      break;
+    default:
+      assert(1 == 0);
+      break;
   }
-  else
-  {
-    switch (dir)
-    {
-      case 0: /* left to right */
-        x = 0;
-        y = config.specimen_from_px + SPECIMEN_SVG_DIST;
-        writing_mode = ""; /* autodetection seems to do better */
-        text_anchor = "start";
-        break;
-      case 1: /* right to left */
-        x = svg_width;
-        y = config.specimen_from_px + SPECIMEN_SVG_DIST;
-        writing_mode = ""; /* autodetection seems to do better */
-        text_anchor = "end";
-        break;
-      case 2: /* top to bottom */
-        x = SPECIMEN_SVG_DIST;
-        y = 0;
-        writing_mode = "tb-rl";
-        text_anchor = "start";
-        break;
-      case 3: /* bottom to top */
-        x = config.specimen_from_px + SPECIMEN_SVG_DIST;
-        y = svg_height;
-        writing_mode = "tb"; /* it seems there isn't "bt" */
-        text_anchor = "end";
-        break;
-      default:
-        assert(1 == 0);
-        break;
-    }
 
-    for (px = 1; px <= SIZES_MAX; px++)
+  for (px = 1; px <= SIZES_MAX; px++)
+  {
+    if (sizes[px])
     {
-      if (sizes[px])
+      fprintf(html, 
+              "%s  <text x = \"%dpx\" y = \"%dpx\" text-anchor = \"%s\""
+              " writing-mode = \"%s\" font-family = \"", 
+              html_indent, x, y, text_anchor, writing_mode);
+      for (c = 0; c < strlen((char *)family); c++)
       {
-        fprintf(html, 
-                "%s  <text x = \"%dpx\" y = \"%dpx\" text-anchor = \"%s\""
-                " writing-mode = \"%s\" font-family = \"", 
-                html_indent, x, y, text_anchor, writing_mode);
-        for (c = 0; c < strlen((char *)family); c++)
-        {
-          if (family[c] == '/')  /* e. g. Anka/Coder */
-            fputc('\\', html);
-          fputc(family[c], html);
-          if (family[c] == '&') /* e. g. B&H Lucida */
-            fprintf(html, "amp;");
-        }
-        fprintf(html, "\" font-size = \"%dpx\" font-weight = \"%d\" "
-                     "font-style = \"%s\" font-stretch = \"%s\"", 
-                     px, fc_to_css_weight(weight), style_name(slant), 
-                     stretch_name(width));
-        if (config.generate_stooltips)
-          fprintf(html, " title=\"%d px\"", px);
-        fprintf(html, ">");
-        c = 0;
-        while (sentence[c])
-            fprintf(html, "&#x%04x;", sentence[c++]);
-        fprintf(html, "</text>\n");
-
-        if (dir < 2)
-          y += px + SPECIMEN_SVG_DIST;
-        else
-          x += px + SPECIMEN_SVG_DIST;
-
-        /* one entry above config.specimen_to_px is enough */
-        /* for minispecimen and for specimen too */
-        if (px > config.specimen_to_px)
-          break;
+        if (family[c] == '/')  /* e. g. Anka/Coder */
+          fputc('\\', html);
+        fputc(family[c], html);
+        if (family[c] == '&') /* e. g. B&H Lucida */
+          fprintf(html, "amp;");
       }
+      fprintf(html, "\" font-size = \"%dpx\" font-weight = \"%d\" "
+                   "font-style = \"%s\" font-stretch = \"%s\"", 
+                   px, fc_to_css_weight(weight), style_name(slant), 
+                   stretch_name(width));
+      if (config.generate_stooltips)
+        fprintf(html, " title=\"%d px\"", px);
+      fprintf(html, ">");
+      c = 0;
+      while (sentence[c])
+          fprintf(html, "&#x%04x;", sentence[c++]);
+      fprintf(html, "</text>\n");
+
+      if (dir < 2)
+        y += px + SPECIMEN_DIST;
+      else
+        x += px + SPECIMEN_DIST;
+
+      /* one entry above config.specimen_to_px is enough */
+      /* for minispecimen and for specimen too */
+      if (px > config.specimen_to_px)
+        break;
     }
   }
-
   fprintf(html, "%s</svg>\n", html_indent);
+
+  if (ret_width)
+    *ret_width = svg_width;
+  if (ret_height)
+    *ret_height = svg_height;
   return;
 }
 
@@ -365,9 +238,8 @@ void write_svg_charset(FILE *html,
 
   int sizes[SIZES_MAX + 1], bs;
 
-  get_pattern_info(font, &family, &charset, &slant, &weight,
-                   &width, sizes, NULL, config);
-  bs = best_size(font, config.charset_pxsize);
+  bs = get_pattern_info(font, &family, NULL, &charset, &slant, &weight,
+                        &width, sizes, NULL, config, 0);
 
   available = fcinfo_chars(charset, &chars, NULL, FcTrue, ALL_CHARS);
   nlines = available/CHARSET_LINE_LEN;

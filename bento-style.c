@@ -87,6 +87,7 @@
 #define FONT_CARD_LANGUAGES     "Supported Languages"
 #define FONT_CARD_CHARSET       "Character Set"
 #define NONE_BITMAP_STRIKES     "none"
+#define SPECIMEN                "Specimen"
 #define SOFTWARE_PACKAGE        "Software Package Information"
 #define LINK_ALL                "all"
 #define TITLE_DETAILED_LETTER   "Show mini-specimens for families begining on this letter"
@@ -592,7 +593,7 @@ static void content_families_detailed_index(FILE *html, config_t config,
     fprintf(html, 
             "            <tr>\n");
     fprintf(html, 
-            "              <td>"
+            "              <td style=\"vertical-align:middle\">"
             "<a href=\"../%s/%s.html\">%s</a></td>", 
             FAMILIES_SUBDIR, family_ww, family);
 
@@ -636,7 +637,7 @@ static void content_families_detailed_index(FILE *html, config_t config,
                        sentence_script, lang, dir % 2, 
                        "                ", 
                        *generate_png_files, "specimenimgmap",
-                       SPECIMEN_WIDTH_MAX);
+                       SPECIMEN_WIDTH_MAX, NULL, NULL);
     fprintf(html, 
             "              </td>\n");
     fprintf(html, 
@@ -853,7 +854,8 @@ static void content_family_styles_indexes(FILE *html, config_t config,
     fprintf(html, 
             "            <tr>\n");
     fprintf(html, 
-            "              <td><a href=\"../%s/%s%s.html\">%s %s</a></td>\n", 
+            "              <td style=\"vertical-align:middle\">"
+                             "<a href=\"../%s/%s%s.html\">%s %s</a></td>\n", 
             FONTS_SUBDIR, family_ww, style_ww, family, style);
      
     assert(FcPatternGetCharSet(styleset->fonts[s], FC_CHARSET, 0, &charset)
@@ -896,7 +898,7 @@ static void content_family_styles_indexes(FILE *html, config_t config,
                        FAMILIES_SUBDIR, config, ucs4_sentence, 
                        sentence_script, lang, dir % 2, 
                        "                ", 1, "specimenimgmap",
-                       SPECIMEN_WIDTH_MAX);
+                       SPECIMEN_WIDTH_MAX, NULL, NULL);
     fprintf(html, 
             "              </td>\n");
     fprintf(html, 
@@ -983,6 +985,8 @@ static void content_font_card(FILE *html, config_t config,
   int s, t;
 
   int f;
+
+  int sp_height, sp_height_max;
 
   char fname[FILEPATH_MAX];
 
@@ -1146,10 +1150,16 @@ static void content_font_card(FILE *html, config_t config,
   fprintf(html,
           "          \n");
 
+  fprintf(html, 
+          "          <h2 id=\"specimen\">"SPECIMEN"</h2>\n");
   fprintf(html,
-          "          <script>\n");
+          "          <table>\n");
   fprintf(html,
-          "            scripts = [");
+          "            <tr><td>\n");
+  fprintf(html,
+          "              <script>\n");
+  fprintf(html,
+          "                scripts = [");
   if (!config.specimen_sentence)
   {
     for (v = 0; v < nsignificantscripts; v++)
@@ -1161,13 +1171,17 @@ static void content_font_card(FILE *html, config_t config,
   fprintf(html,
           "];\n");
   fprintf(html,
-          "            specimen_types = ['bitmap'%s];\n", 
+          "                specimen_types = ['bitmap'%s];\n", 
           config.outline_specimen ? ", 'svg'" : "");
   fprintf(html,
-          "            initialize_specimen_tabs(scripts, specimen_types, 'Specimen');\n");
+          "                initialize_specimen_tabs(scripts, specimen_types, 'Specimen');\n");
   fprintf(html,
-          "          </script>\n");
+          "              </script>\n");
+  fprintf(html,
+          "            </td></tr>\n");
 
+  fprintf(html,
+          "            <tr><td>\n");
   /* try to reuse following for(;;) for 'sentence' of random chars */
   /* and for enforced sentence */
   if (nsignificantscripts == 0)
@@ -1182,6 +1196,7 @@ static void content_font_card(FILE *html, config_t config,
   }
   
 
+  sp_height_max = 0;
   for (v = 0; v < nsignificantscripts; v++)
   {
     if (config.debug)
@@ -1197,40 +1212,52 @@ static void content_font_card(FILE *html, config_t config,
                       &random, ucs4_sentence, SENTENCE_NCHARS);
 
     fprintf(html,
-        "          <div id=\"bitmap%sSpecimen\" style=\"display:%s\">\n", 
+        "              <div class=\"specimen\" id=\"bitmap%sSpecimen\""
+                          " style=\"display:%s\">\n", 
         scripts[v], v == 0 ? "block" : "none");
-    fprintf(html, 
-            "            <table><tr><td>\n");
     write_specimen(html, pattern, FONTS_SUBDIR, 
                    config, ucs4_sentence, 
                    sentence_script, language, dir, 
-                   "              ", "specimenimgmap",
-                   SPECIMEN_WIDTH_MAX);
-    fprintf(html, 
-            "            </td></tr></table>\n");
+                   "                  ", "specimenimgmap",
+                   SPECIMEN_WIDTH_MAX, NULL, &sp_height);
+
+    /* nowdays should all sp_height be same per font card
+       because of naive specimen text size computation,
+       but 'set the stage' for variable length of specimens */
+    if (sp_height > sp_height_max)
+      sp_height_max = sp_height;
+
     fprintf(html,
-          "          </div>\n");
+          "              </div>\n");
 
     if (config.outline_specimen)
     {
       /* write also SVG specimen to see how font renderes */
       /* on client system */
       fprintf(html,
-          "          <div id=\"svg%sSpecimen\" style=\"display:none\">\n",
+          "              <div class=\"specimen\" id=\"svg%sSpecimen\""
+                            " style=\"display:none\">\n",
           scripts[v] ? scripts[v] : "");
-      fprintf(html, 
-              "            <table><tr><td>\n");
       write_svg_specimen(html, pattern, FcFalse,
                          config, ucs4_sentence, 
                          sentence_script, language, dir, 
-                         "                ", SPECIMEN_WIDTH_MAX);
-      fprintf(html, 
-              "            </td></tr></table>\n");
+                         "                    ", 
+                         SPECIMEN_WIDTH_MAX, NULL, NULL);
       fprintf(html,
-              "          </div>\n");
+              "              </div>\n");
     }
   }
-
+  fprintf(html,
+          "            </td></tr>\n");
+  fprintf(html,
+          "          </table>\n");
+  /* ensure specimen images are bounded to the same height */
+  /* even if nowdays should all specimen have same height,
+     svg happens to render slightly bigger (tested with
+     firefox and opera) */
+  fprintf(html,
+          "          <style>div.specimen { height:%dpx }</style>\n", 
+          sp_height_max);
   fprintf(html, 
           "          \n");
 

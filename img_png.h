@@ -42,7 +42,9 @@ void write_png_specimen(const char *subdir,
                         const char *html_indent, 
                         FcBool create_png, 
                         const char *mapname_prefix,
-                        int maxwidth);
+                        int maxwidth,
+                        int *ret_width,
+                        int *ret_height);
 void write_png_charset(const char *subdir, 
                        FILE *html, 
                        FcPattern *font, 

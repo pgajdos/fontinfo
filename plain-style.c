@@ -342,7 +342,7 @@ static void content_families_detailed_index(FILE *html, config_t config,
                        DETAILIDX_SUBDIR, config, ucs4_sentence, 
                        config.minispecimen_script, lang, dir % 2, 
                        "          ", *generate_png_file, 
-                       "specimenimgmap", SPECIMEN_WIDTH_MAX);
+                       "specimenimgmap", SPECIMEN_WIDTH_MAX, NULL, NULL);
     fprintf(html, "        </td>\n");
     fprintf(html, "      </tr>\n");
   }
@@ -519,7 +519,7 @@ static void content_family_styles_indexes(FILE *html, config_t config,
                        FAMILIES_SUBDIR, config, ucs4_sentence, 
                        sentence_script, lang, dir % 2,
                        "          ", 1, "specimenimgmap",
-                       SPECIMEN_WIDTH_MAX);
+                       SPECIMEN_WIDTH_MAX, NULL, NULL);
     fprintf(html, "        </td>\n");
     fprintf(html, "      </tr>\n");    
   }
@@ -757,7 +757,8 @@ static void content_font_card(FILE *html, config_t config, void *output_arg[])
     write_specimen(html, pattern, FONTS_SUBDIR, 
                    config, ucs4_sentence, 
                    sentence_script, language, dir, 
-                   "    ", "specimenimgmap", SPECIMEN_WIDTH_MAX);
+                   "    ", "specimenimgmap", 
+                   SPECIMEN_WIDTH_MAX, NULL, NULL);
   }
 
   fprintf(html, "    \n");

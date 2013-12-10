@@ -25,20 +25,17 @@
 #include <assert.h>
 
 #include "img_png.h"
+#include "img_common.h"
 #include "ft.h"
 #include "constants.h"
 #include "filesystem.h"
 #include "fcinfo.h"
-
-#define SPECIMEN_PNG_DIST    10
 
 #define CHARSET_PNG_VDIST     10
 #define CHARSET_PNG_HDIST     10
 #define CHARSET_LINE_LEN      16
 #define CHARSET_HEAD_PXSIZE   12
 #define CHARSET_LINES_GRAY    0xD0
-
-#define SIZES_MAX           64
 
 #define IMG_SUBDIR          "img"
 
@@ -111,6 +108,7 @@ static void write_png(const char *filename, bitmap_t bitmap)
   return;
 }
 
+#if 0
 static int get_pattern_info(FcPattern *pattern,
                             FcChar8 **family,
                             FcChar8 **style,
@@ -176,7 +174,7 @@ static int get_pattern_info(FcPattern *pattern,
 
   return 0;
 }
-
+#endif
 void write_png_specimen(const char *subdir, 
                         FILE *html, 
                         FcPattern *font, 
@@ -189,7 +187,9 @@ void write_png_specimen(const char *subdir,
                         const char *html_indent, 
                         int create_png, 
                         const char *mapname_prefix, 
-                        int maxwidth)
+                        int maxwidth,
+                        int *ret_width,
+                        int *ret_height)
 {
   char dirname_img[FILEPATH_MAX];
   char png_name[FILEPATH_MAX];
@@ -198,9 +198,9 @@ void write_png_specimen(const char *subdir,
  
   int x, y, crd;
   int px;
-  int png_height;
-  int png_width;
   int wanted_size;
+  int bs;
+  int png_width, png_height;
 
   FcChar32 no_script[] = SCRIPT_NOT_SUPPORTED;
   FcChar32 no_script_rev[] = SCRIPT_NOT_SUPPORTED_REV;
@@ -215,58 +215,12 @@ void write_png_specimen(const char *subdir,
   FcPattern *sans_serif;
 
   wanted_size = mini ? config.minispecimen_pxsize : 0;
-  get_pattern_info(font, &family, &style, NULL, sizes, files, 
-                   config, wanted_size);
+  bs = get_pattern_info(font, &family, &style, NULL, NULL, NULL, NULL,
+                        sizes, files, config, wanted_size);
 
-  for (px = SIZES_MAX; px >= 0; px--)
-    if (sizes[px])
-      break;
-  assert(px > 0);
-
-  if (dir < 2)
-  {
-    png_width = ft_text_length(sentence, font, px, 
-                               files[px], config.use_harfbuzz,
-                               dir, script, lang);
-    if (png_width <= 0)
-      png_width = maxwidth;
-  }
-  else
-  {
-    png_width = SPECIMEN_PNG_DIST;
-    for (px = 1; px <= SIZES_MAX; px++)
-      if (sizes[px])
-      {
-        png_width += (px + SPECIMEN_PNG_DIST);
-
-        /* one entry above config.specimen_to_px is enough */
-        /* for minispecimen and for specimen too */
-        if (px > config.specimen_to_px)
-          break;
-      }
-
-  }
-
-  if (maxwidth && png_width > maxwidth)
-    png_width = maxwidth;
-  
-  /* png_height for vertical layouts could be computed as 
-     png_width  for horizontal layouts (ft_text_length
-     supports vertical layouts); but it doesn't look good 
-     when switching between specimen of horizontal and
-     vertical layouts -> we want specimens to have same 
-     height or ? */
-  png_height = SPECIMEN_PNG_DIST;
-  for (px = 1; px <= SIZES_MAX; px++)
-    if (sizes[px])
-    {
-      png_height += (px + SPECIMEN_PNG_DIST);
-
-      /* one entry above config.specimen_to_px is enough */
-      /* for minispecimen and for specimen too */
-      if (px > config.specimen_to_px)
-        break;
-    }
+  specimen_img_size(sentence, font, sizes, files,
+                    bs, config.use_harfbuzz, dir, script, lang,
+                    maxwidth, config, &png_width, &png_height);
 
   if (create_png)
   {
@@ -280,18 +234,18 @@ void write_png_specimen(const char *subdir,
     {
       case 0: /* left to right */
         x = 0;
-        y = config.specimen_from_px + SPECIMEN_PNG_DIST; 
+        y = (bs ? bs : config.specimen_from_px) + SPECIMEN_DIST;
         break;
       case 1: /* right to left */
         x = png_width;
-        y = config.specimen_from_px + SPECIMEN_PNG_DIST;
+        y = (bs ? bs : config.specimen_from_px) + SPECIMEN_DIST;
         break;
       case 2: /* top to bottom */
-        x = config.specimen_from_px + SPECIMEN_PNG_DIST; 
+        x = (bs ? bs : config.specimen_from_px) + SPECIMEN_DIST; 
         y = 0;
         break;
       case 3: /* bottom to top */
-        x = config.specimen_from_px + SPECIMEN_PNG_DIST;
+        x = (bs ? bs : config.specimen_from_px) + SPECIMEN_DIST;
         y = png_height;
         break;
       default:
@@ -317,7 +271,7 @@ void write_png_specimen(const char *subdir,
                              0, 0, "Latin", "en");
 
           ft_fill_region(&bitmap, 0, y - px, 
-                         png_width - 1, y + SPECIMEN_PNG_DIST - 1, 0xFF); 
+                         png_width - 1, y + SPECIMEN_DIST - 1, 0xFF); 
           ft_draw_text(dir % 2 == 0 ? no_script : no_script_rev,  
                        x, y, &bitmap);
           FcPatternDestroy(sans_serif);
@@ -329,9 +283,9 @@ void write_png_specimen(const char *subdir,
           break;
  
         if (dir < 2)
-          y += px + SPECIMEN_PNG_DIST;
+          y += px + SPECIMEN_DIST;
         else
-          x += px + SPECIMEN_PNG_DIST;
+          x += px + SPECIMEN_DIST;
       }
     }
 
@@ -363,16 +317,16 @@ void write_png_specimen(const char *subdir,
           fprintf(html, 
                   "%s  <area shape=\"rect\" "
                   "coords=\"%d,%d,%d,%d\" title=\"%d px\">\n",
-                  html_indent, 0, crd, png_width, crd + px + SPECIMEN_PNG_DIST, px);
+                  html_indent, 0, crd, png_width, crd + px + SPECIMEN_DIST, px);
         }
         else
         {
           fprintf(html, 
                   "%s  <area shape=\"rect\" "
                   "coords=\"%d,%d,%d,%d\" title=\"%d px\">\n",
-                  html_indent, crd, 0, crd + px + SPECIMEN_PNG_DIST, png_height, px);
+                  html_indent, crd, 0, crd + px + SPECIMEN_DIST, png_height, px);
         }
-        crd += px + SPECIMEN_PNG_DIST;
+        crd += px + SPECIMEN_DIST;
       }
     fprintf(html, "%s</map>\n", html_indent);
   }
@@ -387,6 +341,10 @@ void write_png_specimen(const char *subdir,
     fprintf(html, " usemap=\"#%s%s\"", mapname_prefix, mapname);
   fprintf(html, "/>\n");
   
+  if (ret_width)
+    *ret_width = png_width;
+  if (ret_height)
+    *ret_height = png_height;
   return;
 }
 
@@ -428,7 +386,7 @@ void write_png_charset(const char *subdir,
   int sizes[SIZES_MAX + 1], bs;
   FcChar8 *files[SIZES_MAX + 1];
 
-  bs = get_pattern_info(font, &family, &style, &charset, 
+  bs = get_pattern_info(font, &family, &style, &charset, NULL, NULL, NULL,
                         sizes, files, config, config.charset_pxsize);
   snprintf(monospace_request, 64, "monospace:style=Bold:size=%d", 
            CHARSET_HEAD_PXSIZE);

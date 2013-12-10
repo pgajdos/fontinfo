@@ -34,20 +34,24 @@ void write_specimen(FILE *html,
                     int dir, 
                     const char *html_indent, 
                     const char *mapname_prefix,
-                    int maxwidth)
+                    int maxwidth,
+                    int *width,
+                    int *height)
 {
   switch (config.specimen_type)
   {
     case SVG:
-          /* dir needed also in svg, see http://www.w3.org/International/tutorials/svg-tiny-bidi/ */
+          /* dir needed also in svg, see 
+             http://www.w3.org/International/tutorials/svg-tiny-bidi/ */
           write_svg_specimen(html, font, FcFalse, config, 
                              sentence, script, lang, dir, 
-                             html_indent, maxwidth);
+                             html_indent, maxwidth, width, height);
       break;
     case PNG:
           write_png_specimen(png_subdir, html, font, FcFalse, 
                              config, sentence, script, lang, dir, 
-                             html_indent, 1, mapname_prefix, maxwidth);
+                             html_indent, 1, mapname_prefix, maxwidth,
+                             width, height);
       break;
     default:
       break;
@@ -67,20 +71,22 @@ void write_minispecimen(FILE *html,
                         const char *html_indent,
                         int create_png, 
                         const char *mapname_prefix,
-                        int maxwidth)
+                        int maxwidth,
+                        int *width,
+                        int *height)
 {
   switch (config.specimen_type)
   {
     case SVG:
           write_svg_specimen(html, font, FcTrue, config, 
                              sentence, script, lang, dir, 
-                             html_indent, maxwidth);
+                             html_indent, maxwidth, width, height);
       break;
     case PNG:
           write_png_specimen(png_subdir, html, font, FcTrue, 
                              config, sentence, script, lang, dir, 
                              html_indent, create_png, mapname_prefix, 
-                             maxwidth);
+                             maxwidth, width, height);
       break;
     default:
       break;

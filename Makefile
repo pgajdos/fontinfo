@@ -31,7 +31,8 @@ MYCFLAGS	 = -DFONTINFO_VERSION=$(VERSION) $(PKGMAN_CFLAGS) $(LIBPNG_CFLAGS) $(FT
 MYLIBS		 = $(PKGMAN_LIBS) $(FONTCONFIG_LIBS) $(LIBPNG_LIBS) $(FT2_LIBS) $(HB_LIBS)
 MARKDOWN_COMMAND = $(shell if [ -x /usr/bin/markdown ]; then echo "/usr/bin/markdown -f 'html'"; else echo "/usr/bin/cat"; fi)
 
-OBJS		= constants.o img.o ft.o hbz.o img_svg.o img_png.o fcinfo.o filesystem.o package-manager.o plain-style.o bento-style.o styles-commons.o js-lib.o ymp.o
+OBJS		= constants.o img.o ft.o hbz.o img_svg.o img_png.o img_common.o fcinfo.o \
+                  filesystem.o package-manager.o plain-style.o bento-style.o styles-commons.o js-lib.o ymp.o
 
 fontinfo:			$(OBJS) fontinfo.c configuration.h filesystem.h plain-style.h bento-style.h constants.h
 				gcc $(MYLDFLAGS) $(LDLAGS) -o fontinfo $(OBJS) fontinfo.c $(MYLIBS)
@@ -45,10 +46,12 @@ fcinfo.o:			fcinfo.c fcinfo.h constants.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) fcinfo.c
 img.o:				img.c img.h img_png.h img_svg.h configuration.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) img.c
-img_svg.o:			img_svg.c img_svg.h configuration.h constants.h fcinfo.h ft.h
+img_svg.o:			img_svg.c img_svg.h configuration.h constants.h fcinfo.h img_common.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) img_svg.c
-img_png.o:			img_png.c img_png.h configuration.h constants.h ft.h filesystem.h fcinfo.h
+img_png.o:			img_png.c img_png.h configuration.h constants.h ft.h filesystem.h fcinfo.h img_common.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) img_png.c
+img_common.o:			img_common.c img_common.h ft.h
+				gcc -c $(MYCFLAGS) $(CFLAGS) img_common.c
 ft.o:				ft.c ft.h hbz.h constants.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) ft.c
 hbz.o:				hbz.c hbz.h constants.h
