@@ -241,11 +241,11 @@ void write_png_specimen(const char *subdir,
         y = (bs ? bs : config.specimen_from_px) + SPECIMEN_DIST;
         break;
       case 2: /* top to bottom */
-        x = (bs ? bs : config.specimen_from_px) + SPECIMEN_DIST; 
+        x = (bs ? bs : config.specimen_from_px); 
         y = 0;
         break;
       case 3: /* bottom to top */
-        x = (bs ? bs : config.specimen_from_px) + SPECIMEN_DIST;
+        x = (bs ? bs : config.specimen_from_px);
         y = png_height;
         break;
       default:

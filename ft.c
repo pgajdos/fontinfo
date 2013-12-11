@@ -308,7 +308,7 @@ static int ft_draw_text_(FcChar32 text[], int x,  int y,
   int text_width;
 
   text_width = 0;
-  if (bitmap->use_harfbuzz)
+  if (bitmap->use_harfbuzz && FT_IS_SCALABLE(bitmap->face))
   {
     nglyphs = hbz_glyphs(text, 
                          text_length(text), 
@@ -343,7 +343,7 @@ static int ft_draw_text_(FcChar32 text[], int x,  int y,
     for (g = 0; g < nglyphs; g++)
     {
       glyph_positions[g].x = (pen.x + glyph_offsets[g].x) >> 6;
-      glyph_positions[g].y = (pen.y + glyph_offsets[g].y) >> 6;
+      glyph_positions[g].y = (pen.y - glyph_offsets[g].y) >> 6;
       pen.x += glyph_advances[g].x;
       pen.y -= glyph_advances[g].y;
 

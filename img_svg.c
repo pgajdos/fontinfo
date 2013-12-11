@@ -151,13 +151,13 @@ void write_svg_specimen(FILE *html,
       text_anchor = "end";
       break;
     case 2: /* top to bottom */
-      x = SPECIMEN_DIST;
+      x = (bs ? bs : config.specimen_from_px);
       y = 0;
       writing_mode = "tb-rl";
       text_anchor = "start";
       break;
     case 3: /* bottom to top */
-      x = (bs ? bs : config.specimen_from_px) + SPECIMEN_DIST;
+      x = (bs ? bs : config.specimen_from_px);
       y = svg_height;
       writing_mode = "tb"; /* it seems there isn't "bt" */
       text_anchor = "end";
