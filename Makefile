@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 DIRS		= languages
-VERSION		 = 20131206
+VERSION		 = 20131211
 PKGMAN_CFLAGS	 = $(shell sh ./package-manager.sh --cflags)
 PKGMAN_LIBS	 = $(shell sh ./package-manager.sh --libs)
 LIBPNG_CFLAGS	 = $(shell pkg-config --cflags libpng)
@@ -50,7 +50,7 @@ img_svg.o:			img_svg.c img_svg.h configuration.h constants.h fcinfo.h img_common
 				gcc -c $(MYCFLAGS) $(CFLAGS) img_svg.c
 img_png.o:			img_png.c img_png.h configuration.h constants.h ft.h filesystem.h fcinfo.h img_common.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) img_png.c
-img_common.o:			img_common.c img_common.h ft.h
+img_common.o:			img_common.c img_common.h ft.h configuration.h ft.h fcinfo.h constants.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) img_common.c
 ft.o:				ft.c ft.h hbz.h constants.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) ft.c
