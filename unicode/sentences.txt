@@ -62,6 +62,8 @@
  *          https://github.com/santhoshtr/AutonymFont/blob/master/autonyms.txt
  *          Sundanese
  *          http://sabilulungan.org/aksara/
+ *          Nko
+ *          http://kanjamadi.org/dictionary/dic_2_list.php?start=64
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -682,8 +684,9 @@
 },
 
 {
-  "Nko", TAG('N','k','o','o'), 1, R2L, (sentence_t [])
+  "Nko", TAG('N','k','o','o'), 2, R2L, (sentence_t [])
   {
+    {"ߡߊ߬ߘߍ߬ߡߍ߲߬ߝߋ߲", "nqo"},
     {"ߒߞߏ", "nqo"},
   }
 },
