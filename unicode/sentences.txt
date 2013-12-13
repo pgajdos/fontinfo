@@ -64,6 +64,8 @@
  *          http://sabilulungan.org/aksara/
  *          Nko
  *          http://kanjamadi.org/dictionary/dic_2_list.php?start=64
+ *          Hanunoo
+ *          http://www.christusrex.org/www1/pater/JPN-hanunoo.html
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -504,8 +506,15 @@
 },
 
 {
-  "Hanunoo", TAG('H','a','n','o'), 1, L2R, (sentence_t [])
+  "Hanunoo", TAG('H','a','n','o'), 2, L2R, (sentence_t [])
   {
+    /* omniglot: Direction of writing: traditionally written with the point 
+       of a knife on bamboo in vertical columns from bottom to top and left 
+       to right. Though it is usually read from left to right in horizontal 
+       lines.  */
+    /* so leave it ordinary L2R */
+    /* needs opentype, FreeSerif ok, MPH 2B Damase not ok */
+    {"ᜠ ᜫ ᜨᜲ ᜫᜲ ᜰ ᜮ ᜥᜲ ᜦ᜴ ᜵ ᜩ ᜤ ᜮ ᜥᜳ ᜨ᜴ ᜣ ᜨ᜴ ᜫᜳ ᜥ ᜭ ᜨ᜴ ᜶", "hnn"},
     {"ᜱᜨᜳᜨᜳᜢ", "hnn"},
   }
 },
