@@ -333,7 +333,8 @@
   /* or Burmese */
   "Myanmar", TAG('M','y','m','r'), 1, L2R, (sentence_t [])
   {
-    {"က္ယ္ဝန္‌တော္‌၊က္ယ္ဝန္‌မ မ္ယက္‌စားနုိင္‌သည္‌။ ၎က္ရောင္‌့ ထိခုိက္‌မ္ဟု မရ္ဟိပာ။", "my"},
+    /* needs opentype, Padauk ok */
+    {"ကျွန်တော်ရဲ့ လေစီးယာဉ်မှာ ငါးရှင့်တွေအပြည့်ရှိနေပါတယ်။", "my"},
   }
 },
 
@@ -686,6 +687,8 @@
 {
   "Phags_Pa", TAG('P','h','a','g'), 3, T2B, (sentence_t [])
   {
+    /* needs opentype, 'BabelStone Phags-Pa Book' horizontal ok,
+       vertical needs to be rotated by +90 degrees */
     {"ꡉꡟ ꡉꡟ︀ ꡪꡟ ꡪꡟ︀ ꡃꡡ ꡃꡡꡃ ꡡꡃ", "sa"},
     {"ꡏꡟ ꡋꡞ ꡏꡟ ꡋꡞ ᠂ ꡏ ꡜꡖ ꡏꡟ ꡋꡞ ᠂ ꡓꡞ ꡏꡟ ᠁", "sa"},
     {"ꡏꡟ ꡋꡞ ꡏꡟ ꡋꡞ ᠂ ꡏ ꡜꡖ ꡏꡟ ꡋꡞ ᠂ ꡓꡞ ꡏꡟ", "sa"},
@@ -695,6 +698,7 @@
 {
   "Nko", TAG('N','k','o','o'), 2, R2L, (sentence_t [])
   {
+    /* needs opentype, DejaVu Sans ok */
     {"ߡߊ߬ߘߍ߬ߡߍ߲߬ߝߋ߲", "nqo"},
     {"ߒߞߏ", "nqo"},
   }
