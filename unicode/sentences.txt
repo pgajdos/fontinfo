@@ -48,7 +48,7 @@
  *          Linear_B
  *          http://lila.sns.it/mnamon/index.php?page=Esempi&id=20&lang=en
  *          Miao
- *          http://www.archives.ecs.soton.ac.uk/miao/songs/TranslatedSongs/m101/m101tx.pdf
+ *          http://www.archives.ecs.soton.ac.uk/miao/songs/TranslatedSongs/m201/m201tx.pdf
  *          Ogham
  *          http://www.babelstone.co.uk/Fonts/Ogham.html
  *          Runic
@@ -938,7 +938,8 @@
 {
   "Miao", TAG('P','l','r','d'), 1, L2R, (sentence_t [])
   {
-    {"𖼐𖽪 𖼯𖽪 𖼷𖽷 𖼐𖼊𖽪 𖼷𖽷𖼊𖽡 . 𖼽𖾔 𖼯𖽷 𖼨𖽹𖽪", "hmn"},
+    /* needs opentype, Miao Unicode ok */
+    {"𖽃𖽔𖾐 𖼖𖽻 𖼦𖽡 𖼞𖽪 𖽃𖽔𖾐 𖼊𖽑𖽻𖾐 𖽃𖽔 𖼷𖽐𖽔 𖽃𖽺𖾐 𖼖𖽡𖾏 𖼊𖽔𖾐 𖼊𖽡𖽝 𖽃𖽡𖾑 𖼞𖽡𖾐 𖼽𖽙𖾐 𖼽𖽠 𖼖𖽻 𖼐𖽥𖾐", "hmn"},
   }
 },
 

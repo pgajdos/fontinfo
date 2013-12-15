@@ -50,7 +50,7 @@
 #define VERSION_MAX               16
 
 /* limit for specimen sentence */
-#define SENTENCE_NCHARS      46
+#define SENTENCE_NCHARS      70
 
 /* output maximum SCRIPTS_MAX scripts in font card */
 # define SCRIPTS_MAX           30
