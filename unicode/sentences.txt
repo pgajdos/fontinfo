@@ -68,6 +68,8 @@
  *          http://www.christusrex.org/www1/pater/JPN-hanunoo.html
  *          Phags pa
  *          http://www.babelstone.co.uk/Test/Phags-pa.html
+ *          Tibetan
+ *          http://www.babelstone.co.uk/Test/Tibetan.html
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -324,7 +326,8 @@
 {
   "Tibetan", TAG('T','i','b','t'), 3, L2R, (sentence_t [])
   {
-    {"ཤེལ་སྒོ་ཟ་ནས་ང་ན་གི་མ་རེད།", "bo"},
+    /* needs opentype, Jomolhari and Tibetan Machine Uni ok */
+    {"ཨེ་མ་ངོ་མཚར་ཆེ། ལྷ་གཅིག་ཀོང་ཇོ་ཁྱོད། བདག་གི་ཚིག་ལ་གསོན། བཀྲ་ཤིས་ཉམས་སུ་དགའ༎", "bo"},
     /* for sMar-chen script, tibetan encoded (BabelStone Tibetan sMar-chen) */
     {"ཡིག་གཟུགས་དུ་མའི་མ་ཕྱི་གཞོན་ནུ་མཛེས་པའི་ལང་ཚོ", ""},
     /* for Autonym font: "Tibet" */
@@ -417,8 +420,12 @@
 },
 
 {
-  "Mongolian", TAG('M','o','n','g'), 1, T2B, (sentence_t [])
+  "Mongolian", TAG('M','o','n','g'), 1, L2R, (sentence_t [])
   {
+    /* Behdad: For Phags-Pa and Mongolian, the model is that the font is designed for
+       horizontal layout, and if you want it vertical you need to rotate the
+       horizontal rendering.  The "vertical" layout in HarfBuzz is for CJK
+       languages where glyphs stay upright but stack down. */
     {"ᠪᠢ ᠰᠢᠯᠢ ᠢᠳᠡᠶᠦ ᠴᠢᠳᠠᠨᠠ ᠂ ᠨᠠᠳᠤᠷ ᠬᠣᠤᠷᠠᠳᠠᠢ ᠪᠢᠰᠢ ", "mn"},
   }
 },

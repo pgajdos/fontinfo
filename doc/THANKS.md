@@ -19,6 +19,7 @@ Ideas, bugreports
 Patches, data
 -------------
 * Konstantinos Terzopoulos
+* Andrew West
 
 Technical support
 -----------------
