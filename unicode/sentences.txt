@@ -66,6 +66,8 @@
  *          http://kanjamadi.org/dictionary/dic_2_list.php?start=64
  *          Hanunoo
  *          http://www.christusrex.org/www1/pater/JPN-hanunoo.html
+ *          Phags pa
+ *          http://www.babelstone.co.uk/Test/Phags-pa.html
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -248,6 +250,7 @@
 {
   "Oriya", TAG('O','r','y','a'), 2, L2R, (sentence_t [])
   {
+    /* needs opentype, Free Serif, Lohit Oriya, ori1Uni ok */
     {"ଆପଣ ଓଡ଼ିଆ କୁହନ୍ତି କି", "or"},
     {"ଉତ୍କଳ ଲିପି", "or"},
   }
@@ -685,13 +688,14 @@
 },
 
 {
-  "Phags_Pa", TAG('P','h','a','g'), 3, T2B, (sentence_t [])
+  "Phags_Pa", TAG('P','h','a','g'), 2, L2R, (sentence_t [])
   {
-    /* needs opentype, 'BabelStone Phags-Pa Book' horizontal ok,
-       vertical needs to be rotated by +90 degrees */
+    /* needs opentype, 'BabelStone Phags-Pa Book' horizontal ok;
+       Andrew West: Rotating individual glyphs does not
+       work, you have to rotate the whole run 90 degrees clockwise.*/
+    {"ꡄꡃ ꡚꡜꡞꡃ ꡉꡠꡋ ꡁꡞ ꡙꡞ ꡙꡞ", "sa"},
+    {"ꡏꡡꡃ ꡣꡡꡙ ꡐꡜꡞ", "sa"},
     {"ꡉꡟ ꡉꡟ︀ ꡪꡟ ꡪꡟ︀ ꡃꡡ ꡃꡡꡃ ꡡꡃ", "sa"},
-    {"ꡏꡟ ꡋꡞ ꡏꡟ ꡋꡞ ᠂ ꡏ ꡜꡖ ꡏꡟ ꡋꡞ ᠂ ꡓꡞ ꡏꡟ ᠁", "sa"},
-    {"ꡏꡟ ꡋꡞ ꡏꡟ ꡋꡞ ᠂ ꡏ ꡜꡖ ꡏꡟ ꡋꡞ ᠂ ꡓꡞ ꡏꡟ", "sa"},
   }
 },
 
