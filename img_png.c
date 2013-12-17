@@ -294,7 +294,7 @@ void write_png_specimen(const char *subdir,
     create_dir(dirname_img);
 
     snprintf(png_name, FILEPATH_MAX, "%s/%s%s.%s.s.png",
-             dirname_img, family, style, script);
+             dirname_img, family, style, script ? script : NO_SCRIPT);
     remove_spaces_and_slashes(&png_name[strlen(dirname_img)+1]);
     write_png(png_name, bitmap);
 
@@ -304,7 +304,8 @@ void write_png_specimen(const char *subdir,
   /* link png to html */
   if (config.generate_stooltips)
   {
-    snprintf(mapname, FILEPATH_MAX, "%s%s%s", family, style, script);
+    snprintf(mapname, FILEPATH_MAX, "%s%s%s", family, style, 
+             script ? script : NO_SCRIPT);
     remove_spaces_and_slashes(mapname);    
     fprintf(html, "%s<map name=\"%s%s\">\n", 
             html_indent, mapname_prefix, mapname);
@@ -332,11 +333,11 @@ void write_png_specimen(const char *subdir,
   }
 
   snprintf(png_link, FILEPATH_MAX, "%s/%s%s.%s.s.png", 
-           IMG_SUBDIR, family, style, script);
+           IMG_SUBDIR, family, style, script ? script : NO_SCRIPT);
   remove_spaces_and_slashes(&png_link[strlen(IMG_SUBDIR)+1]);
   fprintf(html, 
           "%s<img src=\"%s\" alt=\"Specimen for %s %s (%s script).\"",
-          html_indent, png_link, family, style, script);
+          html_indent, png_link, family, style, script ? script : NO_SCRIPT);
   if (config.generate_stooltips)
     fprintf(html, " usemap=\"#%s%s\"", mapname_prefix, mapname);
   fprintf(html, "/>\n");

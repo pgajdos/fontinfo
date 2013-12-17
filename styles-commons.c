@@ -185,7 +185,7 @@ void timestamp(char *dest, ts_output_t o)
 
 int specimen_sentence(config_t config, FcCharSet *charset,
                       const char *wanted_script, int *dir, 
-                      const char **lang, const char **sentence_script,
+                      const char **lang,
                       int *random,  FcChar32 *ucs4str, int maxlen)
 {
   int n;
@@ -216,7 +216,6 @@ int specimen_sentence(config_t config, FcCharSet *charset,
       ucs4str[n] = 0;
       *dir = 0;
       *lang = NO_LANG;
-      *sentence_script = NO_SCRIPT;
       return n;
     }
 
@@ -227,7 +226,6 @@ int specimen_sentence(config_t config, FcCharSet *charset,
     ucs4str[n] = 0;
     *dir = config.specimen_textdir;
     *lang = config.specimen_lang;
-    *sentence_script = config.specimen_script;
     *random = 0;
     return n;
   }
@@ -250,7 +248,6 @@ int specimen_sentence(config_t config, FcCharSet *charset,
 
     *dir = 0;
     *lang = NO_LANG;
-    *sentence_script = NO_SCRIPT;
     *random = 2;
     return n;
   }
@@ -270,7 +267,6 @@ int specimen_sentence(config_t config, FcCharSet *charset,
                 sentences[s].sent, sentences[s].lang);
       ucs4str[n] = 0;
       *lang = sentences[s].lang;
-      *sentence_script = wanted_script;
       /* dir set in unicode_script_sentences() */
       *random = 0;
       return n;
@@ -304,7 +300,6 @@ int specimen_sentence(config_t config, FcCharSet *charset,
 
   *dir = 0;
   *lang = NO_LANG;
-  *sentence_script = NO_SCRIPT;
   return n;
 }
 

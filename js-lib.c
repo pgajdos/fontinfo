@@ -24,6 +24,7 @@
 
 #include "js-lib.h"
 #include "filesystem.h"
+#include "constants.h"
 
 void js_write_script(config_t config, const char *js_fname, const char *script)
 {
@@ -36,7 +37,7 @@ void js_write_script(config_t config, const char *js_fname, const char *script)
   
   snprintf(scriptname, FILEPATH_MAX, "%s/%s", dirname, js_fname);
 
-  js = open_write(scriptname, "js_write_function_toggle_view");
+  js = open_write(scriptname, "js_write_script");
   fprintf(js, script);
   fclose(js);
 
@@ -92,14 +93,17 @@ void js_write_script_specimen_view(config_t config, const char *js_fname)
                   "\n"
                   "function initialize_specimen_tabs(scripts, specimen_types, id_suffix)\n"
                   "{\n"
-                  "  cscript = scripts[0];\n"
+                  "  cscript = scripts.length > 0 ? scripts[0] : \""NO_SCRIPT"\";\n"
                   "  cspecimen_type = specimen_types[0];\n"
                   "  specimen_id_suffix = id_suffix\n"
                   "  var el;\n"
                   "  \n"
-                  "  document.write('<table><tr><td>');\n"
+                  "  if (scripts.length > 0 && specimen_types.length > 0)\n"
+                  "  {\n"
+                  "    document.write('<table><tr><td>');\n"
+                  "  }\n"
                   "  \n"
-                  "  if (scripts.length > 1)\n"
+                  "  if (scripts.length > 0)\n"
                   "  {\n"
                   "    document.write('<table><tr>');\n"
                   "    for (var i = 0; i < scripts.length; i++)\n"
@@ -115,9 +119,12 @@ void js_write_script_specimen_view(config_t config, const char *js_fname)
                   "    document.write('</tr></table>');\n"
                   "  }\n"
                   "  \n"
+                  "  if (scripts.length > 0 && specimen_types.length > 0)"
+                  "  {\n"
+                  "    document.write('</td><td>');\n"
+                  "  }\n"
                   "  if (specimen_types.length > 1)\n"
                   "  {\n"
-                  "    document.write('</td><td>')\n"
                   "    document.write('<table><tr>');\n"
                   "    for (var i = 0; i < specimen_types.length; i++)\n"
                   "    {\n"
@@ -128,9 +135,12 @@ void js_write_script_specimen_view(config_t config, const char *js_fname)
                   "    document.write('</tr></table>');\n"
                   "  }\n"
                   "  \n"
-                  "  document.write('</td></tr></table>');\n"
+                  "  if (scripts.length > 0 && specimen_types.length > 0)\n"
+                  "  {\n"
+                  "    document.write('</td></tr></table>');\n"
+                  "  }\n"
                   "  \n"
-                  "  if (scripts.length > 1)\n"
+                  "  if (scripts.length > 0)\n"
                   "  {\n"
                   "    el = document.getElementById(scripts[0] + \"SpecimenAnchor\");\n"
                   "    el.style.color = 'black';\n"

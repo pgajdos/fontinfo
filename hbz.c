@@ -72,7 +72,7 @@ unsigned hbz_glyphs(uint32_t s[],
   //fprintf(stderr, "[%s] [%s] %x %x\n", script, lang, HB_TAG('A', 'r', 'a', 'b'), unicode_script_tag(script));
 
   hb_buffer_set_direction(hb_buf, hbz_direction(dir));
-  if (script[0])
+  if (script && script[0])
     hb_buffer_set_script(hb_buf, unicode_script_tag(script));
   if (lang[0])
     hb_buffer_set_language(hb_buf, 
@@ -96,7 +96,6 @@ unsigned hbz_glyphs(uint32_t s[],
   }
 
   *advances_sum_x = *advances_sum_y = 0;
-  //fprintf(stdout, "%s: ", script);
   for (g = 0; g < glyph_count; g++)
   {
     //fprintf(stdout, "0x%x ", hb_glyph_infos[g].codepoint);
