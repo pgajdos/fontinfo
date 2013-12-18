@@ -70,6 +70,8 @@
  *          http://www.babelstone.co.uk/Test/Phags-pa.html
  *          Tibetan
  *          http://www.babelstone.co.uk/Test/Tibetan.html
+ *          Tamil
+ *          http://www.omniglot.com/language/phrases/tamil.php
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -262,9 +264,9 @@
   "Tamil", TAG('T','a','m','l'), 5, L2R, (sentence_t [])
   {
     /* formal Tamil */
-    {"உங்களை பார்த்தது மிகவும் சந்தோஷம்", "ta"},
+    {"ஒரு மொழி மட்டும் தெரிந்தால் போதாது", "ta"},
     /* informal Tamil*/
-    {"ஒங்கள பாத்தது ரொம்ப சந்தோஷ0", "ta"},
+    {"ஒரு மொழி மட்டு தெரிஞ்சா போதாது", "ta"},
     {"நான் கண்ணாடி சாப்பிடுவேன், அதனால் எனக்கு ஒரு கேடும் வராது. ", "ta"},
     {"தமிழ் அரிச்சுவடி", "ta"},
     /* for Autonym font: "Tamil" */
