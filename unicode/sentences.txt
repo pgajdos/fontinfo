@@ -263,6 +263,7 @@
 { 
   "Tamil", TAG('T','a','m','l'), 5, L2R, (sentence_t [])
   {
+    /* needs opentype, Droid Sans Tamil ok */
     /* formal Tamil */
     {"ஒரு மொழி மட்டும் தெரிந்தால் போதாது", "ta"},
     /* informal Tamil*/

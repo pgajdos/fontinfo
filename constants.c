@@ -117,19 +117,22 @@ int unicode_script_exists(const char *script)
   return 0;
 }
 
-int unicode_script_contains(const char *script, FcChar32 ch)
+int unicode_interval_contains(const char *uinterval_name, 
+                              uinterval_type_t type,
+                              FcChar32 ch)
 {
-  int sm;
-  for (sm = 0; sm < NUM_CONSTS(script_map_consts); sm++)
+  int in;
+  const uinterval_map_t *map = uinterval_maps(type);
+  for (in = 0; in < uinterval_num_maps(type); in++)
   {
-    if (strcmp(script_map_consts[sm].interval_name, script) == 0)
+    if (strcmp(map[in].interval_name, uinterval_name) == 0)
     {
-      if (script_map_consts[sm].l <= ch && ch <= script_map_consts[sm].u)
+      if (map[in].l <= ch && ch <= map[in].u)
         return 1;
     }
     else
     {
-      if (script_map_consts[sm].l <= ch && ch <= script_map_consts[sm].u)
+      if (map[in].l <= ch && ch <= map[in].u)
         return 0;
     }
 
@@ -183,7 +186,9 @@ const char *unicode_block_name(int id)
 
 double charset_uinterval_coverage(FcCharSet *charset, 
                                   const char *uinname,
-                                  uinterval_type_t uintype)
+                                  uinterval_type_t uintype,
+                                  FcChar32 *ch_success,
+                                  FcChar32 *ui_size)
 {
   int m;
   FcChar32 c;
@@ -204,55 +209,78 @@ double charset_uinterval_coverage(FcCharSet *charset,
       }
   }
   assert(uinterval_size > 0);
+  if (ch_success)
+    *ch_success = charset_success;
+  if (ui_size) 
+    *ui_size = uinterval_size;
   return (double)charset_success/(double)uinterval_size*100.0;
 }
 
 int charset_uinterval_statistics(FcCharSet *charset,
-                                 const char *uinnames[],
-                                 double values[],
-                                 uinterval_type_t uintype)
+                                 uinterval_stat_t stats[],
+                                 uinterval_type_t uintype,
+                                 uinterval_sort_t sort_type)
 {
-  int nscripts = 0;
-  int v, s, v2;
-  double cov;
+  int nintervals = 0;
+  int v, s, v2, loop_end;
 
   const int map_len = uinterval_num(uintype);
 
-  bzero(values, sizeof(double)*map_len);
-  bzero(uinnames, sizeof(char*)*map_len);
+  uinterval_stat_t stat;
 
-  /* sort scripts according to coverage values in the font */
+  bzero(stats, sizeof(uinterval_stat_t)*map_len);
+
+  /* sort intervals according to coverage values in the font */
   for (s = 0; s < map_len; s++)
   {
-    cov = charset_uinterval_coverage(charset, 
-                                     uinterval_name(s, uintype), 
-                                     uintype);
-    if (cov == 0)
-      continue;
+    stat.ui_name = uinterval_name(s, uintype);
+    stat.coverage
+       = charset_uinterval_coverage(charset, 
+                                    stat.ui_name, 
+                                    uintype,
+                                    &stat.success,
+                                    &stat.uinterval_size);
+    if (stat.success == 0)
+      continue; /* trow stat away */
 
     v = 0;
-    while (v < nscripts)
+    loop_end = 0;
+    while (v < nintervals)
     {
-      if (cov > values[v])
+      switch (sort_type)
+      {
+        case UI_SORT_NONE:
+          break;
+        case UI_SORT_ABSOLUTE:
+          if (stat.success > stats[v].success)
+            loop_end = 1;
+          break;
+        case UI_SORT_PERCENT:
+          if (stat.coverage > stats[v].coverage)
+            loop_end = 1;
+          break;
+        default:
+          assert(0 == 1);
+      }
+
+      if (loop_end)
         break;
+
       v++;
     }
-    for (v2 = nscripts; v2 > v; v2--)
+    for (v2 = nintervals; v2 > v; v2--)
     {
       if (v2 == map_len)
         continue;
 
-      uinnames[v2] = uinnames[v2 - 1];
-      values[v2] = values[v2 - 1];
+      stats[v2] = stats[v2 - 1];
     }
 
-    uinnames[v] = uinterval_name(s, uintype);
-
-    values[v] = cov;
-    nscripts++;
+    stats[v] = stat;
+    nintervals++;
   }
 
-  return nscripts;
+  return nintervals;
 }
 
 int unicode_script_blocks(const char *script,

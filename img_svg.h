@@ -27,6 +27,7 @@
 # include <stdio.h>
 
 # include "configuration.h"
+# include "constants.h"
 
 void write_svg_specimen(FILE *html, 
                         FcPattern *font, 
@@ -41,9 +42,12 @@ void write_svg_specimen(FILE *html,
                         int *width,
                         int *height);
 void write_svg_charset(FILE *html, 
-                       FcPattern *pattern, 
+                       FcPattern *font, 
+                       const char *uinterval,
+                       uinterval_type_t uintype,
                        config_t config,
                        const char *html_indent, 
+                       const char *line_suffix,
                        int maxwidth, 
                        int maxheight);
 #endif

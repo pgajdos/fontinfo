@@ -86,7 +86,7 @@ FcFontSet *fcinfo_uinterval_statistics(const FcPattern *filter,
                                        uinterval_type_t uintype);
 
 FcChar32 fcinfo_chars(FcCharSet *charset, FcChar32 **chars,
-                      const char *script,
+                      const char *uinterval, uinterval_type_t uintype,
                       FcBool bl, FcChar32 maxchars);
 
 FcPattern *fcinfo_name_parse(const FcChar8 *pattern);

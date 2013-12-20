@@ -277,8 +277,7 @@ static void content_families_detailed_index(FILE *html, config_t config,
   int dir, random;
   const char *lang;
 
-  const char *scripts[NUMSCRIPTS];
-  double values[NUMSCRIPTS];
+  uinterval_stat_t script_stats[NUMSCRIPTS];
   int nscripts, v;
 
   assert(fcinfo_get_translated_string(fontset->fonts[0], FC_FAMILY, 
@@ -316,13 +315,13 @@ static void content_families_detailed_index(FILE *html, config_t config,
     {
       /* font doesn't cover any sentence from config.minispecimen_script */
       /* try another script inside font */ 
-      nscripts = charset_uinterval_statistics(charset, scripts, 
-                                              values, SCRIPT);
+      nscripts = charset_uinterval_statistics(charset, script_stats, 
+                                              SCRIPT, UI_SORT_ABSOLUTE);
       for (v = 0; v < nscripts; v++)
       {
         if (config.debug)
-          fprintf(stdout, "trying %s script: ", scripts[v]);
-        specimen_sentence(config, charset, scripts[v],
+          fprintf(stdout, "trying %s script: ", script_stats[v].ui_name);
+        specimen_sentence(config, charset, script_stats[v].ui_name,
                           &dir, &lang, 
                           &random, ucs4_sentence, SENTENCE_NCHARS);
         if (! random)
@@ -436,8 +435,7 @@ static void content_family_styles_indexes(FILE *html, config_t config,
   int dir, random;
   const char *lang;
 
-  const char *scripts[NUMSCRIPTS];
-  double values[NUMSCRIPTS];
+  uinterval_stat_t script_stats[NUMSCRIPTS];
   int nscripts, v;
   
   assert(fcinfo_get_translated_string(styleset->fonts[0], FC_FAMILY, 
@@ -492,13 +490,13 @@ static void content_family_styles_indexes(FILE *html, config_t config,
     {
       /* font doesn't cover any sentence from config.minispecimen_script */
       /* try another script inside font */
-      nscripts = charset_uinterval_statistics(charset, scripts, 
-                                              values, SCRIPT);
+      nscripts = charset_uinterval_statistics(charset, script_stats, 
+                                              SCRIPT, UI_SORT_ABSOLUTE);
       for (v = 0; v < nscripts; v++)
       {
         if (config.debug)
-          fprintf(stdout, "trying %s script: ", scripts[v]);
-        specimen_sentence(config, charset, scripts[v],
+          fprintf(stdout, "trying %s script: ", script_stats[v].ui_name);
+        specimen_sentence(config, charset, script_stats[v].ui_name,
                           &dir, &lang,
                           &random, ucs4_sentence, SENTENCE_NCHARS);
         if (! random)
@@ -598,9 +596,10 @@ static void content_font_card(FILE *html, config_t config, void *output_arg[])
   int r;
   char filename[FILEPATH_MAX];
 
-  const char *scripts[NUMSCRIPTS];
-  double values[NUMSCRIPTS];
+  uinterval_stat_t script_stats[NUMSCRIPTS];
+  uinterval_stat_t block_stats[NUMBLOCKS];
   int nscripts, v, nsignificantscripts;
+  int nblocks;
   char script_wu[SCRIPT_NAME_LEN_MAX];
 
   assert(fcinfo_get_translated_string(pattern, FC_FAMILY, LANG_EN, &family)
@@ -647,8 +646,10 @@ static void content_font_card(FILE *html, config_t config, void *output_arg[])
 
   file_from_package((char *)file, &pi);
 
-  nscripts = charset_uinterval_statistics(charset, scripts, 
-                                          values, SCRIPT);
+  nscripts = charset_uinterval_statistics(charset, script_stats, 
+                                          SCRIPT, UI_SORT_ABSOLUTE);
+  nblocks = charset_uinterval_statistics(charset, block_stats,
+                                         BLOCK, UI_SORT_NONE);
 
   if (config.debug)
     fprintf(stdout, "\nFONT(specimen): %s, %s\n", family, style);
@@ -690,27 +691,27 @@ static void content_font_card(FILE *html, config_t config, void *output_arg[])
   while (v < SCRIPTS_MAX && v < nscripts)
   {
     /* wipe scripts with really low coverage, even for v == 0 */
-    if (values[v] < SCRIPTS_COVERAGE_HARD_MIN)
+    if (script_stats[v].coverage < SCRIPTS_COVERAGE_HARD_MIN)
       break;
 
     /* wipe scripts with low coverage if we have at least one yet */
-    if (v > 0 && values[v] < SCRIPTS_COVERAGE_MIN)
+    if (v > 0 && script_stats[v].coverage < SCRIPTS_COVERAGE_MIN)
       break;
 
-    snprintf(script_wu, SCRIPT_NAME_LEN_MAX, "%s", scripts[v]);
+    snprintf(script_wu, SCRIPT_NAME_LEN_MAX, "%s", script_stats[v].ui_name);
     underscores_to_spaces(script_wu);
     if (config.generate_indexes)
       fprintf(html, "            <tr><td><a href=\"../%s/script-%s.html\">"
                     "%s%s</a> (%.1f%%)</td></tr>\n", 
-                    SCRIPTS_SUBDIR, scripts[v], script_wu, 
-                    script_is_collection(scripts[v]) 
+                    SCRIPTS_SUBDIR, script_stats[v].ui_name, script_wu, 
+                    script_is_collection(script_stats[v].ui_name) 
                        ? " ("COLLECTION_INDICATOR")" : "", 
-                    values[v]);
+                    script_stats[v].coverage);
     else
       fprintf(html, "            <tr><td>%s%s (%.1f%%)</td></tr>\n", 
-                    script_is_collection(scripts[v]) 
+                    script_is_collection(script_stats[v].ui_name) 
                        ? " ("COLLECTION_INDICATOR")" : "",
-                    script_wu, values[v]);
+                    script_wu, script_stats[v].coverage);
     v++;
   }
   nsignificantscripts = v;
@@ -728,12 +729,12 @@ static void content_font_card(FILE *html, config_t config, void *output_arg[])
   /* and for enforced sentence */
   if (nsignificantscripts == 0)
   {
-    scripts[0] = NULL;
+    script_stats[0].ui_name = NULL;
     nsignificantscripts = 1;
   } 
   else if (config.specimen_sentence)
   {
-    scripts[0] = config.specimen_script;
+    script_stats[0].ui_name = config.specimen_script;
     nsignificantscripts = 1;
   }
 
@@ -741,19 +742,20 @@ static void content_font_card(FILE *html, config_t config, void *output_arg[])
   {
     if (config.debug)
     {
-      if (scripts[0])
-        fprintf(stdout, "%s script (%.1f%%): ", scripts[v], values[v]);
+      if (script_stats[v].ui_name)
+        fprintf(stdout, "%s script (%.1f%%): ", 
+                script_stats[v].ui_name, script_stats[v].coverage);
       else
         fprintf(stdout, "no script found: ");
     }
     /* random flag not used here so far, but for minispecimens */
-    specimen_sentence(config, charset, scripts[v],
+    specimen_sentence(config, charset, script_stats[v].ui_name,
                       &dir, &language,
                       &random, ucs4_sentence, SENTENCE_NCHARS);
 
     write_specimen(html, pattern, FONTS_SUBDIR, 
                    config, ucs4_sentence, 
-                   scripts[v], language, dir, 
+                   script_stats[v].ui_name, language, dir, 
                    "    ", "specimenimgmap", 
                    SPECIMEN_WIDTH_MAX, NULL, NULL);
   }
@@ -906,9 +908,27 @@ static void content_font_card(FILE *html, config_t config, void *output_arg[])
   if (config.generate_charset && charset)
   {
     fprintf(html, "    <h2>Character Set</h2>\n");
-    write_charset(html, pattern,
-                  FONTS_SUBDIR, config, "    ", "charsetimgmap",
-                  0, CHARSET_HEIGHT_MAX);
+    fprintf(html, "          <table>\n");
+    for (v = 0; v < nblocks; v++)
+    {
+      fprintf(html, "            <tr><td>%s</td></tr>\n",
+              block_stats[v].ui_name);
+      fprintf(html, "            <tr><td>\n");
+      write_charset(html,
+                    pattern,
+                    block_stats[v].ui_name,
+                    BLOCK,
+                    FONTS_SUBDIR,
+                    config,
+                    "              ", "",
+                    "charsetimgmap",
+                    0,
+                    CHARSET_HEIGHT_MAX);
+      fprintf(html, "            </td></tr>\n");
+    }
+
+    fprintf(html, "          </table>\n");
+
   }
   fprintf(html, "    \n");
 
@@ -1358,7 +1378,7 @@ static void content_script_font_index(FILE *html, config_t config,
                                       void *output_arg[])
 {
   FcPattern **ranking = (FcPattern **)output_arg[0];
-  double *values = (double *)output_arg[1];
+  double *svalues = (double *)output_arg[1];
   int *nranks = (int *)output_arg[2];
   int *script_idx = (int *)output_arg[3];
   FcChar8 *family, *style;
@@ -1416,9 +1436,9 @@ static void content_script_font_index(FILE *html, config_t config,
 
     if (ten != -1)
     {
-      if ((int)values[f]/10 != ten)
+      if ((int)svalues[f]/10 != ten)
       {
-        ten = (int)values[f]/10;
+        ten = (int)svalues[f]/10;
         fprintf(html, " </p>\n");
         if (ten > 0)
           fprintf(html, "    <h2>%d</h2>\n", ten*10);
@@ -1429,7 +1449,7 @@ static void content_script_font_index(FILE *html, config_t config,
     }
     else
     {
-      ten = (int)values[f]/10;
+      ten = (int)svalues[f]/10;
       if (ten > 0)
         fprintf(html, "    <h2>%d</h2>\n", ten*10);
       else
@@ -1439,7 +1459,7 @@ static void content_script_font_index(FILE *html, config_t config,
 
     /* do not round with printf, just cut off not significant decimals */
     fprintf(html, " <a href=\"../%s/%s\">%s (%s)</a> [%.1f%%] |", 
-            FONTS_SUBDIR, fname, family, style, ((int)(values[f]*10.0))/10.0);
+            FONTS_SUBDIR, fname, family, style, ((int)(svalues[f]*10.0))/10.0);
   }
 
   fprintf(html, "    </p>\n");
@@ -1451,7 +1471,7 @@ void plain_script_fonts_indexes(config_t config)
   double *script_stat[NUMSCRIPTS];
   FcFontSet *fontset;
   FcPattern **ranking;
-  double *values;
+  double *svalues;
   int s, nranks, v, v2, f;
   char *script;
 	
@@ -1470,8 +1490,8 @@ void plain_script_fonts_indexes(config_t config)
 
   fontset = uinterval_statistics(config, script_stat, SCRIPT);
   ranking = malloc(sizeof(FcPattern*)*fontset->nfont);
-  values = malloc(sizeof(double)*fontset->nfont);
-  if (!ranking || !values)
+  svalues = malloc(sizeof(double)*fontset->nfont);
+  if (!ranking || !svalues)
   {
     fprintf(stderr, "plain_script_fonts_indexes(): out of memory\n");
     exit(1);
@@ -1491,18 +1511,18 @@ void plain_script_fonts_indexes(config_t config)
       v = 0;
       while (v < nranks)
       {
-        if (script_stat[s][f] > values[v])
+        if (script_stat[s][f] > svalues[v])
           break;
         v++;
       }
       for (v2 = nranks; v2 > v; v2--)
       {
         ranking[v2] = ranking[v2 - 1];
-        values[v2] = values[v2 - 1];
+        svalues[v2] = svalues[v2 - 1];
       }
 
       ranking[v] = fontset->fonts[f];
-      values[v] = script_stat[s][f];
+      svalues[v] = script_stat[s][f];
       nranks++;
     }
 
@@ -1517,7 +1537,7 @@ void plain_script_fonts_indexes(config_t config)
              dirname, script);
     html = open_write(fname, "plain_script_fonts_indexes");
 
-    arg[0] = ranking; arg[1] = values; arg[2] = &nranks; arg[3] = &s;
+    arg[0] = ranking; arg[1] = svalues; arg[2] = &nranks; arg[3] = &s;
     plain_page(html, title, header_links,
                content_script_font_index, config, arg);
     fclose(html);
@@ -1526,7 +1546,7 @@ void plain_script_fonts_indexes(config_t config)
   for (s = 0; s < NUMSCRIPTS; s++)
     free(script_stat[s]);
   free(ranking);
-  free(values);
+  free(svalues);
   FcFontSetDestroy(fontset);
   return;
 }
@@ -1652,7 +1672,7 @@ static void content_block_font_index(FILE *html, config_t config,
                                      void *output_arg[])
 {
   FcPattern **ranking = (FcPattern **)output_arg[0];
-  double *values = (double *)output_arg[1];
+  double *svalues = (double *)output_arg[1];
   int *nranks = (int *)output_arg[2];
   int *block_idx = (int *)output_arg[3];
   FcChar8 *family, *style;
@@ -1682,9 +1702,9 @@ static void content_block_font_index(FILE *html, config_t config,
 
     if (ten != -1)
     {
-      if ((int)values[f]/10 != ten)
+      if ((int)svalues[f]/10 != ten)
       {
-        ten = (int)values[f]/10;
+        ten = (int)svalues[f]/10;
         fprintf(html, " </p>\n");
         if (ten > 0)
           fprintf(html, "    <h2>%d</h2>\n", ten*10);
@@ -1695,7 +1715,7 @@ static void content_block_font_index(FILE *html, config_t config,
     }
     else
     {
-      ten = (int)values[f]/10;
+      ten = (int)svalues[f]/10;
       if (ten > 0)
         fprintf(html, "    <h2>%d</h2>\n", ten*10);
       else
@@ -1705,7 +1725,7 @@ static void content_block_font_index(FILE *html, config_t config,
 
     /* do not round with printf, just cut off not significant decimals */
     fprintf(html, " <a href=\"../%s/%s\">%s (%s)</a> [%.1f%%] |", 
-            FONTS_SUBDIR, fname, family, style, ((int)(values[f]*10.0))/10.0);
+            FONTS_SUBDIR, fname, family, style, ((int)(svalues[f]*10.0))/10.0);
   }
 
   fprintf(html, "    </p>\n");
@@ -1717,7 +1737,7 @@ void plain_block_fonts_indexes(config_t config)
   double *block_stat[NUMBLOCKS];
   FcFontSet *fontset;
   FcPattern **ranking;
-  double *values;
+  double *svalues;
   int b, nranks, v, v2, f;
   char block_ww[BLOCK_NAME_LEN_MAX];
 	
@@ -1736,8 +1756,8 @@ void plain_block_fonts_indexes(config_t config)
 
   fontset = uinterval_statistics(config, block_stat, BLOCK);
   ranking = malloc(sizeof(FcPattern*)*fontset->nfont);
-  values = malloc(sizeof(double)*fontset->nfont);
-  if (!ranking || !values)
+  svalues = malloc(sizeof(double)*fontset->nfont);
+  if (!ranking || !svalues)
   {
     fprintf(stderr, "plain_block_fonts_indexes(): out of memory\n");
     exit(1);
@@ -1759,18 +1779,18 @@ void plain_block_fonts_indexes(config_t config)
       v = 0;
       while (v < nranks)
       {
-        if (block_stat[b][f] > values[v])
+        if (block_stat[b][f] > svalues[v])
           break;
         v++;
       }
       for (v2 = nranks; v2 > v; v2--)
       {
         ranking[v2] = ranking[v2 - 1];
-        values[v2] = values[v2 - 1];
+        svalues[v2] = svalues[v2 - 1];
       }
 
       ranking[v] = fontset->fonts[f];
-      values[v] = block_stat[b][f];
+      svalues[v] = block_stat[b][f];
       nranks++;
     }
 
@@ -1785,7 +1805,7 @@ void plain_block_fonts_indexes(config_t config)
              dirname, block_ww);
     html = open_write(fname, "plain_block_fonts_indexes");
 
-    arg[0] = ranking; arg[1] = values; arg[2] = &nranks; arg[3] = &b;
+    arg[0] = ranking; arg[1] = svalues; arg[2] = &nranks; arg[3] = &b;
     plain_page(html, title, header_links,
                content_block_font_index, config, arg);
     fclose(html);
@@ -1794,7 +1814,7 @@ void plain_block_fonts_indexes(config_t config)
   for (b = 0; b < NUMBLOCKS; b++)
     free(block_stat[b]);
   free(ranking);
-  free(values);
+  free(svalues);
   FcFontSetDestroy(fontset);
   return;
 }

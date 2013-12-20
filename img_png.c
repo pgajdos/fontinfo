@@ -27,7 +27,6 @@
 #include "img_png.h"
 #include "img_common.h"
 #include "ft.h"
-#include "constants.h"
 #include "filesystem.h"
 #include "fcinfo.h"
 
@@ -352,8 +351,11 @@ void write_png_specimen(const char *subdir,
 void write_png_charset(const char *subdir, 
                        FILE *html,  
                        FcPattern *font, 
+                       const char *uinterval,
+                       uinterval_type_t uintype,
                        config_t config, 
                        const char *html_indent, 
+                       const char *line_suffix,
                        const char *mapname,
                        int maxwidth, 
                        int maxheight)
@@ -377,6 +379,7 @@ void write_png_charset(const char *subdir,
   char dirname_img[FILEPATH_MAX];
   char png_name[FILEPATH_MAX];
   char png_link[FILEPATH_MAX];
+  char uinterval_ws[FILEPATH_MAX];
 
   FcChar8 *family, *style;
   FcCharSet *charset;
@@ -397,7 +400,8 @@ void write_png_charset(const char *subdir,
                        + CHARSET_PNG_VDIST;
 
   assert(bs > 0);
-  available = fcinfo_chars(charset, &chars, NULL, FcTrue, ALL_CHARS);
+  available = fcinfo_chars(charset, &chars, uinterval, uintype, 
+                           FcTrue, ALL_CHARS);
   nlines = available/CHARSET_LINE_LEN;
   
   png_width = charset_head_width + CHARSET_LINE_LEN*(bs + CHARSET_PNG_HDIST);
@@ -425,28 +429,29 @@ void write_png_charset(const char *subdir,
     ft_initialize_bitmap(&bitmap, png_height_part, png_width);
     ft_fill_region(&bitmap, 
                    charset_head_width - CHARSET_PNG_VDIST/2, 
-                   CHARSET_PNG_HDIST,
+                   0,
                    charset_head_width - CHARSET_PNG_VDIST/2, 
-                   png_height_part,
+                   png_height_part - CHARSET_PNG_VDIST/2,
                    CHARSET_LINES_GRAY);
 
-    if (config.generate_ctooltips)
-      fprintf(html, "%s<map name=\"%s%d\">\n", 
-                    html_indent, mapname, png_nparts);
+    if (html && config.generate_ctooltips)
+    {
+      if (uinterval)
+      {
+        snprintf(uinterval_ws, FILEPATH_MAX, "%s", uinterval);
+        remove_spaces_and_slashes(uinterval_ws);
+      }
+
+      fprintf(html, "%s<map name=\"%s%s%d\">%s\n", 
+                    html_indent, mapname, 
+                    uinterval ? uinterval_ws : "", png_nparts, line_suffix);
+    }
 
     line_part = 0;
     empty_lines_part = 0;
     last_line = line + nlines_part - 1;
     for (; line <= last_line; line++)
     { 
-      if (line != 0)
-        ft_fill_region(&bitmap, 
-                       0,
-                       line_part*(bs + CHARSET_PNG_HDIST) + CHARSET_PNG_HDIST/2,
-                       png_width,
-                       line_part*(bs + CHARSET_PNG_HDIST) + CHARSET_PNG_HDIST/2, 
-                       CHARSET_LINES_GRAY);
-
       ft_bitmap_set_font(&bitmap, font, bs, files[bs], 0, 0, NULL, NULL);
       for (column = 0; column < CHARSET_LINE_LEN; column++)
       {
@@ -457,9 +462,9 @@ void write_png_charset(const char *subdir,
           text[0] = chars[char_index];
           ft_draw_text(text,
                        charset_head_width + column*(bs + CHARSET_PNG_HDIST),
-                       (line_part + 1)*(bs + CHARSET_PNG_VDIST),
+                       (line_part + 1)*(bs + CHARSET_PNG_VDIST) - CHARSET_PNG_VDIST,
                        &bitmap);
-          if (config.generate_ctooltips)
+          if (html && config.generate_ctooltips)
           {
             fprintf(html,
                     "%s  <area shape=\"rect\" coords=\"%d,%d,%d,%d\""
@@ -475,7 +480,7 @@ void write_png_charset(const char *subdir,
               fprintf(html, "%s (U+%04X)", uchar_name, chars[char_index]);
             else
                fprintf(html, "U+%04X", chars[char_index]);
-            fprintf(html, "\">\n");
+            fprintf(html, "\">%s\n", line_suffix);
           }
 
           if (first_char_in_line == available) /* == unset */
@@ -492,8 +497,15 @@ void write_png_charset(const char *subdir,
         ft_draw_text(head_text,
                      0,
                      (line_part + 1)*(bs + CHARSET_PNG_HDIST)
-                        - bs/2 + CHARSET_HEAD_PXSIZE/2,
+                       - CHARSET_PNG_HDIST - bs/2 + CHARSET_HEAD_PXSIZE/2,
                      &bitmap);
+        if (line != 0)
+          ft_fill_region(&bitmap, 
+                         0,
+                         line_part*(bs + CHARSET_PNG_HDIST) - CHARSET_PNG_HDIST/2,
+                         png_width,
+                         line_part*(bs + CHARSET_PNG_HDIST) - CHARSET_PNG_HDIST/2, 
+                        CHARSET_LINES_GRAY);
 
         line_part++, first_char_in_line = available;
       }
@@ -501,8 +513,8 @@ void write_png_charset(const char *subdir,
         empty_lines_part++;
     }
 
-    if (config.generate_ctooltips)
-      fprintf(html, "%s</map>\n", html_indent);
+    if (html && config.generate_ctooltips)
+      fprintf(html, "%s</map>%s\n", html_indent, line_suffix);
 
     if (empty_lines_part)
     {
@@ -519,20 +531,26 @@ void write_png_charset(const char *subdir,
     snprintf(dirname_img, FILEPATH_MAX, "%s/%s/%s", 
              config.dir, subdir, IMG_SUBDIR);
     create_dir(dirname_img);
-    snprintf(png_name, FILEPATH_MAX, "%s/%s%s.c.%d.png",
-             dirname_img, family, style, png_nparts);
+    snprintf(png_name, FILEPATH_MAX, "%s/%s%s.%s.c.%d.png",
+             dirname_img, family, style, 
+             uinterval ? uinterval : "", png_nparts);
     remove_spaces_and_slashes(&png_name[strlen(dirname_img)+1]);
     write_png(png_name, bitmap);
 
-    snprintf(png_link, FILEPATH_MAX, "%s/%s%s.c.%d.png", 
-             IMG_SUBDIR, family, style, png_nparts);
-    remove_spaces_and_slashes(&png_link[strlen(IMG_SUBDIR)+1]);
-    fprintf(html,
-            "%s<img src=\"%s\" alt=\"Character Set for %s %s (part %d).\"",
-            html_indent, png_link, family, style, png_nparts);
-    if (config.generate_ctooltips)
-      fprintf(html, " usemap=\"#%s%d\"", mapname, png_nparts);
-    fprintf(html, "/>\n");
+    if (html)
+    {
+      snprintf(png_link, FILEPATH_MAX, "%s/%s%s.%s.c.%d.png", 
+               IMG_SUBDIR, family, style, 
+               uinterval ? uinterval : "", png_nparts);
+      remove_spaces_and_slashes(&png_link[strlen(IMG_SUBDIR)+1]);
+      fprintf(html,
+              "%s<img src=\"%s\" alt=\"Character Set for %s %s (part %d).\"",
+             html_indent, png_link, family, style, png_nparts);
+      if (config.generate_ctooltips)
+        fprintf(html, " usemap=\"#%s%s%d\"", 
+                mapname, uinterval ? uinterval_ws : "", png_nparts);
+      fprintf(html, "/>%s\n", line_suffix);
+    }
 
     ft_free_bitmap(&bitmap);
     png_nparts++;

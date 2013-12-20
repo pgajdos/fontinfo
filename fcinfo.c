@@ -434,7 +434,7 @@ int fcinfo_charset_coveres_sentence(FcCharSet *charset,
     if (! FcCharSetHasChar(charset, sentence[c]))
       return c;
 
-    if (script && unicode_script_contains(script, sentence[c]))
+    if (script && unicode_interval_contains(script, SCRIPT, sentence[c]))
       (*charsfromscript)++;
   }
  
@@ -446,7 +446,7 @@ int fcinfo_charset_coveres_sentence(FcCharSet *charset,
 /* doesn't exist; of course leave out lines (maps) where */
 /* no character exists */
 FcChar32 fcinfo_chars(FcCharSet *charset, FcChar32 **chars, 
-                      const char *script,
+                      const char *uinterval, uinterval_type_t uintype,
                       FcBool grid, FcChar32 maxchars)
 {
   FcChar32 available, nchars, n;
@@ -468,7 +468,10 @@ FcChar32 fcinfo_chars(FcCharSet *charset, FcChar32 **chars,
     for (i = (ucs4 == 0 ? 1 : 0); 
          i < FC_CHARSET_MAP_SIZE; 
          ucs4 == 0 && i == 3 ? i = 5 : i++)
-      if (map[i])
+      if (map[i] && 
+          (!uinterval || 
+           unicode_interval_contains(uinterval, uintype, ucs4 + 32*i) ||
+           unicode_interval_contains(uinterval, uintype, ucs4 + 32*i + 0x10)))
         nlines++;
   }
 
@@ -498,16 +501,16 @@ FcChar32 fcinfo_chars(FcCharSet *charset, FcChar32 **chars,
     for (i = (ucs4 == 0 ? 1 : 0); 
          i < FC_CHARSET_MAP_SIZE; 
          ucs4 == 0 && i == 3 ? i = 5 : i++)
-      if (map[i])
+      if (map[i] && 
+          (!uinterval || 
+           unicode_interval_contains(uinterval, uintype, ucs4 + 32*i) ||
+           unicode_interval_contains(uinterval, uintype, ucs4 + 32*i + 0x10)))
       {
          for (j = 0; j < 32; j++)
          {
            if (map[i] & (1 << j))
            {
              FcChar32 ch = ucs4 + 32*i + j;
-
-             if (script && !unicode_script_contains(script, ch))
-               continue;
 
              if (grid == FcTrue || !FcBlanksIsMember(blanks, ch))
                (*chars)[n++] = ch;
@@ -535,7 +538,7 @@ int fcinfo_charset_generate_sentence(FcCharSet *charset,
   FcChar32 *chars;
   FcChar32 i, available;
 
-  available = fcinfo_chars(charset, &chars, script, FcFalse, maxchars);
+  available = fcinfo_chars(charset, &chars, script, SCRIPT, FcFalse, maxchars);
 
   for (i = 0; i < available && i < maxchars; i++)
     sentence[i] = chars[i];
@@ -899,7 +902,8 @@ FcFontSet *fcinfo_uinterval_statistics(const FcPattern *filter,
       uinterval_stat[s][f] = 
         charset_uinterval_coverage(charset, 
                                    uinterval_name(s, uintype), 
-                                   uintype);
+                                   uintype,
+                                   NULL, NULL);
   }
 
   return fontset; /* holds one of table headers */

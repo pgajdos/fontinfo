@@ -154,3 +154,57 @@ void js_write_script_specimen_view(config_t config, const char *js_fname)
   return;
 }
 
+void js_write_script_charset_view(config_t config, const char *js_fname)
+{
+  js_write_script(config, js_fname,
+                  "function charset_block_show(cell_id, html)\n"
+                  "{\n"
+                  "  el = document.getElementById(cell_id);\n"
+                  "  el.innerHTML = html;\n"
+                  "  el.style.display = 'block';\n"
+                  "  charset_shown[cell_id] = 1;\n"
+                  "  el = document.getElementById(cell_id + 'Toggle');\n"
+                  "  el.innerHTML = '-'\n"
+                  "}\n"
+                  "\n"
+                  "function charset_block_hide(cell_id)\n"
+                  "{\n"
+                  "  el = document.getElementById(cell_id);\n"
+                  "  el.innerHTML = '';\n"
+                  "  el.style.display = 'none';\n"
+                  "  charset_shown[cell_id] = 0;\n"
+                  "  el = document.getElementById(cell_id + 'Toggle');\n"
+                  "  el.innerHTML = '+'\n"
+                  "}\n"
+                  "\n"
+                  "function charset_block_toggle(cell_id, html)\n"
+                  "{\n"
+                  //"  el.innerHTML = \"AHOJ<script src=\" + txt_file + \"></srcipt>\"\n"
+                  "  if (charset_shown[cell_id])\n"
+                  "  {\n"
+                  "    charset_block_hide(cell_id);\n"
+                  "  }\n"
+                  "  else\n"
+                  "  {\n"
+                  "    charset_block_show(cell_id, html);\n"
+                  "  }\n"
+                  "}\n"
+                  "\n"
+                  "function charset_blocks_show()\n"
+                  "{\n"
+                  "  for (var charset_block in charset_shown)\n"
+                  "  {\n"
+                  "    charset_block_show(charset_block, charset_html[charset_block]);\n"
+                  "  }\n"
+                  "}\n"
+                  "\n"
+                  "function charset_blocks_hide()\n"
+                  "{\n"
+                  "  for (var charset_block in charset_shown)\n"
+                  "  {\n"
+                  "    charset_block_hide(charset_block);\n"
+                  "  }\n"
+                  "}\n");
+  return;
+}
+

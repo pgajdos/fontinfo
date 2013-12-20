@@ -97,9 +97,12 @@ void write_minispecimen(FILE *html,
 
 void write_charset(FILE *html, 
                    FcPattern *font,
+                   const char *uinterval,
+                   uinterval_type_t uintype,
                    const char *png_subdir, 
                    config_t config, 
                    const char *html_indent, 
+                   const char *line_suffix,
                    const char *mapname,
                    int maxwidth, 
                    int maxheight)
@@ -107,12 +110,14 @@ void write_charset(FILE *html,
   switch (config.charset_type)
   {
     case SVG:
-          write_svg_charset(html, font, config, html_indent, 
+          write_svg_charset(html, font, uinterval, uintype,
+                            config, html_indent, line_suffix,
                             maxwidth, maxheight);
       break;
     case PNG:
-          write_png_charset(png_subdir, html, font,   
-                            config, html_indent, 
+          write_png_charset(png_subdir, html, font, 
+                            uinterval, uintype,  
+                            config, html_indent, line_suffix,
                             mapname, maxwidth, maxheight);
       break;
     default:

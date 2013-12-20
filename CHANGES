@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Fri Dec 20 14:22:18 UTC 2013 - pgajdos@suse.com
+
+Version 20131220
+  * charset: view by unicode blocks, individual
+    pngs download on demand
+  * fixed or improve some specimen strings
+
+-------------------------------------------------------------------
 Wed Dec 11 11:15:04 UTC 2013 - pgajdos@suse.com
 
 Version 20131211

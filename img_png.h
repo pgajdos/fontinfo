@@ -29,6 +29,7 @@
 # include <png.h>
 
 # include "configuration.h"
+# include "constants.h"
 
 void write_png_specimen(const char *subdir, 
                         FILE *html,
@@ -48,8 +49,11 @@ void write_png_specimen(const char *subdir,
 void write_png_charset(const char *subdir, 
                        FILE *html, 
                        FcPattern *font, 
+                       const char *uinterval,
+                       uinterval_type_t uintype,
                        config_t config, 
-                       const char *html_indent, 
+                       const char *html_indent,
+                       const char *line_suffix,
                        const char *mapname,
                        int maxwidth, int maxheight);
 char *libpng_version(char *string, int maxlen);

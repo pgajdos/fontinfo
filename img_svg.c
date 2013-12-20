@@ -26,7 +26,6 @@
 
 #include "img_svg.h"
 #include "img_common.h"
-#include "constants.h"
 #include "fcinfo.h"
 
 #define CHARSET_SVG_VDIST   10
@@ -217,8 +216,11 @@ void write_svg_specimen(FILE *html,
 
 void write_svg_charset(FILE *html,  
                        FcPattern *font, 
+                       const char *uinterval,
+                       uinterval_type_t uintype,
                        config_t config, 
                        const char *html_indent, 
+                       const char *line_suffix,
                        int maxwidth, 
                        int maxheight)
 {
@@ -241,7 +243,8 @@ void write_svg_charset(FILE *html,
   bs = get_pattern_info(font, &family, NULL, &charset, &slant, &weight,
                         &width, sizes, NULL, config, 0);
 
-  available = fcinfo_chars(charset, &chars, NULL, FcTrue, ALL_CHARS);
+  available = fcinfo_chars(charset, &chars, uinterval, uintype,
+                           FcTrue, ALL_CHARS);
   nlines = available/CHARSET_LINE_LEN;
 
   /* trim for now */
@@ -253,8 +256,8 @@ void write_svg_charset(FILE *html,
     svg_height = maxheight;
 
   fprintf(html, 
-          "%s<svg width=\"%dpx\" height=\"%dpx\" version = \"1.1\">\n", 
-          html_indent, svg_width, svg_height);
+          "%s<svg width=\"%dpx\" height=\"%dpx\" version = \"1.1\">%s\n", 
+          html_indent, svg_width, svg_height, line_suffix);
 
   line = 1;
   column = 1;
@@ -284,7 +287,7 @@ void write_svg_charset(FILE *html,
         else
           fprintf(html, " title=\"0x%04x\"", chars[i]);
       }
-      fprintf(html, ">&#x%04x;</text>\n", chars[i]);
+      fprintf(html, ">&#x%04x;</text>%s\n", chars[i], line_suffix);
     }
 
     column++;
@@ -295,7 +298,7 @@ void write_svg_charset(FILE *html,
     }
   }
 
-  fprintf(html, "%s</svg>\n", html_indent);
+  fprintf(html, "%s</svg>%s\n", html_indent, line_suffix);
 
   free(chars);
   return;

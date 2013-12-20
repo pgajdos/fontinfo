@@ -59,9 +59,12 @@ void write_minispecimen(FILE *html,
 
 void write_charset(FILE *html, 
                    FcPattern *font,
+                   const char *uinterval,
+                   uinterval_type_t uintype,
                    const char *png_subdir, 
                    config_t config,
                    const char *html_indent, 
+                   const char *line_suffix,
                    const char *mapname,
                    int maxwidth, 
                    int maxheight);

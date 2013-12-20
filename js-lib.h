@@ -28,5 +28,6 @@
 #include "configuration.h"
 
 void js_write_script_specimen_view(config_t config, const char *js_fname);
+void js_write_script_charset_view(config_t config, const char *js_fname);
 
 #endif

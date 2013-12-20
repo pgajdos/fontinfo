@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 DIRS		= languages
-VERSION		 = 20131211
+VERSION		 = 20131220
 PKGMAN_CFLAGS	 = $(shell sh ./package-manager.sh --cflags)
 PKGMAN_LIBS	 = $(shell sh ./package-manager.sh --libs)
 LIBPNG_CFLAGS	 = $(shell pkg-config --cflags libpng)
@@ -44,7 +44,7 @@ styles-commons.o:		styles-commons.c styles-commons.h fcinfo.h img_svg.h constant
 				gcc -c $(MYCFLAGS) $(CFLAGS) styles-commons.c
 fcinfo.o:			fcinfo.c fcinfo.h constants.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) fcinfo.c
-img.o:				img.c img.h img_png.h img_svg.h configuration.h
+img.o:				img.c img.h img_png.h img_svg.h configuration.h constants.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) img.c
 img_svg.o:			img_svg.c img_svg.h configuration.h constants.h fcinfo.h img_common.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) img_svg.c
@@ -64,7 +64,7 @@ filesystem.o:			filesystem.c filesystem.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) filesystem.c
 package-manager.o:		package-manager.c package-manager.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) package-manager.c
-js-lib.o:			js-lib.c js-lib.h filesystem.h configuration.h
+js-lib.o:			js-lib.c js-lib.h filesystem.h configuration.h constants.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) js-lib.c
 ymp.o:				ymp.c ymp.h filesystem.h configuration.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) ymp.c

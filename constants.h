@@ -165,11 +165,27 @@ typedef struct
   const char *interval_name;
 } uinterval_map_t;
 
+typedef struct
+{
+  const char *ui_name;
+  double coverage;
+  FcChar32 success;
+  FcChar32 uinterval_size;
+} uinterval_stat_t;
+
 typedef enum
 {
+  UI_NONE,
   SCRIPT,
-  BLOCK
+  BLOCK,
 } uinterval_type_t;
+
+typedef enum
+{
+  UI_SORT_NONE,
+  UI_SORT_ABSOLUTE,
+  UI_SORT_PERCENT,
+} uinterval_sort_t;
 
 static const uinterval_map_t script_map_consts[] = 
 {
@@ -260,7 +276,9 @@ const FcChar8 *unicode_char_name(FcChar32 ch);
 int fc_to_css_weight(int fc_weight);
 uint32_t unicode_script_tag(const char *script);
 int unicode_script_exists(const char *script);
-int unicode_script_contains(const char *script, FcChar32 ch);
+int unicode_interval_contains(const char *script, 
+                              uinterval_type_t type, 
+                              FcChar32 ch);
 void unicode_script_sentences(const char *script,
                               int *nsentences,
                               sentence_t **sentences,
@@ -269,11 +287,13 @@ const char *unicode_script_name(int id);
 const char *unicode_block_name(int id);
 double charset_uinterval_coverage(FcCharSet *charset, 
                                   const char *uinterval_name,
-                                  uinterval_type_t uintype);
+                                  uinterval_type_t uintype,
+                                  FcChar32 *ch_success,
+                                  FcChar32 *ui_size);
 int charset_uinterval_statistics(FcCharSet *charset,
-                                 const char *scripts[NUMSCRIPTS],
-                                 double values[NUMSCRIPTS],
-                                 uinterval_type_t uintype);
+                                 uinterval_stat_t scripts[],
+                                 uinterval_type_t uintype,
+                                 uinterval_sort_t sort_type);
 int unicode_script_blocks(const char *script,
                           const char *blocks[SCRIPT_BLOCKS_MAX],
                           int lbounds[SCRIPT_BLOCKS_MAX],
