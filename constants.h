@@ -208,6 +208,8 @@ static const uinterval_map_t block_map_consts[] =
 #define uinterval_name(index, uintype) \
   (uintype == SCRIPT ? script_consts[index].name \
                      : block_map_consts[index].interval_name)
+#define block_lbound(index) block_map_consts[index].l
+#define block_ubound(index) block_map_consts[index].u
 #define NO_LANG     ""
 #define NO_SCRIPT   ""
 

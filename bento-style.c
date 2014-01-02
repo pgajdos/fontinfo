@@ -1530,8 +1530,9 @@ static void content_font_card(FILE *html, config_t config,
               "onclick=\"charset_block_toggle('cellCharset%s', "
               "charset_html['cellCharset%s'])""\">"
               "[<b id=\"cellCharset%sToggle\" style=\"font-family:"
-              " monospace;\">+</b>] %s</a></td></tr>\n",
-              block_ws, block_ws, block_ws, block_stats[v].ui_name);
+              " monospace;\">+</b>] %s (U+%05X - U+%05X)</a></td></tr>\n",
+              block_ws, block_ws, block_ws, block_stats[v].ui_name,
+              block_lbound(v), block_ubound(v));
       fprintf(html,
               "            <tr><td style=\"display:none\""
               " id=\"cellCharset%s\">\n", block_ws);
