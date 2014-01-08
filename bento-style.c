@@ -558,6 +558,7 @@ static void content_families_detailed_index(FILE *html, config_t config,
 
   FcChar32 ucs4_sentence[SENTENCE_NCHARS];
   int dir, random;
+  const char *script;
   const char *lang;
 
   uinterval_stat_t script_stats[NUMSCRIPTS];
@@ -604,6 +605,7 @@ static void content_families_detailed_index(FILE *html, config_t config,
 
     if (config.debug)
       fprintf(stdout, "\nFONT(minispecimen, detailed index): %s\n", family);
+    script = config.minispecimen_script;
     specimen_sentence(config, charset, config.minispecimen_script,
                       &dir, &lang,
                       &random, ucs4_sentence, SENTENCE_NCHARS);
@@ -630,13 +632,15 @@ static void content_families_detailed_index(FILE *html, config_t config,
         specimen_sentence(config, charset, config.minispecimen_script,
                           &dir, &lang,
                           &random, ucs4_sentence, SENTENCE_NCHARS);
+      else
+        script = script_stats[v].ui_name;
     }
 
     fprintf(html, 
             "              <td>\n");
     write_minispecimen(html, fontset->fonts[f], 
                        DETAILIDX_SUBDIR, config, ucs4_sentence, 
-                       config.minispecimen_script, lang, dir % 2, 
+                       script, lang, dir % 2, 
                        "                ", 
                        *generate_png_files, "specimenimgmap",
                        SPECIMEN_WIDTH_MAX, NULL, NULL);
@@ -802,6 +806,7 @@ static void content_family_styles_indexes(FILE *html, config_t config,
 
   FcChar32 ucs4_sentence[SENTENCE_NCHARS];
   int dir, random;
+  const char *script;
   const char *lang;
 
   uinterval_stat_t script_stats[NUMSCRIPTS];
@@ -864,6 +869,7 @@ static void content_family_styles_indexes(FILE *html, config_t config,
     if (config.debug)
       fprintf(stdout, "\nFONT(minispecimen, styles index): %s, %s\n", 
               family, style);
+    script = config.minispecimen_script;
     specimen_sentence(config, charset, config.minispecimen_script,
                       &dir, &lang,
                       &random, ucs4_sentence, SENTENCE_NCHARS);
@@ -890,13 +896,15 @@ static void content_family_styles_indexes(FILE *html, config_t config,
         specimen_sentence(config, charset, config.minispecimen_script,
                           &dir, &lang, 
                           &random, ucs4_sentence, SENTENCE_NCHARS);
+      else
+        script = script_stats[v].ui_name;
     }
 
     fprintf(html, 
             "              <td>\n");
     write_minispecimen(html, styleset->fonts[s],
                        FAMILIES_SUBDIR, config, ucs4_sentence, 
-                       config.minispecimen_script, lang, dir % 2, 
+                       script, lang, dir % 2, 
                        "                ", 1, "specimenimgmap",
                        SPECIMEN_WIDTH_MAX, NULL, NULL);
     fprintf(html, 

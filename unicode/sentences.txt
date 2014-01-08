@@ -278,6 +278,7 @@
 {
   "Telugu", TAG('T','e','l','u'), 2, L2R, (sentence_t [])
   {
+    /* needs opentype, Lohit Telugu, Pothana2000, Vermana2000 looks ok */
     {"నేను గాజు తినగలను మరియు అలా చేసినా నాకు ఏమి ఇబ్బంది లేదు ", "te"},
     /* for Autonym font: "Telugu" */
     {"తెలుగు", "te"},
@@ -920,7 +921,7 @@
 {
   "Brahmi", TAG('B','r','a','h'), 1, L2R, (sentence_t [])
   {
-    /* Tamil-Brahmi*/
+    /* Tamil-Brahmi; needs opentype,  Adinatha Tamil Brahmi ok */
     {"𑀆𑀢𑀺𑀦𑀸𑀢", "oty"},
   }
 },

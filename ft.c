@@ -115,8 +115,7 @@ void ft_bitmap_set_font(bitmap_t *bitmap,
 
   FT_Error error;
 
-  if (use_harfbuzz == 1)
-    use_harfbuzz = 1;
+  //printf("ft_bitmap_set_font(): use_harfbuzz = %d text_direction = %d script = %s lang = %s\n", use_harfbuzz, text_direction, script, lang);
 
   if (bitmap->face)
     FT_Done_Face(bitmap->face);
