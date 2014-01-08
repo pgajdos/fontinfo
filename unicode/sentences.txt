@@ -286,8 +286,10 @@
 },
 
 {
-  "Kannada", TAG('K','n','d','a'), 1, L2R, (sentence_t [])
+  "Kannada", TAG('K','n','d','a'), 2, L2R, (sentence_t [])
   {
+    /* needs opentype, Lohit Kannada looks ok */
+    {"ಬಾ ಇಲ್ಲಿ ಸಂಭವಿಸು ಇಂದೆನ್ನ ಹೃದಯದಲಿ ", "kn"},
     {"ನನಗೆ ಹಾನಿ ಆಗದೆ, ನಾನು ಗಜನ್ನು ತಿನಬಹುದು", "kn"},
   }
 },
