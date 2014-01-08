@@ -297,16 +297,19 @@
 {
   "Malayalam", TAG('M','l','y','m'), 2, L2R, (sentence_t [])
   {
-    {"രുചിയോടെ ഭക്ഷണം ആസ്വദിക്കാന്‍ കഴിയട്ടേ ", "ml"},
+    /* needs opentype, Lohit Malayalam looks ok */
+    {"രുചിയോടെ ഭക്ഷണം ആസ്വദിക്കാന് കഴിയട്ടേ", "ml"},
     {"മലയാളം", "ml"},
   }
 },
 
 {
-  "Sinhala", TAG('S','i','n','h'), 3, L2R, (sentence_t [])
+  "Sinhala", TAG('S','i','n','h'), 4, L2R, (sentence_t [])
   {
+    /* needs opentype, FreeSerif and LKLUG looks ok */
     {"මට වීදුරු කෑමට හැකියි. එයින් මට කිසි හානියක් සිදු නොවේ.", "si"},
     {"ඔබ දැනගන්න ලැබිම සතුටක්", "si"},
+    {"විනොදෙන් කන්න", "si"},
     /* for Autonym font: "Sinhala" */
     {"සිංහල", "si"},
   }
