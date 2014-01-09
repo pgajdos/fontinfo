@@ -47,7 +47,7 @@
 #define OFF             "off"
 
 #define DEFAULT_SPECIMEN_FROM_PX     7
-#define DEFAULT_SPECIMEN_TO_PX       20
+#define DEFAULT_SPECIMEN_TO_PX       25
 #define DEFAULT_USE_HARFBUZZ         1
 #define DEFAULT_SPECIMEN_SCRIPT      "Latin"
 #define DEFAULT_SPECIMEN_LANG        "la"

@@ -72,6 +72,8 @@
  *          http://www.babelstone.co.uk/Test/Tibetan.html
  *          Tamil
  *          http://www.omniglot.com/language/phrases/tamil.php
+ *          Tagbanwa
+ *          http://www.bibingka.com/dahon/living/living.htm
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -417,7 +419,7 @@
   {                                                                     /*??*/
     {"ᛏᚡᛆᛋ ᛒᚱᛁᛚᛚᛁᚵ ᛆᚿᛑ ᛏᚼᛂ ᛋᛚᛁᛏᚼᚤ ᛏᚫᚡᛂᛋ ᛑᛁᛑ ᚵᚤᚱᛂ ᛆᚿᛑ ᚵᛁᛘᛒᛚᛂ ᛁᚿ ᛏᚼᛂ ᚡᛆᛒᛂ", ""},
     {"ᛋᛒᛖ‍ᚱᚫᛞᚻᛏᛇᛒᚳᚪᛁ ᛖ‍ᚱᚻ‍ᚪᛞ‍ᚫᛒᛋ", ""},
-    {"[ᚻ]ᚱᛁᚾᚷᛁᚳᚻ‍ᚪᛏᛏ[ᚫ]", ""},
+    {"[ᚻ]ᚱᛁᚾᚷᛁᚳᚻᚪᛏᛏ[ᚫ]", ""},
   }
 },
 
@@ -547,8 +549,10 @@
 },
 
 {
-  "Tagbanwa", TAG('T','a','g','b'), 1, L2R, (sentence_t [])
+  "Tagbanwa", TAG('T','a','g','b'), 2, L2R, (sentence_t [])
   {
+    /* needs opentype, Tagbanwa family ok */
+    {"ᝠᝧᝦᝲ ᝫᝩᝥᝰᝯ ᝰᝲᝦᝳᝠᝫᝳ ᝫᝰᝳᝮᝳᝤᝲᝧᝳ", "tbw"},
     {"ᝦᝪᝨᝯ", "tbw"},
   }
 },
