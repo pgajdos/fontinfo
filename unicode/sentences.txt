@@ -558,8 +558,11 @@
 },
 
 {
-  "Limbu", TAG('L','i','m','b'), 1, L2R, (sentence_t [])
+  "Limbu", TAG('L','i','m','b'), 2, L2R, (sentence_t [])
   {
+    /* needs opentype,  Namdhinggo SIL looks good, MPH 2B Damase worse,
+       both seems to render wrongly vowel 'i' */
+    {"ᤀᤰᤁᤣᤖᤡᤰᤁᤣ ᤁᤡᤖᤠᤳ ᤕᤠᤰᤌᤢᤱ ᤆᤢᤶᤗᤢᤱ ᤗᤢᤶᤔᤡᤒᤠ ᤐᤠᤛᤡᤱᤐᤠᤍᤠᤱ ᤓᤖᤳᤛᤡᤱ", "lif"},
     {"ᤀᤡᤔᤠᤴᤛᤡᤱ ᤁᤡᤵᤋᤱᤃᤡᤵᤛᤡᤱ ᤏᤠᤛᤢᤵ", "lif"},
   }
 },
