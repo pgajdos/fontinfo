@@ -74,6 +74,8 @@
  *          http://www.omniglot.com/language/phrases/tamil.php
  *          Tagbanwa
  *          http://www.bibingka.com/dahon/living/living.htm
+ *          Tai Le
+ *          omniglot
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -570,6 +572,13 @@
 {
   "Tai_Le", TAG('T','a','l','e'), 1, L2R, (sentence_t [])
   {
+    /* I think opentype is not needed */
+    /* omniglot: "Originally tones were not usually marked in the Dehong 
+       Dai script, and there was no distinction between some vowel sounds. 
+       In 1956 a revised version of the script with tones indicated by 
+       diacritics was officially launched, and in 1988 in another revision 
+       the tone diacritics were replaced by tone letters. */
+    {"ᥘᥬᥰ ᥔᥩᥛᥳᥝᥢᥰᥘᥭᥳ ᥐᥩᥙᥘᥭᥲᥑᥨᥛᥱᥑᥦᥢᥴᥖᥫᥒᥰᥐᥣ", "tdd"},
     {"ᥖᥭᥰᥖᥬᥳᥑᥨᥒᥰ", "tdd"},
   }
 },
