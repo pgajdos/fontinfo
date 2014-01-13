@@ -76,6 +76,12 @@
  *          http://www.bibingka.com/dahon/living/living.htm
  *          Tai Le
  *          omniglot
+ *          Old Turkic
+ *          omniglot
+ *          Meetei Mayek
+ *          omniglot
+ *          Javanese
+ *          http://en.wikipedia.org/wiki/List_of_pangrams#Javanese
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -570,14 +576,15 @@
 },
 
 {
-  "Tai_Le", TAG('T','a','l','e'), 1, L2R, (sentence_t [])
+  "Tai_Le", TAG('T','a','l','e'), 3, L2R, (sentence_t [])
   {
-    /* I think opentype is not needed */
+    /* opentype is not needed */
     /* omniglot: "Originally tones were not usually marked in the Dehong 
        Dai script, and there was no distinction between some vowel sounds. 
        In 1956 a revised version of the script with tones indicated by 
        diacritics was officially launched, and in 1988 in another revision 
        the tone diacritics were replaced by tone letters. */
+    {"ᥘᥬᥰ, ᥔᥩᥛᥳᥝᥢᥰᥘᥭᥳ, ᥐᥩᥙᥘᥭᥲᥑᥨᥛᥱᥑᥦᥢᥴᥖᥫᥒᥰᥐᥣ,", "tdd"},
     {"ᥘᥬᥰ ᥔᥩᥛᥳᥝᥢᥰᥘᥭᥳ ᥐᥩᥙᥘᥭᥲᥑᥨᥛᥱᥑᥦᥢᥴᥖᥫᥒᥰᥐᥣ", "tdd"},
     {"ᥖᥭᥰᥖᥬᥳᥑᥨᥒᥰ", "tdd"},
   }
@@ -862,8 +869,10 @@
 },
 
 {
-  "Lisu", TAG('L','i','s','u'), 1, L2R, (sentence_t [])
+  "Lisu", TAG('L','i','s','u'), 2, L2R, (sentence_t [])
   {
+    /* do not need opentype */
+    {"ꓖꓳ ꓕꓯ ꓟꓵ ꓗꓳꓹ ꓓꓵ ꓓꓵ ꓗꓪ ꓠꓬ ꓥꓳꓽ ꓕꓲ ꓫꓵꓽ_ ꓡꓰ ꓙꓳ ꓢꓲ꓾ ꓐꓯ ꓘꓶ_ ꓟꓲ ꓕꓲ ꓡꓰꓹꓼꓥ ꓡꓳ꓿", "lis"},
     {"ꓡꓲꓢꓴ", "lis"},
   }
 },
@@ -875,8 +884,10 @@
 },
 
 {
-  "Javanese", TAG('J','a','v','a'), 2, L2R, (sentence_t [])
+  "Javanese", TAG('J','a','v','a'), 3, L2R, (sentence_t [])
   {
+    /* needs opentype, Tuladha Jejeg ok */
+    {"꧋ꦱꦧꦼꦤ꧀ꦮꦺꦴꦁꦏꦭꦲꦶꦂꦲꦏꦺꦏꦤ꧀ꦛꦶꦩꦂꦢꦶꦏꦭꦤ꧀ꦢꦂꦧꦺꦩꦂꦠꦧꦠ꧀ꦭꦤ꧀ꦲꦏ꧀ꦲꦏ꧀ꦏꦁꦥꦝ꧉", "jv"},
     {"꧋ ꦲꦤꦕꦫꦏ꧈ ꦢꦠꦱꦮꦭ꧈ ꦥꦝꦗꦪꦚ꧈ ꦩꦒꦧꦛꦔ꧉", "jv"},
     /* for Autonym font: "Javanese language" */
     {"ꦧꦱꦗꦮ", "jv"},
@@ -884,15 +895,18 @@
 },
 
 {
-  "Meetei_Mayek", TAG('M','t','e','i'), 1, L2R, (sentence_t [])
+  "Meetei_Mayek", TAG('M','t','e','i'), 2, L2R, (sentence_t [])
   {
-    {"ꯑꯌꯨꯛꯀꯤꯃꯦꯡꯂꯃꯉꯥꯙꯅ", "mni"},
+    /* needs opentype, Eeyek Unicode ok  */
+    {"ꯑꯌꯨꯛꯀꯤ ꯃꯦꯡꯂ ꯃꯉꯥꯜꯅ ꯃꯥꯂꯦꯝ ꯀꯣꯤꯅ ꯌꯦꯡꯂꯛꯂꯦ꯫", "mni"},
+    {"ꯑꯌꯨꯛꯀꯤꯃꯦꯡꯂꯃꯉꯥꯜꯅ", "mni"},
   }
 },
 
 {
   "Imperial_Aramaic", TAG('A','r','m','i'), 1, R2L, (sentence_t [])
   {
+    /* do not need opentype */
     {"𐡀𐡊𐡀𐡌𐡉𐡕", "arc"}
   }
 },
@@ -900,15 +914,18 @@
 {
   "Old_South_Arabian", TAG('S','a','r','b'), 1, R2L, (sentence_t [])
   {
-                         /*??*/
-    {"𐩱𐩬𐩵𐩸𐩽𐩥𐩫𐩠𐩬𐩸𐩽𐩥𐩱𐩵𐩬𐩸", ""},
+    /* opentype not needed */                     
+    {"𐩱𐩬𐩵𐩸𐩽𐩥𐩫𐩠𐩬𐩸𐩽𐩥𐩱𐩵𐩬𐩸", /*??*/""},
   }
 },
 
 {
-  "Old_Turkic", TAG('O','r','k','h'), 3, R2L, (sentence_t [])
+  "Old_Turkic", TAG('O','r','k','h'), 5, R2L, (sentence_t [])
   {
-    {"𐰜𐰇𐰛 𐱅𐰇𐰼𐰜", "otk"},
+    /* opentype not needed */
+    {"𐱅𐰵𐰼𐰜:𐰆𐰍𐰔:𐰋𐰏𐰠𐰼𐰃:𐰉𐰆𐰑𐰣:𐱁𐰃𐰓𐰤:𐰵𐰔𐰀", "otk"},
+    {"𐱅𐰵𐰼𐰜 𐰆𐰍𐰔 𐰋𐰏𐰠𐰼𐰃 𐰉𐰆𐰑𐰣 𐱁𐰃𐰓𐰤 𐰵𐰔𐰀", "otk"},
+   {"𐰜𐰇𐰛 𐱅𐰇𐰼𐰜", "otk"},
     /* without space */
     {"𐰜𐰇𐰛𐱅𐰇𐰼𐰜", "otk"},
     {"𐰃𐰺𐰴 𐰋𐰃𐱅𐰃𐰏", "otk"},
