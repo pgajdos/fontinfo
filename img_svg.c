@@ -50,6 +50,7 @@ void write_svg_specimen(FILE *html,
   int px, c;
   int svg_width;
   int svg_height;
+  int tmp;
   int wanted_size;
   int bs;
 
@@ -68,9 +69,28 @@ void write_svg_specimen(FILE *html,
                     bs, config.use_harfbuzz, dir, script, lang,
                     maxwidth, config, &svg_width, &svg_height);
 
-  fprintf(html, 
-          "%s<svg width=\"%dpx\" height=\"%dpx\" version = \"1.1\">\n", 
-          html_indent, svg_width, svg_height);
+  fprintf(html, "%s<svg version = \"1.1\" ", html_indent);
+
+  switch (transform)
+  {
+    case TRNS_ROT270:
+      tmp = svg_height;
+      svg_height = svg_width;
+      svg_width = tmp;
+      fprintf(html, "transform = \"translate(%d, 0) rotate(90)\" ", 
+              svg_width);
+      break;
+
+    case TRNS_NONE:
+      break;
+
+    default:
+      assert(1 == 0);
+      break;
+  }
+
+  fprintf(html, "width=\"%dpx\" height=\"%dpx\">\n", 
+          svg_width, svg_height);
 
   /* e. g. 'Arabic Newspaper' reports only size 32 */
   /* that's why we consider specimen entries over */
@@ -196,7 +216,7 @@ void write_svg_charset(FILE *html,
     svg_height = maxheight;
 
   fprintf(html, 
-          "%s<svg width=\"%dpx\" height=\"%dpx\" version = \"1.1\">%s\n", 
+          "%s<svg version = \"1.1\" width=\"%dpx\" height=\"%dpx\">%s\n", 
           html_indent, svg_width, svg_height, line_suffix);
 
   line = 1;
