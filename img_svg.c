@@ -32,67 +32,6 @@
 #define CHARSET_SVG_HDIST   10
 #define CHARSET_LINE_LEN    16
 
-
-#if 0
-static void get_pattern_info(FcPattern *pattern, 
-                      FcChar8 **family,
-                      FcCharSet **charset,
-                      int *slant,
-                      int *weight,
-                      int *width,
-                      FcBool sizes[],
-                      FcChar8 *files[],
-                      config_t config)
-{
-  FcBool scalable;
-  int i, px;
-  double size;
-
-  assert(fcinfo_get_translated_string(pattern, FC_FAMILY, LANG_EN, family)
-         == FcResultMatch);
-  if (charset)
-    assert(FcPatternGetCharSet(pattern, FC_CHARSET, 0, charset)
-           == FcResultMatch);
-  assert(FcPatternGetInteger(pattern, FC_SLANT, 0, slant) 
-         == FcResultMatch);
-  assert(FcPatternGetInteger(pattern, FC_WEIGHT, 0, weight)
-         == FcResultMatch);
-  assert(FcPatternGetInteger(pattern, FC_WIDTH, 0, width)
-         == FcResultMatch);
-
-  assert(FcPatternGetBool(pattern, FC_SCALABLE, 0, &scalable)
-         == FcResultMatch);
-
-  bzero(sizes, sizeof(FcBool)*(SIZES_MAX + 1));
-
-  if (! scalable)
-  {
-    for (i = 0;
-         FcPatternGetDouble(pattern, FC_PIXEL_SIZE, i, &size) == FcResultMatch;
-         i++)
-      if (i <= SIZES_MAX)
-      {
-        sizes[(int)size] = FcTrue;
-        if (files)
-          assert(FcPatternGetString(pattern, FC_FILE, i, &files[(int)size])
-                 == FcResultMatch);
-      }
-  }
-  else
-  {
-    for (px = config.specimen_from_px; px <= config.specimen_to_px; px++)
-    {
-      sizes[px] = FcTrue;
-      if (files)
-        assert(FcPatternGetString(pattern, FC_FILE, 0, &files[px])
-               == FcResultMatch);
-    }
-  }
-
-  return;
-}
-#endif
-
 void write_svg_specimen(FILE *html, 
                         FcPattern *font, 
                         FcBool mini, 

@@ -608,10 +608,9 @@ void ft_rot270(bitmap_t *bitmap)
     }
   }
 
-  /* transpose */
   for (row = 0; row < bitmap->height; row++)
     for (col = 0; col < bitmap->width; col++)
-      bitmap->data[row][col] = data[col][row];
+      bitmap->data[row][bitmap->width-col-1] = data[col][row];
 
   /* bitmap->width is now former bitmap->height */
   for (row = 0; row < bitmap->width; row++)
