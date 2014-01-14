@@ -130,6 +130,7 @@ void write_png_specimen(const char *subdir,
   char mapname[FILEPATH_MAX];
  
   int x, y, crd;
+  int tmp, left, top, right, bottom;
   int px;
   int wanted_size;
   int bs;
@@ -258,20 +259,32 @@ void write_png_specimen(const char *subdir,
     for (px = 1; px <= SIZES_MAX; px++)
       if (sizes[px])
       {
-        if (dir < 2)
+        if (dir < 2) /* horizontal */
+          right = 0, top = crd, left = png_width, bottom = crd + px + SPECIMEN_DIST;
+        else         /* vertical */
+          right = crd, top = 0, left = crd + px + SPECIMEN_DIST, bottom = png_height;
+
+        switch (transform)
         {
-          fprintf(html, 
-                  "%s  <area shape=\"rect\" "
-                  "coords=\"%d,%d,%d,%d\" title=\"%d px\">\n",
-                  html_indent, 0, crd, png_width, crd + px + SPECIMEN_DIST, px);
+          case TRNS_ROT270:
+            tmp = top;
+            top = left;
+            left = png_height - bottom;
+            bottom = right;
+            right = png_height - tmp;
+            break;
+ 
+          case TRNS_NONE:
+            break;
+
+          default:
+            assert(1 == 0);
         }
-        else
-        {
-          fprintf(html, 
-                  "%s  <area shape=\"rect\" "
-                  "coords=\"%d,%d,%d,%d\" title=\"%d px\">\n",
-                  html_indent, crd, 0, crd + px + SPECIMEN_DIST, png_height, px);
-        }
+
+        fprintf(html, 
+                "%s  <area shape=\"rect\" "
+                "coords=\"%d,%d,%d,%d\" title=\"%d px\">\n",
+                html_indent, left, top, right, bottom, px);
         crd += px + SPECIMEN_DIST;
       }
     fprintf(html, "%s</map>\n", html_indent);
