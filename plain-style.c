@@ -311,7 +311,7 @@ static void content_families_detailed_index(FILE *html, config_t config,
       fprintf(stdout, "\nFONT(minispecimen): %s\n", family);
     script = config.minispecimen_script;
     specimen_sentence(config, charset, config.minispecimen_script, 
-                      &dir, &lang, 
+                      &dir, NULL, &lang,
                       &random, ucs4_sentence, SENTENCE_NCHARS);
     if (random)
     {
@@ -324,7 +324,7 @@ static void content_families_detailed_index(FILE *html, config_t config,
         if (config.debug)
           fprintf(stdout, "trying %s script: ", script_stats[v].ui_name);
         specimen_sentence(config, charset, script_stats[v].ui_name,
-                          &dir, &lang, 
+                          &dir, NULL, &lang,
                           &random, ucs4_sentence, SENTENCE_NCHARS);
         if (! random)
           break;
@@ -333,7 +333,7 @@ static void content_families_detailed_index(FILE *html, config_t config,
       /* no sentence which would fit found, use random characters instead */
       if (v == nscripts)
         specimen_sentence(config, charset, config.minispecimen_script,
-                          &dir, &lang, &random, 
+                          &dir, NULL, &lang, &random,
                           ucs4_sentence, SENTENCE_NCHARS);
       else
         script = script_stats[v].ui_name;
@@ -489,7 +489,7 @@ static void content_family_styles_indexes(FILE *html, config_t config,
       fprintf(stdout, "\nFONT(minispecimen): %s, %s\n", family, style);
     script = config.minispecimen_script;
     specimen_sentence(config, charset, config.minispecimen_script,
-                      &dir, &lang, &random,
+                      &dir, NULL, &lang, &random, 
                       ucs4_sentence, SENTENCE_NCHARS);
  
     if (random)
@@ -503,7 +503,7 @@ static void content_family_styles_indexes(FILE *html, config_t config,
         if (config.debug)
           fprintf(stdout, "trying %s script: ", script_stats[v].ui_name);
         specimen_sentence(config, charset, script_stats[v].ui_name,
-                          &dir, &lang,
+                          &dir, NULL, &lang,
                           &random, ucs4_sentence, SENTENCE_NCHARS);
         if (! random)
           break;
@@ -512,7 +512,7 @@ static void content_family_styles_indexes(FILE *html, config_t config,
       /* no sentence which would fit found, use random characters instead */
       if (v == nscripts)
         specimen_sentence(config, charset, config.minispecimen_script,
-                          &dir, &lang, 
+                          &dir, NULL, &lang, 
                           &random, ucs4_sentence, SENTENCE_NCHARS);
       else
         script = script_stats[v].ui_name;
@@ -599,6 +599,7 @@ static void content_font_card(FILE *html, config_t config, void *output_arg[])
   FcChar32 ucs4_sentence[SENTENCE_NCHARS];
   int dir, random;
   const char *language;
+  img_transform_t transform;
 
   package_info_t pi;
   int r;
@@ -758,12 +759,12 @@ static void content_font_card(FILE *html, config_t config, void *output_arg[])
     }
     /* random flag not used here so far, but for minispecimens */
     specimen_sentence(config, charset, script_stats[v].ui_name,
-                      &dir, &language,
+                      &dir, &transform, &language,
                       &random, ucs4_sentence, SENTENCE_NCHARS);
 
     write_specimen(html, pattern, FONTS_SUBDIR, 
                    config, ucs4_sentence, 
-                   script_stats[v].ui_name, language, dir, 
+                   script_stats[v].ui_name, language, dir, transform,
                    "    ", "specimenimgmap", 
                    SPECIMEN_WIDTH_MAX, NULL, NULL);
   }

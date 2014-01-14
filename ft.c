@@ -66,7 +66,7 @@ void ft_initialize_bitmap(bitmap_t *bitmap, int height, int width)
   bitmap->data = (unsigned char **)malloc(height*sizeof(unsigned char *));
   if (! bitmap->data)
   {
-    fprintf(stderr, "ft_allocate_data(): no free memory\n");
+    fprintf(stderr, "ft_initialize_bitmap(): no free memory\n");
     exit(1);
   }
 
@@ -577,4 +577,47 @@ void ft_fill_region(bitmap_t *bitmap, int left, int top,
       bitmap->data[j][i] = gray;
 }
 
+void ft_rot270(bitmap_t *bitmap)
+{
+  int tmp;
+  int row, col;
+  unsigned char **data;
+
+  data = bitmap->data;
+
+  tmp = bitmap->height;
+  bitmap->height = bitmap->width;
+  bitmap->width = tmp;
+
+  bitmap->data 
+    = (unsigned char **)malloc(bitmap->height*sizeof(unsigned char *));
+  if (! bitmap->data)
+  {
+    fprintf(stderr, "ft_bitmap_transform(): no free memory\n");
+    exit(1);
+  }
+
+  for (row = 0; row < bitmap->height; row++)
+  {
+    bitmap->data[row]
+      = (unsigned char *)malloc(bitmap->width*sizeof(unsigned char));
+    if (! bitmap->data[row])
+    {
+      fprintf(stderr, "ft_bitmap_transform(): no free memory\n");
+      exit(1);
+    }
+  }
+
+  /* transpose */
+  for (row = 0; row < bitmap->height; row++)
+    for (col = 0; col < bitmap->width; col++)
+      bitmap->data[row][col] = data[col][row];
+
+  /* bitmap->width is now former bitmap->height */
+  for (row = 0; row < bitmap->width; row++)
+    free(data[row]);
+  free(data);
+
+  return;
+}
 

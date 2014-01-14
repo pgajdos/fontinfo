@@ -36,11 +36,12 @@ void write_specimen(FILE *html,
                     const char *script,
                     const char *lang,
                     int dir, 
+                    img_transform_t transform,
                     const char *html_indent, 
                     const char *mapname_prefix,
                     int maxwidth,
-                    int *width,
-                    int *height);
+                    int *res_width,
+                    int *res_height);
 
 void write_minispecimen(FILE *html, 
                         FcPattern *font,
@@ -54,8 +55,8 @@ void write_minispecimen(FILE *html,
                         int create_png, 
                         const char *mapname_prefix,
                         int maxwidth,
-                        int *width,
-                        int *height);
+                        int *res_width,
+                        int *res_height);
 
 void write_charset(FILE *html, 
                    FcPattern *font,

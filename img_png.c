@@ -183,12 +183,13 @@ void write_png_specimen(const char *subdir,
                         const char *script, 
                         const char *lang,
                         int dir, 
+                        img_transform_t transform,
                         const char *html_indent, 
                         int create_png, 
                         const char *mapname_prefix, 
                         int maxwidth,
-                        int *ret_width,
-                        int *ret_height)
+                        int *res_width,
+                        int *res_height)
 {
   char dirname_img[FILEPATH_MAX];
   char png_name[FILEPATH_MAX];
@@ -288,6 +289,18 @@ void write_png_specimen(const char *subdir,
       }
     }
 
+    switch (transform)
+    {
+      case TRNS_ROT270:
+        ft_rot270(&bitmap);
+        break;
+      case TRNS_NONE:
+        break;
+      default:
+        assert(1 == 0);
+        break;
+    }
+
     snprintf(dirname_img, FILEPATH_MAX, "%s/%s/%s", 
              config.dir, subdir, IMG_SUBDIR);
     create_dir(dirname_img);
@@ -341,10 +354,10 @@ void write_png_specimen(const char *subdir,
     fprintf(html, " usemap=\"#%s%s\"", mapname_prefix, mapname);
   fprintf(html, "/>\n");
   
-  if (ret_width)
-    *ret_width = png_width;
-  if (ret_height)
-    *ret_height = png_height;
+  if (res_width)
+    *res_width = png_width;
+  if (res_height)
+    *res_height = png_height;
   return;
 }
 

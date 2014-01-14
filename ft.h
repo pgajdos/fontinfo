@@ -171,5 +171,5 @@ void ft_free_info(face_info_t *info);
 
 void ft_fill_region(bitmap_t *bitmap, int left, int top, 
                     int right, int bottom, unsigned char gray);
-
+void ft_rot270(bitmap_t *bitmap);
 #endif

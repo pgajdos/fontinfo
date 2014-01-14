@@ -32,11 +32,12 @@ void write_specimen(FILE *html,
                     const char *script, 
                     const char *lang,
                     int dir, 
+                    img_transform_t transform,
                     const char *html_indent, 
                     const char *mapname_prefix,
                     int maxwidth,
-                    int *width,
-                    int *height)
+                    int *res_width,
+                    int *res_height)
 {
   switch (config.specimen_type)
   {
@@ -44,14 +45,14 @@ void write_specimen(FILE *html,
           /* dir needed also in svg, see 
              http://www.w3.org/International/tutorials/svg-tiny-bidi/ */
           write_svg_specimen(html, font, FcFalse, config, 
-                             sentence, script, lang, dir, 
-                             html_indent, maxwidth, width, height);
+                             sentence, script, lang, dir, transform, 
+                             html_indent, maxwidth, res_width, res_height);
       break;
     case PNG:
           write_png_specimen(png_subdir, html, font, FcFalse, 
-                             config, sentence, script, lang, dir, 
+                             config, sentence, script, lang, dir, transform,
                              html_indent, 1, mapname_prefix, maxwidth,
-                             width, height);
+                             res_width, res_height);
       break;
     default:
       break;
@@ -72,21 +73,21 @@ void write_minispecimen(FILE *html,
                         int create_png, 
                         const char *mapname_prefix,
                         int maxwidth,
-                        int *width,
-                        int *height)
+                        int *res_width,
+                        int *res_height)
 {
   switch (config.specimen_type)
   {
     case SVG:
           write_svg_specimen(html, font, FcTrue, config, 
-                             sentence, script, lang, dir, 
-                             html_indent, maxwidth, width, height);
+                             sentence, script, lang, dir, TRNS_NONE,
+                             html_indent, maxwidth, res_width, res_height);
       break;
     case PNG:
           write_png_specimen(png_subdir, html, font, FcTrue, 
-                             config, sentence, script, lang, dir, 
+                             config, sentence, script, lang, dir, TRNS_NONE,
                              html_indent, create_png, mapname_prefix, 
-                             maxwidth, width, height);
+                             maxwidth, res_width, res_height);
       break;
     default:
       break;

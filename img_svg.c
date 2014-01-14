@@ -101,10 +101,11 @@ void write_svg_specimen(FILE *html,
                         const char *script,
                         const char *lang,
                         int dir, 
+                        img_transform_t transform,
                         const char *html_indent,
                         int maxwidth,
-                        int *ret_width,
-                        int *ret_height)
+                        int *res_width,
+                        int *res_height)
 {
   int x, y;
   int px, c;
@@ -207,10 +208,10 @@ void write_svg_specimen(FILE *html,
   }
   fprintf(html, "%s</svg>\n", html_indent);
 
-  if (ret_width)
-    *ret_width = svg_width;
-  if (ret_height)
-    *ret_height = svg_height;
+  if (res_width)
+    *res_width = svg_width;
+  if (res_height)
+    *res_height = svg_height;
   return;
 }
 

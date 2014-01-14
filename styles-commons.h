@@ -89,7 +89,7 @@ void timestamp(char *dest, ts_output_t o);
            2 random chars from whole font */ 
 int specimen_sentence(config_t config, FcCharSet *charset, 
                       const char *wanted_script, int *dir, 
-                      const char **lang, 
+                      img_transform_t *transform, const char **lang, 
                       int *random, FcChar32 *ucs4str, int maxlen);
 
 void underscores_to_spaces(char *str);

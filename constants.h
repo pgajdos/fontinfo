@@ -226,12 +226,19 @@ typedef struct
 
 #define TAG(c1,c2,c3,c4) ((uint32_t)((((uint8_t)(c1))<<24)|(((uint8_t)(c2))<<16)|(((uint8_t)(c3))<<8)|((uint8_t)(c4))))
 
+typedef enum
+{
+  TRNS_NONE,
+  TRNS_ROT270
+} img_transform_t;
+
 typedef struct
 {
   const char *script;
   uint32_t tag;
   int nsentences;
   int dir;
+  img_transform_t transform;
   sentence_t *sentences;
 } script_data_t;
 
@@ -284,7 +291,8 @@ int unicode_interval_contains(const char *script,
 void unicode_script_sentences(const char *script,
                               int *nsentences,
                               sentence_t **sentences,
-                              int *dir);
+                              int *dir,
+                              img_transform_t *transform);
 const char *unicode_script_name(int id);
 const char *unicode_block_name(int id);
 double charset_uinterval_coverage(FcCharSet *charset, 

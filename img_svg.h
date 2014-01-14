@@ -37,10 +37,11 @@ void write_svg_specimen(FILE *html,
                         const char *script,
                         const char *lang,
                         int dir, 
+                        img_transform_t transform,
                         const char *html_indent,
                         int maxwidth,
-                        int *width,
-                        int *height);
+                        int *res_width,
+                        int *res_height);
 void write_svg_charset(FILE *html, 
                        FcPattern *font, 
                        const char *uinterval,

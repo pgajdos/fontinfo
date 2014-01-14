@@ -143,7 +143,8 @@ int unicode_interval_contains(const char *uinterval_name,
 void unicode_script_sentences(const char *script,
                               int *nsentences,
                               sentence_t **sentences,
-                              int *dir)
+                              int *dir,
+                              img_transform_t *transform)
 {
   int sd;
   *sentences = NULL;
@@ -154,6 +155,8 @@ void unicode_script_sentences(const char *script,
       *nsentences = script_data_consts[sd].nsentences;
       *sentences = script_data_consts[sd].sentences;
       *dir = script_data_consts[sd].dir;
+      if (transform)
+        *transform = script_data_consts[sd].transform;
       break;
     }
 
