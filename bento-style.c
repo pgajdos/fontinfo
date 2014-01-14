@@ -1541,7 +1541,8 @@ static void content_font_card(FILE *html, config_t config,
               "[<b id=\"cellCharset%sToggle\" style=\"font-family:"
               " monospace;\">+</b>] %s (U+%05X - U+%05X)</a></td></tr>\n",
               block_ws, block_ws, block_ws, block_stats[v].ui_name,
-              block_lbound(v), block_ubound(v));
+              block_lbound(block_stats[v].ui_name), 
+              block_ubound(block_stats[v].ui_name));
       fprintf(html,
               "            <tr><td style=\"display:none\""
               " id=\"cellCharset%s\">\n", block_ws);

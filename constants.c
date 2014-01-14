@@ -313,4 +313,25 @@ int unicode_script_blocks(const char *script,
   return nblocks;
 }
 
+int block_bound(const char *block_name, int upper_bound)
+{
+  int b;
+  for (b = 0; b < NUMBLOCKS; b++)
+  {
+    if (strcmp(block_map_consts[b].interval_name, block_name) == 0)
+      return upper_bound ? block_map_consts[b].u : block_map_consts[b].l;
+  }
 
+  assert(1 == 0);
+  return 0;
+}
+
+int block_ubound(const char *block_name)
+{
+  return block_bound(block_name, 1);
+}
+
+int block_lbound(const char *block_name)
+{
+  return block_bound(block_name, 0);
+}

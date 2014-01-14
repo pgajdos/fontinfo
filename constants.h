@@ -208,8 +208,6 @@ static const uinterval_map_t block_map_consts[] =
 #define uinterval_name(index, uintype) \
   (uintype == SCRIPT ? script_consts[index].name \
                      : block_map_consts[index].interval_name)
-#define block_lbound(index) block_map_consts[index].l
-#define block_ubound(index) block_map_consts[index].u
 #define NO_LANG     ""
 #define NO_SCRIPT   ""
 
@@ -308,5 +306,9 @@ int unicode_script_blocks(const char *script,
                           const char *blocks[SCRIPT_BLOCKS_MAX],
                           int lbounds[SCRIPT_BLOCKS_MAX],
                           int ubounds[SCRIPT_BLOCKS_MAX]);
+/* following two have not sense for scripts as they 
+   are not neccesarily compact */
+int block_ubound(const char *block_name);
+int block_lbound(const char *block_name);
 int script_is_collection(const char *script_name);
 #endif

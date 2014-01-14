@@ -455,7 +455,7 @@ FcChar32 fcinfo_chars(FcCharSet *charset, FcChar32 **chars,
   FcChar32 map[FC_CHARSET_MAP_SIZE];
   FcChar32 next;
 
-  int i, j;
+  int i, j, left, right;
   int nlines;
 
   nlines = 0;
@@ -501,28 +501,34 @@ FcChar32 fcinfo_chars(FcCharSet *charset, FcChar32 **chars,
     for (i = (ucs4 == 0 ? 1 : 0); 
          i < FC_CHARSET_MAP_SIZE; 
          ucs4 == 0 && i == 3 ? i = 5 : i++)
-      if (map[i] && 
-          (!uinterval || 
-           unicode_interval_contains(uinterval, uintype, ucs4 + 32*i) ||
-           unicode_interval_contains(uinterval, uintype, ucs4 + 32*i + 0x10)))
+    {
+      if (map[i])
       {
-         for (j = 0; j < 32; j++)
-         {
-           if (map[i] & (1 << j))
-           {
-             FcChar32 ch = ucs4 + 32*i + j;
+        left = 0;
+        right = 32;
+        if (uinterval && !unicode_interval_contains(uinterval, uintype, ucs4 + 32*i))
+          left = 16;
+        if (uinterval && !unicode_interval_contains(uinterval, uintype, ucs4 + 32*i + 16))
+          right = 16;
 
-             if (grid == FcTrue || !FcBlanksIsMember(blanks, ch))
-               (*chars)[n++] = ch;
+        for (j = left; j < right; j++)
+        {
+          if (map[i] & (1 << j))
+          {
+            FcChar32 ch = ucs4 + 32*i + j;
+
+            if (grid == FcTrue || !FcBlanksIsMember(blanks, ch))
+              (*chars)[n++] = ch;
              
-           }
-           else if (grid == FcTrue)
-             (*chars)[n++] = NO_CHAR;
+          }
+          else if (grid == FcTrue)
+            (*chars)[n++] = NO_CHAR;
 
-           if (n == nchars)
-             return n;
-         }
+          if (n == nchars)
+            return n;
+        }
       }
+    }
   }
 
   return n;
