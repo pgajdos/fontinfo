@@ -1,4 +1,14 @@
 -------------------------------------------------------------------
+Wed Jan 15 09:54:51 UTC 2014 - pgajdos@suse.com
+
+- Version 20140115
+  * add or fix some specimen strings
+  * alow rotation of specimen images (needed for Phags Pa and
+    Mongolian)
+  * charset toggle links has now block interval ranges
+  * minor fixes
+
+-------------------------------------------------------------------
 Fri Dec 20 14:22:18 UTC 2013 - pgajdos@suse.com
 
 Version 20131220
