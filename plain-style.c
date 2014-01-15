@@ -920,8 +920,10 @@ static void content_font_card(FILE *html, config_t config, void *output_arg[])
     fprintf(html, "          <table>\n");
     for (v = 0; v < nblocks; v++)
     {
-      fprintf(html, "            <tr><td>%s</td></tr>\n",
-              block_stats[v].ui_name);
+      fprintf(html, "            <tr><td>%s (U+%05X - U+%05X)</td></tr>\n",
+              block_stats[v].ui_name,  
+              block_lbound(block_stats[v].ui_name),
+              block_ubound(block_stats[v].ui_name));
       fprintf(html, "            <tr><td>\n");
       write_charset(html,
                     pattern,
