@@ -247,6 +247,10 @@ void write_png_specimen(const char *subdir,
     ft_free_bitmap(&bitmap);
   }
 
+  snprintf(png_link, FILEPATH_MAX, "%s/%s%s.%s.s.png", 
+           IMG_SUBDIR, family, style, script ? script : NO_SCRIPT);
+  remove_spaces_and_slashes(&png_link[strlen(IMG_SUBDIR)+1]);
+
   /* link png to html */
   if (config.generate_stooltips)
   {
@@ -260,9 +264,19 @@ void write_png_specimen(const char *subdir,
       if (sizes[px])
       {
         if (dir < 2) /* horizontal */
-          right = 0, top = crd, left = png_width, bottom = crd + px + SPECIMEN_DIST;
+        {
+          left = 0; 
+          top = crd;
+          right = png_width;
+          bottom = crd + px + SPECIMEN_DIST;
+        } 
         else         /* vertical */
-          right = crd, top = 0, left = crd + px + SPECIMEN_DIST, bottom = png_height;
+        {
+          left = crd;
+          top = 0;
+          right = crd + px + SPECIMEN_DIST;
+          bottom = png_height;
+        }
 
         switch (transform)
         {
@@ -283,22 +297,20 @@ void write_png_specimen(const char *subdir,
 
         fprintf(html, 
                 "%s  <area shape=\"rect\" "
-                "coords=\"%d,%d,%d,%d\" title=\"%d px\">\n",
-                html_indent, left, top, right, bottom, px);
+                "coords=\"%d,%d,%d,%d\" title=\"%d px\" href=\"%s\">\n",
+                html_indent, left, top, right, bottom, px, png_link);
         crd += px + SPECIMEN_DIST;
       }
     fprintf(html, "%s</map>\n", html_indent);
   }
 
-  snprintf(png_link, FILEPATH_MAX, "%s/%s%s.%s.s.png", 
-           IMG_SUBDIR, family, style, script ? script : NO_SCRIPT);
-  remove_spaces_and_slashes(&png_link[strlen(IMG_SUBDIR)+1]);
   fprintf(html, 
           "%s<img src=\"%s\" alt=\"Specimen for %s %s (%s script).\"",
-          html_indent, png_link, family, style, script ? script : NO_SCRIPT);
+          html_indent, png_link, 
+          family, style, script ? script : NO_SCRIPT);
   if (config.generate_stooltips)
     fprintf(html, " usemap=\"#%s%s\"", mapname_prefix, mapname);
-  fprintf(html, "/>\n");
+  fprintf(html, "/></a>\n");
   
   if (res_width)
     *res_width = png_width;

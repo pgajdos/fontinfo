@@ -1306,7 +1306,7 @@ static void content_font_card(FILE *html, config_t config,
     if (pi.url[0])
       fprintf(html, 
               "            <tr><td><b>Url:</b></td>"
-              "<td><a href=\"%s\">%s</td></tr>\n",
+              "<td><a href=\"%s\">%s</a></td></tr>\n",
               pi.url, pi.url);
     if (pi.license[0])
       fprintf(html, 
