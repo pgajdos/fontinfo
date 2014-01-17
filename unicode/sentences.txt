@@ -82,6 +82,10 @@
  *          omniglot
  *          Javanese
  *          http://en.wikipedia.org/wiki/List_of_pangrams#Javanese
+ *          Avestan
+ *          omniglot (second image)
+ *          Tai Viet
+ *          omniglot
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -841,8 +845,10 @@
 },
 
 {
-  "Tai_Viet", TAG('T','a','v','t'), 1, L2R, TRNS_NONE, (sentence_t [])
+  "Tai_Viet", TAG('T','a','v','t'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* seems do need opentype, Tai Heritage Pro ok */
+    {"ꪋ꫁ꪫꪸꪙ ꪭ꫁ꪮ ꪶꪭ꪿ꪉ ꪛ꪿ꪱꪉ", "blt"},
     {"ꪀꪁꪂꪃꪄꪅꪆꪇꪈꪉ", "blt"},
   }
 },
@@ -850,6 +856,7 @@
 {
   "Avestan", TAG('A','v','s','t'), 1, R2L, TRNS_NONE, (sentence_t [])
   {
+    /* seems do not need opentype */
     {"𐬀𐬙 𐬟𐬭𐬀𐬎𐬎𐬀𐬑𐬴𐬌𐬌𐬁 𐬥𐬏 𐬔𐬏𐬴𐬋𐬛𐬏𐬨 𐬥𐬏 𐬯𐬭𐬀𐬊𐬝𐬁", "ae"},
   }
 },
