@@ -615,7 +615,7 @@ static void content_families_detailed_index(FILE *html, config_t config,
       /* font doesn't cover any sentence from config.minispecimen_script */
       /* try another script inside font */
       nscripts = charset_uinterval_statistics(charset, script_stats, 
-                                              SCRIPT, UI_SORT_ABSOLUTE);
+                                              SCRIPT, UI_SORT_PERCENT);
       for (v = 0; v < nscripts; v++)
       {
         if (config.debug)
@@ -879,7 +879,7 @@ static void content_family_styles_indexes(FILE *html, config_t config,
       /* font doesn't cover any sentence from config.minispecimen_script */
       /* try another script inside font */
       nscripts = charset_uinterval_statistics(charset, script_stats, 
-                                              SCRIPT, UI_SORT_ABSOLUTE);
+                                              SCRIPT, UI_SORT_PERCENT);
       for (v = 0; v < nscripts; v++)
       {
         if (config.debug)
@@ -1009,7 +1009,7 @@ static void content_font_card(FILE *html, config_t config,
 
   uinterval_stat_t script_stats[NUMSCRIPTS];
   uinterval_stat_t block_stats[NUMBLOCKS];
-  int nscripts, nsignificantscripts, v;
+  int nscripts, nsignificantscripts, v, v1;
   int nblocks;
   char script_wu[SCRIPT_NAME_LEN_MAX];
   char block_ws[BLOCK_NAME_LEN_MAX];
@@ -1061,7 +1061,7 @@ static void content_font_card(FILE *html, config_t config,
   file_from_package((char *)file, &pi);
 
   nscripts = charset_uinterval_statistics(charset, script_stats, 
-                                          SCRIPT, UI_SORT_ABSOLUTE);
+                                          SCRIPT, UI_SORT_PERCENT);
   nblocks = charset_uinterval_statistics(charset, block_stats, 
                                          BLOCK, UI_SORT_NONE);
 
@@ -1147,6 +1147,15 @@ static void content_font_card(FILE *html, config_t config,
     v++;
   }
   nsignificantscripts = v;
+
+  if (config.debug)
+  { 
+    fprintf(stdout, "scripts leaving aside: [");
+    for (v1 = v; v1 < nscripts; v1++)
+      fprintf(stdout, "%s (%.1f%%) ", 
+              script_stats[v1].ui_name, script_stats[v1].coverage);
+    fprintf(stdout, "]\n");
+  }   
 
   if (nsignificantscripts == 0)
     fprintf(html,

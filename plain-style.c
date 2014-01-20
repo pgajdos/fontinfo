@@ -318,7 +318,7 @@ static void content_families_detailed_index(FILE *html, config_t config,
       /* font doesn't cover any sentence from config.minispecimen_script */
       /* try another script inside font */ 
       nscripts = charset_uinterval_statistics(charset, script_stats, 
-                                              SCRIPT, UI_SORT_ABSOLUTE);
+                                              SCRIPT, UI_SORT_PERCENT);
       for (v = 0; v < nscripts; v++)
       {
         if (config.debug)
@@ -497,7 +497,7 @@ static void content_family_styles_indexes(FILE *html, config_t config,
       /* font doesn't cover any sentence from config.minispecimen_script */
       /* try another script inside font */
       nscripts = charset_uinterval_statistics(charset, script_stats, 
-                                              SCRIPT, UI_SORT_ABSOLUTE);
+                                              SCRIPT, UI_SORT_PERCENT);
       for (v = 0; v < nscripts; v++)
       {
         if (config.debug)
@@ -656,7 +656,7 @@ static void content_font_card(FILE *html, config_t config, void *output_arg[])
   file_from_package((char *)file, &pi);
 
   nscripts = charset_uinterval_statistics(charset, script_stats, 
-                                          SCRIPT, UI_SORT_ABSOLUTE);
+                                          SCRIPT, UI_SORT_PERCENT);
   nblocks = charset_uinterval_statistics(charset, block_stats,
                                          BLOCK, UI_SORT_NONE);
 
