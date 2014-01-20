@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Jan 20 10:31:49 UTC 2014 - pgajdos@suse.com
+
+Version 20140120
+  * use relative sorting for scripts again as absolute seem to
+    have more cons than pros
+
+-------------------------------------------------------------------
 Wed Jan 15 09:54:51 UTC 2014 - pgajdos@suse.com
 
 - Version 20140115
