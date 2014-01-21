@@ -86,6 +86,18 @@
  *          omniglot (second image)
  *          Tai Viet
  *          omniglot
+ *          Tai Tham
+ *          http://www.geocities.jp/simsheart_alif/taithamunicode.html
+ *          Lydian
+ *          omniglot
+ *          wikipedia (http://en.wikipedia.org/wiki/Lydian_language)
+ *          Lycian
+ *          omniglot
+ *          Kayah Li
+ *          http://www.ktimes.org/karenni/index.php/feature/46-2013-06-11-09-05-48
+ *          Saurashtra
+ *          Final revised proposal to encode the Saurashtra script in the UCS
+ *          http://std.dkuug.dk/jtc1/sc2/wg2/docs/n2969.pdf
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -782,8 +794,10 @@
 },
 
 {
-  "Saurashtra", TAG('S','a','u','r'), 2, L2R, TRNS_NONE, (sentence_t [])
+  "Saurashtra", TAG('S','a','u','r'), 3, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* needs opentype,  Pagul ok */
+    {"ꢯ꣄ꢬꢿꢰ꣄ꢝ ꢱꣃꢬꢵꢰ꣄ꢜ꣄ꢬ ꢱꢵꢲꢶꢡ꣄ꢦ ꢱꢩꢵ ꢪꢘꢸꢬꣁ ꣎", "saz"},
     {"ꢱꣃꢬꢵꢰ꣄ꢜ꣄ꢬꢵ", "saz"},
     /* the string above doesn't fit Autonym font for some reason,
        following was taken from autonym.txt of Autonym Font project  */
@@ -792,9 +806,11 @@
 },
 
 {
-  "Kayah_Li", TAG('K','a','l','i'), 1, L2R, TRNS_NONE, (sentence_t [])
+  "Kayah_Li", TAG('K','a','l','i'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
     /* omniglot: ".. people who speak it are also known as Western Kayah, .. " */
+    /* needs opentype, Noto Sans Kayah Li and Free Mono Regular looks ok */
+    {"ꤊꤢ꤬ꤛꤢ꤭ꤜꤟꤤ꤬ ꤖꤢꤨ ꤜꤟꤢꤩꤊꤜꤥ꤭ ꤙꤛꤢ ꤕꤟꤢꤪ꤬ꤟꤢꤩ꤬ ꤔꤢ ꤒꤢ꤬ꤋꤢꤨ꤬ ꤒꤟꤢꤧ꤬ꤗꤟꤢꤩ꤬ ꤞꤤꤖꤢꤧ", "kyu"},
     {"ꤏꤢꤧ꤬ꤢꤩ꤬ꤏꤢꤧ꤬ꤥ꤭", "kyu"},
   }
 },
@@ -806,15 +822,19 @@
 },
 
 {
-  "Lycian", TAG('L','y','c','i'), 1, L2R, TRNS_NONE, (sentence_t [])
+  "Lycian", TAG('L','y','c','i'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
-    {"𐊁𐊂𐊚𐊑𐊏𐊚", "xlc"},
+    /* do not need opentype, Noto Sans Lycian and Aegean looks ok  */
+    {"𐊁𐊂𐊚𐊑𐊏𐊚:𐊓𐊕𐊑𐊏𐊀𐊇𐊒:𐊎𐊚𐊏:𐊁𐊓𐊕𐊑𐊏𐊀𐊇𐊀𐊗𐊚:𐊛𐊀𐊏𐊀𐊅𐊀𐊈𐊀:𐊛𐊕𐊓:𐊓𐊆𐊍𐊀𐊅𐊆:𐊁𐊛𐊂𐊆:𐊖𐊁𐊗𐊆𐊅𐊁𐊆𐊎𐊁", "xlc"},
+    {"𐊁𐊂𐊚𐊑𐊏𐊚 𐊓𐊕𐊑𐊏𐊀𐊇𐊒 𐊎𐊚𐊏 𐊁𐊓𐊕𐊑𐊏𐊀𐊇𐊀𐊗𐊚 𐊛𐊀𐊏𐊀𐊅𐊀𐊈𐊀 𐊛𐊕𐊓 𐊓𐊆𐊍𐊀𐊅𐊆 𐊁𐊛𐊂𐊆 𐊖𐊁𐊗𐊆𐊅𐊁𐊆𐊎𐊁", "xlc"},
   }
 },
 
 {
   "Carian", TAG('C','a','r','i'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* do not need opentype, Noto Sans Carian looks good,
+       Aegean seems to flip some chars left-to-right */
     {"𐊠𐊥𐊣𐊹𐊮𐊸 𐊲𐊥𐊰𐊴𐊣𐊺𐊸 𐊽𐊹𐊾𐊩𐊰𐊹𐊸", "xcr"},
   }
 },
@@ -822,6 +842,8 @@
 {
   "Lydian", TAG('L','y','d','i'), 1, R2L, TRNS_NONE, (sentence_t [])
   {
+    /* do not need opentype Noto Sans Lydian and Aegean looks good */
+    {"𐤭𐤠𐤷 𐤦𐤳𐤩𐤷 𐤡𐤠𐤨𐤦𐤩𐤩𐤷 𐤤𐤳𐤯 𐤪𐤭𐤰𐤣 𐤤𐤮𐤮𐤨", "xld"},
     /* month house wall*/
     {"𐤬𐤭𐤠𐤿𐤠𐤭𐤦𐤡𐤿𐤩𐤠𐤲𐤭𐤦𐤳𐤠", "xld"},
   }
@@ -830,17 +852,19 @@
 {
   "Cham", TAG('C','h','a','m'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
-     /*cjm or cja?*//*??*/
+    /* haven't found opensource unicode font */
+                /*cjm or cja?*/
     {"ꨀꨁꨂꨃꨄꨅꨆꨇꨉ", ""},
   }
 },
 
 {
   "Tai_Tham", TAG('L','a','n','a'), 2, L2R, TRNS_NONE, (sentence_t [])
-  {
+  {  
+    /* needs opentype, Noto Sans Tai Tham has some problems (see bottom of source) */
+                                                /*??*/
+    {"ᨽᩣᩇᩣᨣᩴᩤᨾᩮᩥᩬᨦᨸᩮ᩶ᩢ᩠ᨶᨽᩣᩇᩣᨴᩦ᩵ᨩᩣ᩠ᩅᩃ᩶ᩣ᩠ᨶᨶᩣᩋᩪ᩶ᨠᩢ᩠ᨶ", "tai"},
     {"ᨲ᩠ᩅᩫᨾᩮᩬᨦ", "nod"},
-                    /*??*/
-    {"ᨯᩣ᩠ᩅᨶ᩺ᩉᩖᩰᨯᨼᩬᩁ᩠ᨲ᩺ᨲᩫ᩠ᩅᨾᩮᩥᩬᨦ", ""},
   } 
 },
 
