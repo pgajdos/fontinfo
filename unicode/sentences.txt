@@ -98,6 +98,8 @@
  *          Saurashtra
  *          Final revised proposal to encode the Saurashtra script in the UCS
  *          http://std.dkuug.dk/jtc1/sc2/wg2/docs/n2969.pdf
+ *          Vai
+ *          omniglot
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -788,7 +790,8 @@
 {
   "Vai", TAG('V','a','i','i'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
-    {"ꕉꕜꕮ ꔔꘋ ꖸ ꔰ ꗋꘋ ꕮꕨ ꔔꘋ ꖸ ꕎ ꕉꖸꕊ ꕴꖃ ꕃꔤꘂ ꗱ, ꕉꖷ ꗪꗡ ꔻꔤ ꗏꗒꗡ ꕎ ꗪ ꕉꖸꕊ ꖏꕎ.", "vai"},
+    /* does not need opentype */
+    {"ꕉꕜꕮ ꔔꘋ ꖸ ꔰ ꗋꘋ ꕮꕨ ꔔꘋ ꖸ ꕎ ꕉꖸꕊ ꕴꖃ ꕃꔤꘂ ꗱ꘍ ꕉꖷ ꗪꗡ ꔻꔤ ꗏꗒꗡ ꕎ ꗪ ꕉꖸꕊ ꖏꕎ꘎", "vai"},
     {"ꕙꔤ", "vai"},
   }
 },
