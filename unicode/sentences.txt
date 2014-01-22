@@ -103,6 +103,11 @@
  *          omniglot
  *          Lepcha
  *          omniglot
+ *          Phoenician
+ *          wikipedia
+ *          Cuneiform
+ *          iClay: Digitizing Cuneiform
+ *          http://www.jhu.edu/digitalhammurabi/research/2004_12_vast.pdf
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -732,8 +737,10 @@
 },
 
 {
-  "Cuneiform", TAG('X','s','u','x'), 2, L2R, TRNS_NONE, (sentence_t [])
+  "Cuneiform", TAG('X','s','u','x'), 3, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* do non need opentype */
+    {"𒐊𒋡𒁉𒐊𒋡𒃻𒈫𒊓𒋧𒐈𒂆𒉌𒈫𒂆𒉀", "akk"},
     {"𒅎𒀝𒂵𒌈", "akk"},
               /*??*/
     {"𒄖𒉈𒅁𒌨𒅎", "akk"},
@@ -743,6 +750,7 @@
 {
   "Phoenician", TAG('P','h','n','x'), 1, R2L, TRNS_NONE, (sentence_t [])
   {
+    /* do not need opentype */
     {"𐤃𐤁𐤓𐤉𐤌 𐤊𐤍𐤏𐤍𐤉𐤌", "phn"},
   }
 },
