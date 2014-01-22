@@ -100,6 +100,8 @@
  *          http://std.dkuug.dk/jtc1/sc2/wg2/docs/n2969.pdf
  *          Vai
  *          omniglot
+ *          Lepcha
+ *          omniglot
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -774,8 +776,10 @@
 },
 
 {
-  "Lepcha", TAG('L','e','p','c'), 1, L2R, TRNS_NONE, (sentence_t [])
+  "Lepcha", TAG('L','e','p','c'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* needs opentype, Mingzat ok */
+    {"ᰕᰛᰩ ᰀᰳᰦ ᰘ ᰣᰦᰀᰱᰪ ᰉᰳᰬ ᰉᰧ ᰥ ᰝᰉᰶ ᰍᰵᰩ ᰀᰦ ᰣᰦᰀᰱᰪ ᰊᰭᰬ ᰍᰰᰪ ᰣᰦᰦᰓ ᰛᰮᰬ ᰡᰪ ᰥ ᰣᰬ", "lep"},
     {"ᰀᰁᰂ", "lep"},
   }
 },
@@ -783,6 +787,7 @@
 {
   "Ol_Chiki", TAG('O','l','c','k'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* probably doesn't need opentype, haven't found opensource font */
     {"᱐᱑᱒", "sat"},
   }
 },
@@ -790,7 +795,7 @@
 {
   "Vai", TAG('V','a','i','i'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
-    /* does not need opentype */
+    /* does not need opentype, Free Sans and Noto Sans Vai ok */
     {"ꕉꕜꕮ ꔔꘋ ꖸ ꔰ ꗋꘋ ꕮꕨ ꔔꘋ ꖸ ꕎ ꕉꖸꕊ ꕴꖃ ꕃꔤꘂ ꗱ꘍ ꕉꖷ ꗪꗡ ꔻꔤ ꗏꗒꗡ ꕎ ꗪ ꕉꖸꕊ ꖏꕎ꘎", "vai"},
     {"ꕙꔤ", "vai"},
   }
