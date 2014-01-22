@@ -108,6 +108,10 @@
  *          Cuneiform
  *          iClay: Digitizing Cuneiform
  *          http://www.jhu.edu/digitalhammurabi/research/2004_12_vast.pdf
+ *          Sylloti Nagri (Sylheti nagri)
+ *          'Halot-un-Nobi'
+ *          http://www.sylheti.org.uk/eghalot.html
+ *          
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -690,6 +694,7 @@
 {
   "Glagolitic", TAG('G','l','a','g'), 3, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* doesn't need opentype, Free Serif and MPH 2B Damase ok */
     {"Ⰳⰵⰺ, ⱃⱁⰴⰹⱀⰰ ⰿⰹⰾⰰ́, ⰳⱁⰴⰹⱀⰰ ⱁⰴⰱⰹⰾⰰ, ⰶⰹⱕ ⰿⰰⱅⰽⰰ Ⱄⰾⰰ́ⰲⰰ", "cu"},
     {"ⰀⰁⰂⰃⰄⰅⰆⰇⰈⰉⰊⰋⰌⰍⰎⰏⰐⰑⰒⰓⰔⰕⰖⰗⰘⰙⰚⰛⰜⰝⰞⰟⰠⰡⰢⰣⰤⰥⰦⰧⰨⰩⰪⰫ Ⱞ", "cu"},
     {"ⰔⰎⰀⰂⰑⰐⰊⰍ", "cu"},
@@ -699,6 +704,7 @@
 {
   "Tifinagh", TAG('T','f','n','g'), 3, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* doesn't need opentype, Free Sans and MPH 2B Damase looks ok */
     {"ⵉⵎⴷⴰⵏⴻⵏ, ⴰⴽⴽⴻⵏ ⵎⴰ ⵍⵍⴰⵏ ⵜⵜⵍⴰⵍⴻⵏ ⴷ ⵉⵍⴻⵍⵍⵉⵢⴻⵏ ⵎⵙⴰⵡⴰⵏ ⴷⵉ ⵍⵃⵡⴻⵕⵎⴰ ⴷ ⵢⵉⵣⴻⵔⴼⴰⵏ-ⵖⵓⵔ ⵙⴻⵏ ⵜⴰⵎⵙⴰⴽⵡⵉⵜ ⴷ ⵍⴰⵇⵓⴻⵍ ⵓ ⵢⴻⵙⵙⴻⴼⴽ ⴰⴷ-ⵜⵉⵍⵉ ⵜⴻⴳⵎⴰⵜⵜ ⴳⴰⵔ ⴰⵙⴻⵏ.", "zgh"},
     {"ⵜⵉⴼⵉⵏⴰⵖ", "zgh"},
     /* for Autonym font: "Tamazight" */
@@ -707,10 +713,11 @@
 },
 
 {
-  "Syloti_Nagri", TAG('S','y','l','o'), 1, L2R, TRNS_NONE, (sentence_t [])
+  "Syloti_Nagri", TAG('S','y','l','o'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
-    /* omniglot: "Vowels can be written as independent letters, or by using a variety of diacritical marks" */
-    /* but really not sure if this is correct: */
+    /* needs opentype, MPH 2B Damase looks ok */
+    {"ꠇꠦꠔꠣꠛ ꠢꠣꠟꠔꠥꠘꠘꠛꠤ", "syl"},
+    /* really not sure if this is correct: */
     {"ꠡꠁꠟꠅꠔꠁ ꠘꠀꠉꠞꠁ", "syl"},
   }
 },
@@ -718,6 +725,7 @@
 {
   "Old_Persian", TAG('X','p','e','o'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* do not need opentype, Aegean ok */
     {"𐎠𐎭𐎶𐏐𐎠𐎠𐎼𐎹𐎺𐎢𐏁𐏐𐎧𐏁𐎠𐎹𐎰𐎡𐎹𐏐𐎺𐏀𐎼𐎣𐏐", "peo"},
   }
 },
@@ -725,6 +733,7 @@
 {
   "Kharoshthi", TAG('K','h','a','r'), 1, R2L, TRNS_NONE, (sentence_t [])
   {
+    /* needs opentype, haven't found opensource unicode font */
     {"𐨐𐨑𐨒𐨓", "pra"},
   }
 },
@@ -732,6 +741,7 @@
 {
   "Balinese", TAG('B','a','l','i'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* needs opentype, haven't found opensource unicode font */
     {"ᬅᬆᬇᬈᬉᬊᬋᬌ", "bal"},
   }
 },
@@ -739,7 +749,9 @@
 {
   "Cuneiform", TAG('X','s','u','x'), 3, L2R, TRNS_NONE, (sentence_t [])
   {
-    /* do non need opentype */
+    /* do non need opentype, Akkadian ok */
+    /* 5 liters of bier, 5 liters of gruel, 1/20 liter of oil, 
+       2 strings of garlic, 1/30 liter of soap */
     {"𒐊𒋡𒁉𒐊𒋡𒃻𒈫𒊓𒋧𒐈𒂆𒉌𒈫𒂆𒉀", "akk"},
     {"𒅎𒀝𒂵𒌈", "akk"},
               /*??*/
@@ -798,7 +810,7 @@
 {
   "Ol_Chiki", TAG('O','l','c','k'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
-    /* probably doesn't need opentype, haven't found opensource font */
+    /* probably doesn't need opentype, haven't found opensource unicode  font */
     {"᱐᱑᱒", "sat"},
   }
 },
