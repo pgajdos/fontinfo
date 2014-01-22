@@ -61,6 +61,7 @@
  *          Autonyms
  *          https://github.com/santhoshtr/AutonymFont/blob/master/autonyms.txt
  *          Sundanese
+ *          omniglot
  *          http://sabilulungan.org/aksara/
  *          Nko
  *          http://kanjamadi.org/dictionary/dic_2_list.php?start=64
@@ -768,8 +769,10 @@
 },
 
 {
-  "Sundanese", TAG('S','u','n','d'), 2, R2L, TRNS_NONE, (sentence_t [])
+  "Sundanese", TAG('S','u','n','d'), 3, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* needs opentype */
+    {"ᮞᮊᮥᮙ᮪ᮔ ᮏᮜ᮪ᮙ ᮌᮥᮘᮢᮘ᮪ ᮊ ᮃᮜᮙ᮪ ᮓᮥᮑ ᮒᮨᮂ", "su"},
     {"ᮊᮧᮔ᮪ᮗᮦᮁᮞᮤ ᮃᮊ᮪ᮞᮛ ᮜᮒᮤᮔ᮪ - ᮃᮊ᮪ᮞᮛ ᮞᮥᮔ᮪ᮓ", "su"},
     {"ᮘᮞ ᮞᮥᮔ᮪ᮓ", "su"},
   }
