@@ -115,6 +115,8 @@
  *          omniglot
  *          Buginese
  *          omniglot
+ *          Osmanya
+ *          omniglot
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -647,6 +649,8 @@
 {
   "Osmanya", TAG('O','s','m','a'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* do not need opentype */
+    {"𐒛𐒆𐒖𐒒𐒔𐒖 𐒊𐒖𐒑𐒑𐒛𐒒𐒂𐒕𐒈 𐒓𐒚𐒄𐒓 𐒊𐒖𐒉𐒛 𐒘𐒈𐒖𐒌𐒝 𐒄𐒙𐒇 𐒖𐒔", "so"},
     {"𐒋𐒘𐒈𐒑𐒛𐒒𐒕𐒀", "so"},
   }
 },
@@ -661,6 +665,7 @@
 {
   "Braille", TAG('B','r','a','i'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* doesn't need opentype */
     /* there is Braille whitespace 0x2800 */
     {"⠊⠀⠉⠁⠝⠀⠑⠁⠞⠀⠛⠇⠁⠎⠎⠀⠁⠝⠙⠀⠊⠞⠀⠙⠕⠑⠎⠝⠞⠀⠓⠥⠗⠞⠀⠍⠑", ""},
   }
