@@ -111,7 +111,10 @@
  *          Sylloti Nagri (Sylheti nagri)
  *          'Halot-un-Nobi'
  *          http://www.sylheti.org.uk/eghalot.html
- *          
+ *          New Tai Lue
+ *          omniglot
+ *          Buginese
+ *          omniglot
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -664,8 +667,10 @@
 },
 
 {
-  "Buginese", TAG('B','u','g','i'), 2, L2R, TRNS_NONE, (sentence_t [])
+  "Buginese", TAG('B','u','g','i'), 3, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* neds opentype, Free Serif ok, MPH 2B Damase seems have problem with AE */
+    {"ᨊᨀᨚ ᨕᨃᨛ ᨈᨕᨘᨄᨔᨒ᨞ ᨕᨍᨆᨘᨄᨈᨒᨒᨚᨓᨗ ᨄᨌᨒᨆᨘ ᨑᨗᨈᨚᨄᨔᨒᨕᨙ᨞", "bug"},
     {"ᨅᨔ ᨕᨘᨁᨗ", "bug"},
     {"ᨀᨁᨂᨃᨄᨅᨆᨇᨈᨉ", "bug"},
   }
@@ -674,6 +679,7 @@
 {
   "Coptic", TAG('C','o','p','t'), 4, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* doesn't need opentype */
     {"ⲟⲩⲟϩ ⲛⲁⲣⲉ ⲡⲕⲁϩⲓ ⲧⲏⲣϥ ⲟⲓ ⲛ̇ⲟⲩⲥⲯⲟⲧⲟⲩ ⲛ̇ⲟⲩⲱⲧ ⲛⲉⲙ ⲟⲩⲥⲙⲏ ⲛ̇ⲟⲩⲱⲧ", "cop"},
     {"ⲘⲉⲧⲢⲉⲙ̀ⲛⲭⲏⲙⲓ", "cop"},
     {"ⲟⲩⲢⲉⲙ̀ⲛⲭⲏⲙⲓ ⲛ̀Ⲭⲣⲏⲥⲧⲓ̀ⲁⲛⲟⲥ", "cop"},
@@ -683,8 +689,11 @@
 },
 
 {
-  "New_Tai_Lue", TAG('T','a','l','u'), 3, L2R, TRNS_NONE, (sentence_t []) 
+  "New_Tai_Lue", TAG('T','a','l','u'), 4, L2R, TRNS_NONE, (sentence_t []) 
   {
+    /* needs opentype, Dai Banna SIL * looks ok */
+    {"ᦙᦲ ᦓᦷᧅᦍᦳᧂ ᦙᦶᧈ ᦎᦷ ᦁᧃ ᦃᧅᦅᦺᧉ ᦐᧃᧉᦠᦱ ᦎᦷ ᧚", "khb"},
+    {"ᦙᦲ ᦷᦓᧅᦍᦳᧂ ᦶᦙᧈ ᦷᦎ ᦁᧃ ᦃᧅᦺᦅᧉ ᦐᧃᧈ ᦷᦎ ᧚.", "khb"},
     {"ᦑᦺᦟᦹᧉ", "khb"},
     {"ᦂᦱᧉ", "khb"},
     {"ᦟᦲᧅ ᦷᦎ ᦺᦑᦟᦹᧉ", "khb"},
