@@ -42,11 +42,11 @@
  *          Glagolitic
  *          http://glagolitic.com/
  *          Ugaritic
- *          http://lila.sns.it/mnamon/index.php?page=Esempi&id=30&lang=en
+ *          http://lila.sns.it/mnamon/index.php?page=Esempi&id=30&lang=en (Ax RS 1.051)
  *          Cypriot
  *          http://lila.sns.it/mnamon/index.php?page=Esempi&id=4&lang=en
  *          Linear_B
- *          http://lila.sns.it/mnamon/index.php?page=Esempi&id=20&lang=en
+ *          http://lila.sns.it/mnamon/index.php?page=Esempi&id=20&lang=en (Stirrup Jar TH Z 852)
  *          Miao
  *          http://www.archives.ecs.soton.ac.uk/miao/songs/TranslatedSongs/m201/m201tx.pdf
  *          Ogham
@@ -117,6 +117,9 @@
  *          omniglot
  *          Osmanya
  *          omniglot
+ *          Deseret
+ *          http://www.utlm.org/images/deseretalphabet_sample_1.gif
+ *          (http://www.utlm.org/onlineresources/deseretalphabet.htm)
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -559,14 +562,16 @@
 {
   "Deseret", TAG('D','s','r','t'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
-    {"𐐔𐐯𐑅𐐨𐑉𐐯𐐻 𐐔𐐯𐑆𐐲𐑉𐐯𐐻", "en"},
+    /* does not need opentype, */
+    {"𐐂 𐑌𐐲𐑉𐑅𐐨𐑉𐐮 𐐮𐑆 𐐪 𐐹𐐨𐑅 𐐱𐑂 𐑊𐐰𐑌𐐼 𐐱𐑌 𐐸𐐶𐐮𐐽", "en"},
   }
 },
 
 {
   "Tagalog", TAG('T','g','l','g'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
-    {"ᜀᜅ ᜎᜑᜆ᜔ ᜅ ᜆᜂᜌ᜔ ᜁᜐᜒᜈᜒᜎᜅ ᜈ ᜋᜎᜌ ᜀᜆ᜔ ᜉᜈ᜔ᜆᜌ᜔ ᜉᜈ᜔ᜆᜌ᜔ ᜐ ᜃᜇᜅᜎᜈ᜔ ᜀᜆ᜔ ᜋ᜔ᜄ ᜃᜇᜓᜉᜆᜈ᜔᜶ ᜐᜒᜎᜌ᜔ ᜉᜒᜈᜄ᜔ᜃᜎᜓᜊᜈ᜔ ᜅ ᜃᜆ᜔ᜏᜒᜇᜈ᜔ ᜀᜆ᜔ ᜊᜓᜇ᜔ᜑᜒ ᜀᜆ᜔ ᜇᜉᜆ᜔ ᜋᜄ᜔ᜉᜎᜄᜌᜈ᜔ ᜀᜅ ᜁᜐᜆ᜔ ᜁᜐ ᜐ ᜇᜒᜏ ᜅ ᜉᜄ᜔ᜃᜃᜉᜆᜒᜇᜈ᜔᜶", "tl"},
+    /* needs opentype, Noto Sans Tagalog looks good */
+    {"ᜀᜅ᜔ ᜎᜑᜆ᜔ ᜈᜅ᜔ ᜆᜂ ᜀᜌ᜔ ᜁᜐᜒᜈᜒᜎᜅ᜔ ᜈ ᜋᜎᜌ ᜀᜆ᜔ ᜉᜈ᜔ᜆᜌ᜔ᜉᜈ᜔ᜆᜌ᜔ ᜐ ᜃ᜵ᜅᜎᜈ᜔ ᜀᜆ᜔ ᜃ᜵ᜉᜆᜈ᜔᜶", "tl"},
   }
 },
 
@@ -628,6 +633,7 @@
 {
   "Linear_B", TAG('L','i','n','b'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* do not need opentype, Aegean ok */
     {"𐀀𐀩𐀕𐀚 𐀷𐀵 𐀩𐀄𐀒𐀍 𐂂𐂃𐂀𐂁𐃌", "gmy"},
   }
 },
@@ -635,6 +641,7 @@
 {
   "Ugaritic", TAG('U','g','a','r'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* do not need opentype, Aegean ok */
     {"𐎗𐎁𐎟𐎋𐎅𐎐𐎎", "uga"},
   }
 },
@@ -642,6 +649,7 @@
 {
   "Shavian", TAG('S','h','a','w'), 3, L2R, TRNS_NONE, (sentence_t [])
   {
+     /* do not need opentype, MPH 2B Damase ok */
      {"𐑷𐑤 𐑣𐑿𐑥𐑩𐑯 𐑚𐑰𐑦𐑙𐑟 𐑸 𐑚𐑹𐑯 𐑓𐑮𐑰 𐑯 𐑰𐑒𐑢𐑩𐑤 𐑦𐑯 𐑛𐑦𐑜𐑯𐑦𐑑𐑦 𐑯 𐑮𐑳𐑑𐑕.", "en"},
      {"𐑷𐑤 𐑣𐑿𐑥𐑩𐑯 𐑚𐑰𐑦𐑙𐑟 𐑸 𐑚𐑹𐑯 𐑓𐑮𐑰 𐑯 𐑰𐑒𐑢𐑩𐑤 𐑦𐑯 𐑛𐑦𐑜𐑯𐑦𐑑𐑦 𐑯 𐑮𐑳𐑑𐑕", "en"},
      {"𐑒𐑪𐑯𐑝𐑦𐑒𐑑", "en"},
