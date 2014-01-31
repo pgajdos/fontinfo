@@ -120,6 +120,36 @@
  *          Deseret
  *          http://www.utlm.org/images/deseretalphabet_sample_1.gif
  *          (http://www.utlm.org/onlineresources/deseretalphabet.htm)
+ *          Gothic
+ *          I can eat glass (http://jsfiddle.net/maxkorz/6Hjec/1/embedded/result/)
+ *          Yi
+ *          http://www.unicode.org/udhr/d/udhr_iii.html
+ *          Chinese
+ *          http://www.columbia.edu/~kermit/utf8.html
+ *          Bopomofo
+ *          http://en.wikipedia.org/wiki/Bopomofo
+ *          Katakana
+ *          http://katakana-net.com/
+ *          Hiragana
+ *          http://www.columbia.edu/~fdc/utf8.html
+ *          Mongolian
+ *          I can eat glass (http://jsfiddle.net/maxkorz/6Hjec/1/embedded/result/)
+ *          Latin
+ *          http://www.columbia.edu/~kermit/utf8.html
+ *          Greek        
+ *          http://www.columbia.edu/~kermit/utf8.html
+ *          Cyrillic
+ *          http://en.wikipedia.org/wiki/List_of_pangrams
+ *          Arabic
+ *          http://www.columbia.edu/~kermit/utf8.html
+ *          Canadian Aboriginal
+ *          from fontaine, CanadianSyllabics.h (lang. Moose Cree) 
+ *          Cherokee
+ *          http://en.wikipedia.org/wiki/Cherokee
+ *          Hangul
+ *          http://www.columbia.edu/~kermit/utf8.html
+ *          Thaana
+ *          omniglot
  *
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
@@ -156,6 +186,7 @@
 {
   "Latin", TAG('L','a','t','n'), 5, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* do not need opentype */
     {"Vitrum edere possum; mihi non nocet.", "la"},
     {"VITRUM EDERE POSSUM; MIHI NON NOCET.", "la"},
     {"vitrum edere possum; mihi non nocet.", "la"},
@@ -169,6 +200,7 @@
 {
   "Greek", TAG('G','r','e','k'), 9, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* do not need opentype */
     /* Classical Greek */
     {"ὕαλον ϕαγεῖν δύναμαι· τοῦτο οὔ με βλάπτει.", "el"},
     /* Greek (monotonic) */
@@ -188,6 +220,7 @@
 {
   "Cyrillic", TAG('C','y','r','l'), 10, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* do not need opentype */
     /* Russian */
     {"В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!", "ru"},
     /* Mongolian */
@@ -214,6 +247,7 @@
 {
   "Armenian", TAG('A','r','m','n'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* TODO: ABBREVIATION MARK ? */
     {"Կրնամ ապակի ուտել և ինծի անհանգիստ չըներ։", "hy"},
     /* for Autonym font: "Armenian" */
     {"Հայերեն", "hy"},
@@ -223,6 +257,7 @@
 {
   "Hebrew", TAG('H','e','b','r'), 4, R2L, TRNS_NONE, (sentence_t [])
   {
+    /* TODO: WOVELS */
     {"אני יכול לאכול זכוכית וזה לא מזיק לי", "he"},
     {"דג סקרן שט בים מאוכזב ולפתע מצא חברה", "he"},
     {"כך התרסק נפץ על גוזל קטן, שדחף את צבי למים", "he"},
@@ -234,6 +269,7 @@
 {
   "Arabic", TAG('A','r','a','b'), 6, R2L, TRNS_NONE, (sentence_t [])
   {
+    /* needs opentype */
     {"أنا قادر على أكل الزجاج و هذا لا يؤلمني", "ar"},
     {"صِف خَلقَ خَودِ كَمِثلِ الشَمسِ إِذ بَزَغَت — يَحظى الضَجيعُ بِها نَجلاءَ مِعطارِ", "ar"},
     {"هلا سكنت بذي ضغثٍ فقد زعموا — شخصت تطلب ظبياً راح مجتازا", "ar"},
@@ -247,13 +283,15 @@
 {
   "Syriac", TAG('S','y','r','c'), 1, R2L, TRNS_NONE, (sentence_t [])
   {
+    /* TODO */
     {"ܒ݁ܪܺܫܺܝܬ݂ ܐܺܝܬ݂ܰܘܗ݈ܝ ܗ݈ܘܳܐ ܡܶܠܬ݂ܳܐ ܘܗܽܘ ܡܶܠܬ݂ܳܐ ܐܺܝܬ݂ܰܘܗ݈ܝ ܗ݈ܘܳܐ ܠܘܳܬ݂ ܐܰܠܳܗܳܐ ܘܰܐܠܳܗܳܐ ܐܺܝܬ݂ܰܘܗ݈ܝ ܗ݈ܘܳܐ ܗܽܘ ܡܶܠܬ݂ܳܐ܂", "syr"},
   }
 },
 
 {
-  "Thaana", TAG('T','h','a','a'), 2, R2L, TRNS_NONE, (sentence_t [])
+  "Thaana", TAG('T','h','a','a'), 3, R2L, TRNS_NONE, (sentence_t [])
   {
+    {"ހުރިހާއިންސާނުންވެސްއުފަންވަނ ދަރަޖައާއ ޙައްޤުތަކުގައ", "dv"},
     {"ޤައުމީ މިއެކުވެރިކަން މަތީ ތިބެގެން ކުރީމެ ސަލާމް", "dv"},
     /* for Autonym font: "Maldivian" */
     {"ދިވެހި", "dv"},
@@ -263,6 +301,7 @@
 {
   "Devanagari", TAG('D','e','v','a'), 3, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* TODO */
                             /*??*/
     {"आप भला तो सब भला ।", "hi"}, 
     /* wide spaces */           /*??*/
@@ -274,7 +313,8 @@
 
 {
   "Bengali", TAG('B','e','n','g'), 2, L2R, TRNS_NONE, (sentence_t [])
-  {                                                   /*??*/
+  {    
+    /* TODO */                                       /*??*/
     {"আমি কাঁচ খেতে পারি, তাতে আমার কোনো ক্ষতি হয় না।", "bn"},
     /* for Autonym font: "Bengali" */
     {"বাংলা", "bn"},
@@ -284,6 +324,7 @@
 {
   "Gurmukhi", TAG('G','u','r','u'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* TODO */
     {"ਉਹ ਮੇਰੇ ਲਈ ਖਾਣਾ ਬਣਾਉਂਦੀ ਹੈ ।", "pa"},
     /* for Autonym font: "Punjabi" */
     {"ਪੰਜਾਬੀ", "pa"},
@@ -293,6 +334,7 @@
 {
   "Gujarati", TAG('G','u','j','r'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* TODO */
     {"એક ભાષા ક્યારેય પણ પુરતી નથી", "gu"}, 
     /* for Autonym font: "Gujarati" */
     {"ગુજરાતી", "gu"},
@@ -366,6 +408,7 @@
 {
   "Thai", TAG('T','h','a','i'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* TODO */
     {"ฉันกินกระจกได้ แต่มันไม่ทำให้ฉันเจ็บ", "th"},
     {"โฮเวอร์คราฟท์ของผมเต็มไปด้วยปลาไหล", "th"},
   }
@@ -374,6 +417,7 @@
 {
   "Lao", TAG('L','a','o','o'), 3, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* TODO */
     {"ຂອ້ຍກິນແກ້ວໄດ້ໂດຍທີ່ມັນບໍ່ໄດ້ເຮັດໃຫ້ຂອ້ຍເຈັບ.", "lo"},
     {"ດີໃຈທີ່ຮູ້ກັບເຈົ້າ", "lo"},
     {"ອັກສອນລາວ", "lo"},
@@ -404,6 +448,7 @@
 {
   "Georgian", TAG('G','e','o','r'), 5, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* TODO */ 
     {"მინას ვჭამ და არა მტკივა.", "ka"},
     {"ქართული დამწერლობა", "ka"},
     /* without space for MUTT ClearlyU Alternate Glyphs Wide */
@@ -416,8 +461,9 @@
 
 {
   /* Korean */
-  "Hangul", TAG('H','a','n','g'), 3, L2R, TRNS_NONE, (sentence_t [])
+  "Hangul", TAG('H','a','n','g'), 3, T2B, TRNS_NONE, (sentence_t [])
   {
+    /* needs opentype */
     {"나는　유리를　먹을　수　있어요.　그래도　아프지　않아요", "ko"},
     {"내　호버크라프트는　장어로　가득　차　있어요", "ko"},
     /* with normal space (MUTT ClarlyU Wide)*/
@@ -429,6 +475,7 @@
   /* or Amharic (?) */
   "Ethiopic", TAG('E','t','h','i'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* TODO */
     {"መልካም፡ቀን፡ይሁንልህ።", "am"},
     {"ስለተዋወቅን፡ደስ፡ብሎኛል", "am"},
   }
@@ -438,6 +485,7 @@
   /* or Iroquoian */
   "Cherokee", TAG('C','h','e','r'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* do not need opentype */
     {"ᏂᎦᏓ ᎠᏂᏴᏫ ᏂᎨᎫᏓᎸᎾ ᎠᎴ ᎤᏂᏠᏱ ᎤᎾᏕᎿ ᏚᏳᎧᏛ ᎨᏒᎢ.", "chr"},
     /* without full stop */
     {"ᏂᎦᏓ ᎠᏂᏴᏫ ᏂᎨᎫᏓᎸᎾ ᎠᎴ ᎤᏂᏠᏱ ᎤᎾᏕᎿ ᏚᏳᎧᏛ ᎨᏒᎢ", "chr"},
@@ -445,16 +493,18 @@
 },
 
 {
-  /* from fontaine, CanadianSyllabics.h (lang. Moose Cree) */
   "Canadian_Aboriginal", TAG('C','a','n','s'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* do not need opentype */
     {"ᐅᒪ ᐊᑕᓗᑫᐎᓐ ᐊᓕᒧᒪᑲᓋᓐ ᓇᐯᐤ ᐎᓴᑫᒐᒃ ᐁ ᐃᔑᓂᑲᓱᑦ᙮ ᑭᒋ ᐌᔅᑲᒡ ᒪᑲ, ᑭ ᐃᑕᑯᐸᓐ ᓇᐯᐤ ᐎᓴᑫᒐᒃ ᐁ ᐃᔑᓂᑲᓱᑦ᙮", "cr"},
   }
 },
 
 {
   "Ogham", TAG('O','g','a','m'), 2, L2R, TRNS_NONE, (sentence_t [])
-  { /* sga .. old irish, pgl .. primitive irish ???*/
+  { 
+    /* does not need opentype */
+    /* sga .. old irish, pgl .. primitive irish ???*/
     {"᚛᚛ᚉᚑᚅᚔᚉᚉᚔᚋ ᚔᚈᚔ ᚍᚂᚐᚅᚑ ᚅᚔᚋᚌᚓᚅᚐ᚜", "pgl"},
     {"᚛ᚉᚏᚏᚑᚄᚉᚉ᛬ᚅᚐᚆᚆᚈᚃᚃᚇᚇᚐᚇᚇᚄ᛬ᚇᚐᚈᚈᚏᚏ᛬ᚐᚅᚅ", "pgl"},
   }
@@ -462,7 +512,8 @@
 
 {
   "Runic", TAG('R','u','n','r'), 3, L2R, TRNS_NONE, (sentence_t [])
-  {                                                                     /*??*/
+  {         
+    /* does not need opentype */                                         /*??*/
     {"ᛏᚡᛆᛋ ᛒᚱᛁᛚᛚᛁᚵ ᛆᚿᛑ ᛏᚼᛂ ᛋᛚᛁᛏᚼᚤ ᛏᚫᚡᛂᛋ ᛑᛁᛑ ᚵᚤᚱᛂ ᛆᚿᛑ ᚵᛁᛘᛒᛚᛂ ᛁᚿ ᛏᚼᛂ ᚡᛆᛒᛂ", ""},
     {"ᛋᛒᛖ‍ᚱᚫᛞᚻᛏᛇᛒᚳᚪᛁ ᛖ‍ᚱᚻ‍ᚪᛞ‍ᚫᛒᛋ", ""},
     {"[ᚻ]ᚱᛁᚾᚷᛁᚳᚻᚪᛏᛏ[ᚫ]", ""},
@@ -472,6 +523,7 @@
 {
   "Khmer", TAG('K','h','m','r'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* TODO */
     {"ខ្ញុំអាចញុំកញ្ចក់បាន ដោយគ្មានបញ្ហារ", "km"},
   }
 },
@@ -479,6 +531,7 @@
 {
   "Mongolian", TAG('M','o','n','g'), 1, L2R, TRNS_ROT270, (sentence_t [])
   {
+    /* needs opentype */
     /* Behdad: For Phags-Pa and Mongolian, the model is that the font is designed for
        horizontal layout, and if you want it vertical you need to rotate the
        horizontal rendering.  The "vertical" layout in HarfBuzz is for CJK
@@ -488,8 +541,9 @@
 },
 
 {
-  "Hiragana", TAG('H','i','r','a'), 3, L2R, TRNS_NONE, (sentence_t [])
+  "Hiragana", TAG('H','i','r','a'), 3, T2B, TRNS_NONE, (sentence_t [])
   {
+    /* needs opentype */
     {"いろはにほへど　ちりぬるを　わがよたれぞ　つねならむ　うゐのおくやま　けふこえて　あさきゆめみじ　ゑひもせず", "ja"},
     /* 0x0020 as space (e. g. Caslon do not have 0x3000) */
     {"いろはにほへど ちりぬるを わがよたれぞ つねならむ うゐのおくやま けふこえて あさきゆめみじ ゑひもせず", "ja"},
@@ -498,8 +552,9 @@
 },
 
 {
-  "Katakana", TAG('K','a','n','a'), 4, L2R, TRNS_NONE, (sentence_t [])
+  "Katakana", TAG('K','a','n','a'), 4, T2B, TRNS_NONE, (sentence_t [])
    {
+     /* needs opentype */
      {"カタカナ", "ja"},
      {"コンピュータ", "ja"},
      {"ロンドン", "ja"},
@@ -509,8 +564,9 @@
 },
 
 {
-  "Bopomofo", TAG('B','o','p','o'), 1, L2R, TRNS_NONE, (sentence_t [])
+  "Bopomofo", TAG('B','o','p','o'), 1, T2B, TRNS_NONE, (sentence_t [])
   {
+    /* does not need opentype */
     {"ㄅㄆㄇㄈ", "zh"},
   }
 },
@@ -518,6 +574,7 @@
 {
   "Han", TAG('H','a','n','i'), 5, T2B, TRNS_NONE, (sentence_t [])
   {
+    /* needs opentype */
     /* Chinese */
     {"我能吞下玻璃而不伤身体。", "zh"},
     /* Chinese Traditional */
@@ -532,6 +589,7 @@
 {
   "Yi", TAG('Y','i','i','i'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* does not need opentype */
     {"ꊿꂷꃅꄿꐨꐥ，ꌅꅍꀂꏽꐯꒈꃅꐥꌐ。ꊿꊇꉪꍆꌋꆀꁨꉌꑌꐥ，ꄷꀋꁨꂛꊨꅫꃀꃅꐥꄡꑟ", "ii"},
   }
 },
@@ -545,6 +603,7 @@
      orientation. */
   "Old_Italic", TAG('I','t','a','l'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* do not need opentype, Analecta ok */
     /* hope this is first line of TABLE OF AGNONE */
     {"𐌔𐌕𐌀𐌕𐌞𐌔 𐌐𐌞𐌔 𐌔𐌄𐌕 𐌇𐌞𐌃𐌝𐌍", "it"},
   }
@@ -553,6 +612,7 @@
 {
   "Gothic", TAG('G','o','t','h'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
+    /* does not need opentype, Analecta ok */
     {"𐌼𐌰𐌲 𐌲𐌻𐌴𐍃 𐌹̈𐍄𐌰𐌽, 𐌽𐌹 𐌼𐌹𐍃 𐍅𐌿 𐌽𐌳𐌰𐌽 𐌱𐍂𐌹𐌲𐌲𐌹𐌸.", "got"},
     /* without diacritics */
     {"𐌼𐌰𐌲 𐌲𐌻𐌴𐍃 𐌹𐍄𐌰𐌽, 𐌽𐌹 𐌼𐌹𐍃 𐍅𐌿 𐌽𐌳𐌰𐌽 𐌱𐍂𐌹𐌲𐌲𐌹𐌸.", "got"},
@@ -562,7 +622,7 @@
 {
   "Deseret", TAG('D','s','r','t'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
-    /* does not need opentype, */
+    /* does not need opentype, Analecta ok */
     {"𐐂 𐑌𐐲𐑉𐑅𐐨𐑉𐐮 𐐮𐑆 𐐪 𐐹𐐨𐑅 𐐱𐑂 𐑊𐐰𐑌𐐼 𐐱𐑌 𐐸𐐶𐐮𐐽", "en"},
   }
 },
