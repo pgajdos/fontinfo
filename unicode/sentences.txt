@@ -121,7 +121,7 @@
  *          http://www.utlm.org/images/deseretalphabet_sample_1.gif
  *          (http://www.utlm.org/onlineresources/deseretalphabet.htm)
  *          Gothic
- *          I can eat glass (http://jsfiddle.net/maxkorz/6Hjec/1/embedded/result/)
+ *          http://www.columbia.edu/~kermit/utf8.html
  *          Yi
  *          http://www.unicode.org/udhr/d/udhr_iii.html
  *          Chinese
@@ -133,7 +133,7 @@
  *          Hiragana
  *          http://www.columbia.edu/~fdc/utf8.html
  *          Mongolian
- *          I can eat glass (http://jsfiddle.net/maxkorz/6Hjec/1/embedded/result/)
+ *          http://www.columbia.edu/~kermit/utf8.html
  *          Latin
  *          http://www.columbia.edu/~kermit/utf8.html
  *          Greek        
@@ -150,7 +150,26 @@
  *          http://www.columbia.edu/~kermit/utf8.html
  *          Thaana
  *          omniglot
- *
+ *          Ethiopic
+ *          http://www.omniglot.com/babel/amharic.htm
+ *          Georgian
+ *          http://www.columbia.edu/~kermit/utf8.html
+ *          Lao
+ *          omniglot
+ *          Thai
+ *          http://www.columbia.edu/~fdc/utf8.html
+ *          Gujarati
+ *          http://en.wikipedia.org/wiki/Gujarati_language
+ *          Bengali
+ *          http://en.wikipedia.org/wiki/Bengali_language (Sample Text)
+ *          Syriac
+ *          https://sites.google.com/site/denken2008/syriac
+ *          Hebrew
+ *          Genesis
+ *          http://www.mechon-mamre.org/p/pt/pt0101.htm 
+ *          Armenian
+ *          http://www.columbia.edu/~kermit/utf8.html
+ *          
  * why some sentences do not match charsets:
  * COPTIC -- IIUC http://en.wikipedia.org/wiki/Coptic_alphabet, one can write
  * coptic using greek plus coptic extension (0x0370-0x03FF block) or coptic
@@ -247,7 +266,9 @@
 {
   "Armenian", TAG('A','r','m','n'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
-    /* TODO: ABBREVIATION MARK ? */
+    /* opentype: don't know. Abbreviation mark[1] (U+055F) should 
+       need it, but I haven't seen it working. 
+       [1] http://en.wikipedia.org/wiki/Armenian_alphabet#Punctuation */
     {"Կրնամ ապակի ուտել և ինծի անհանգիստ չըներ։", "hy"},
     /* for Autonym font: "Armenian" */
     {"Հայերեն", "hy"},
@@ -257,7 +278,8 @@
 {
   "Hebrew", TAG('H','e','b','r'), 4, R2L, TRNS_NONE, (sentence_t [])
   {
-    /* TODO: WOVELS */
+    /* needs opentype (vowels) */
+    {"בְּרֵאשִׁית, בָּרָא אֱלֹהִים, אֵת הַשָּׁמַיִם, וְאֵת הָאָרֶץ.", "he"},
     {"אני יכול לאכול זכוכית וזה לא מזיק לי", "he"},
     {"דג סקרן שט בים מאוכזב ולפתע מצא חברה", "he"},
     {"כך התרסק נפץ על גוזל קטן, שדחף את צבי למים", "he"},
@@ -283,14 +305,15 @@
 {
   "Syriac", TAG('S','y','r','c'), 1, R2L, TRNS_NONE, (sentence_t [])
   {
-    /* TODO */
-    {"ܒ݁ܪܺܫܺܝܬ݂ ܐܺܝܬ݂ܰܘܗ݈ܝ ܗ݈ܘܳܐ ܡܶܠܬ݂ܳܐ ܘܗܽܘ ܡܶܠܬ݂ܳܐ ܐܺܝܬ݂ܰܘܗ݈ܝ ܗ݈ܘܳܐ ܠܘܳܬ݂ ܐܰܠܳܗܳܐ ܘܰܐܠܳܗܳܐ ܐܺܝܬ݂ܰܘܗ݈ܝ ܗ݈ܘܳܐ ܗܽܘ ܡܶܠܬ݂ܳܐ܂", "syr"},
+    /* needs opentype */
+    {"ܠܳܐ ܗܽܘ ܗܘܳܐ ܢܽܘܗܪܳܐܐܶܠܳܐ ܕ݁ܢܶܣܗܰܕ݂ ܥܰܠ ܢܽܘܗܪܳܐ", "syr"},
   }
 },
 
 {
   "Thaana", TAG('T','h','a','a'), 3, R2L, TRNS_NONE, (sentence_t [])
   {
+    /* needs opentype */
     {"ހުރިހާއިންސާނުންވެސްއުފަންވަނ ދަރަޖައާއ ޙައްޤުތަކުގައ", "dv"},
     {"ޤައުމީ މިއެކުވެރިކަން މަތީ ތިބެގެން ކުރީމެ ސަލާމް", "dv"},
     /* for Autonym font: "Maldivian" */
@@ -301,8 +324,7 @@
 {
   "Devanagari", TAG('D','e','v','a'), 3, L2R, TRNS_NONE, (sentence_t [])
   {
-    /* TODO */
-                            /*??*/
+    /* needs opentype */
     {"आप भला तो सब भला ।", "hi"}, 
     /* wide spaces */           /*??*/
     {"आप　भला　तो　सब　भला　।", "hi"},
@@ -314,7 +336,8 @@
 {
   "Bengali", TAG('B','e','n','g'), 2, L2R, TRNS_NONE, (sentence_t [])
   {    
-    /* TODO */                                       /*??*/
+    /* needs opentype, Akaash looks good  */ 
+    {"সমস্ত মানুষ স্বাধীনভাবে সমান মর্যাদা এবং অধিকার নিয়ে জন্মগ্রহণ করে।", "bn"},
     {"আমি কাঁচ খেতে পারি, তাতে আমার কোনো ক্ষতি হয় না।", "bn"},
     /* for Autonym font: "Bengali" */
     {"বাংলা", "bn"},
@@ -324,7 +347,7 @@
 {
   "Gurmukhi", TAG('G','u','r','u'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
-    /* TODO */
+    /* needs opentype, AnmolUni looks ok */
     {"ਉਹ ਮੇਰੇ ਲਈ ਖਾਣਾ ਬਣਾਉਂਦੀ ਹੈ ।", "pa"},
     /* for Autonym font: "Punjabi" */
     {"ਪੰਜਾਬੀ", "pa"},
@@ -332,9 +355,10 @@
 },
 
 {
-  "Gujarati", TAG('G','u','j','r'), 2, L2R, TRNS_NONE, (sentence_t [])
+  "Gujarati", TAG('G','u','j','r'), 3, L2R, TRNS_NONE, (sentence_t [])
   {
-    /* TODO */
+    /* needs opentype */
+    {"ગાંધીજીની ઝૂંપડી-કરાડી", "gu"},
     {"એક ભાષા ક્યારેય પણ પુરતી નથી", "gu"}, 
     /* for Autonym font: "Gujarati" */
     {"ગુજરાતી", "gu"},
@@ -408,16 +432,19 @@
 {
   "Thai", TAG('T','h','a','i'), 2, L2R, TRNS_NONE, (sentence_t [])
   {
-    /* TODO */
+    /* needs opentype */
     {"ฉันกินกระจกได้ แต่มันไม่ทำให้ฉันเจ็บ", "th"},
     {"โฮเวอร์คราฟท์ของผมเต็มไปด้วยปลาไหล", "th"},
   }
 },
 
 {
-  "Lao", TAG('L','a','o','o'), 3, L2R, TRNS_NONE, (sentence_t [])
-  {
-    /* TODO */
+  "Lao", TAG('L','a','o','o'), 5, L2R, TRNS_NONE, (sentence_t [])
+  { /* needs opentype */
+    /* not sure if vowels that are written before consonant should be entered
+       _after_ consonant, e. g. ລແະ vs. ແລະ*/
+    {"ມະນຸດທຸກຄົນເກີດມາມີກຽດສັກສີສິດທິເສຣີພາປແລະຄວາມສເມີພາປເທົາທຽມກັນ","lo"},
+    {"ມະນຸດ ທຸກ ຄົນ ເກີດ ມາມີກຽດ ສັກ ສີ, ສິດທິ, ເສຣີ ພາປ ແລະ ຄວາມ ສເມີ ພາປ ເທົາ ທຽມ ກັນ.","lo"},
     {"ຂອ້ຍກິນແກ້ວໄດ້ໂດຍທີ່ມັນບໍ່ໄດ້ເຮັດໃຫ້ຂອ້ຍເຈັບ.", "lo"},
     {"ດີໃຈທີ່ຮູ້ກັບເຈົ້າ", "lo"},
     {"ອັກສອນລາວ", "lo"},
@@ -448,7 +475,7 @@
 {
   "Georgian", TAG('G','e','o','r'), 5, L2R, TRNS_NONE, (sentence_t [])
   {
-    /* TODO */ 
+    /* do not need opentype  */
     {"მინას ვჭამ და არა მტკივა.", "ka"},
     {"ქართული დამწერლობა", "ka"},
     /* without space for MUTT ClearlyU Alternate Glyphs Wide */
@@ -473,9 +500,10 @@
 
 {
   /* or Amharic (?) */
-  "Ethiopic", TAG('E','t','h','i'), 2, L2R, TRNS_NONE, (sentence_t [])
+  "Ethiopic", TAG('E','t','h','i'), 3, L2R, TRNS_NONE, (sentence_t [])
   {
-    /* TODO */
+    /* do not need opentype (?) */
+    {"፤ ምድርም ሁሉ በአንድ ቋንቋና በአንድ ንግግር ነበረች።", "am"},
     {"መልካም፡ቀን፡ይሁንልህ።", "am"},
     {"ስለተዋወቅን፡ደስ፡ብሎኛል", "am"},
   }
@@ -523,7 +551,7 @@
 {
   "Khmer", TAG('K','h','m','r'), 1, L2R, TRNS_NONE, (sentence_t [])
   {
-    /* TODO */
+    /* needs opentype, Khmer OS looks good */
     {"ខ្ញុំអាចញុំកញ្ចក់បាន ដោយគ្មានបញ្ហារ", "km"},
   }
 },
