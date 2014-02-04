@@ -180,7 +180,7 @@ void write_png_specimen(const char *subdir,
         break;
       case 3: /* bottom to top */
         x = (bs ? bs : config.specimen_from_px);
-        y = png_height;
+        y = png_height - SPECIMEN_DIST;
         break;
       default:
         assert(1 == 0);

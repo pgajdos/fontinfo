@@ -339,6 +339,8 @@ static int ft_draw_text_(FcChar32 text[], int x,  int y,
     pen.y = y << 6;
     if (bitmap->text_direction == 3)
       pen.y -= (-sum_advances_y);
+    if (bitmap->text_direction == 2)
+      pen.y -= glyph_advances[0].y - glyph_offsets[0].y;
     for (g = 0; g < nglyphs; g++)
     {
       glyph_positions[g].x = (pen.x + glyph_offsets[g].x) >> 6;
