@@ -72,7 +72,7 @@ void generate_ymp(config_t config, const char *pkgname, char *ympname)
     fprintf(ymp, "          Font package from %s\n", config.location);
     fprintf(ymp, "        </summary>\n");
     fprintf(ymp, "        <description>\n");
-    fprintf(ymp, "          Latest version of package %s in %s.",
+    fprintf(ymp, "          Latest version of package %s in %s.\n",
                  pkgname, config.location);
     fprintf(ymp, "        </description>\n");
     fprintf(ymp, "      </item>\n");
