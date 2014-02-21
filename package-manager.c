@@ -101,6 +101,7 @@ void file_from_package(const char *file, package_info_t *pi)
   pi->version[0] = '\0';
   pi->url[0] = '\0';
   pi->license[0] = '\0';
+  pi->description[0] = '\0';
   return;
 }
 
@@ -114,6 +115,7 @@ void file_from_package(const char *file, package_info_t *pi)
   pi->version[0] = '\0';
   pi->url[0] = '\0';
   pi->license[0] = '\0';
+  pi->description[0] = '\0';
   return;
 }
 
