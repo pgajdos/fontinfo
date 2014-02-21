@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 DIRS		= languages
-VERSION		 = 20140204
+VERSION		 = 20140219
 PKGMAN_CFLAGS	 = $(shell sh ./package-manager.sh --cflags)
 PKGMAN_LIBS	 = $(shell sh ./package-manager.sh --libs)
 LIBPNG_CFLAGS	 = $(shell pkg-config --cflags libpng)
