@@ -797,7 +797,7 @@ static void content_family_styles_indexes(FILE *html, config_t config,
   FcFontSet *styleset = (FcFontSet *)output_arg[0];
   family_info_t *fi = (family_info_t *)output_arg[1];
 
-  FcChar8 *family, *style;
+  FcChar8 *family, *style, *file;
   FcCharSet *charset;
   char style_ww[STYLE_NAME_LEN_MAX];
   char family_ww[FAMILY_NAME_LEN_MAX];
@@ -811,6 +811,9 @@ static void content_family_styles_indexes(FILE *html, config_t config,
 
   uinterval_stat_t script_stats[NUMSCRIPTS];
   int nscripts, v;
+
+  char filename[FILEPATH_MAX];
+  package_info_t pi;
 
   assert(fcinfo_get_translated_string(styleset->fonts[0], FC_FAMILY, 
                                       LANG_EN, &family)
@@ -855,6 +858,10 @@ static void content_family_styles_indexes(FILE *html, config_t config,
     remove_spaces_and_slashes(family_ww);    
     snprintf(style_ww, STYLE_NAME_LEN_MAX, "%s", (char *)style);
     remove_spaces_and_slashes(style_ww);
+
+    assert(FcPatternGetString(styleset->fonts[s], FC_FILE, 0, &file)
+             == FcResultMatch);
+    file_from_package((char *)file, &pi);
 
     fprintf(html, 
             "            <tr>\n");
@@ -909,6 +916,17 @@ static void content_family_styles_indexes(FILE *html, config_t config,
                        SPECIMEN_WIDTH_MAX, NULL, NULL);
     fprintf(html, 
             "              </td>\n");
+    if (pi.name[0])
+    {
+      generate_ymp(config, pi.name, filename);
+      fprintf(html,
+              "              <td>\n");
+      fprintf(html,
+              "              <a style=\"font-weight:bold;color:#690\""
+              " href=../%s>1 Click Install</a>", filename);
+      fprintf(html,
+              "              </td>\n");
+    }
     fprintf(html, 
             "            </tr>\n");    
   }
@@ -1293,38 +1311,37 @@ static void content_font_card(FILE *html, config_t config,
     if (pi.name[0])
     {
       fprintf(html, 
-              "            <tr><td><b>Name:</b></td><td>");
+              "            <tr><td><b>Name:</b></td><td>%s</td><td>", pi.name);
       if (config.install_type == YMP)
       {
         generate_ymp(config, pi.name, filename);
         fprintf(html,
-                "<a href=\"../%s\">", filename);
+                "<a style=\"font-weight:bold;color:#690\" href=../%s>"
+                "1 Click Install</a>", filename);
       }
-      fprintf(html, 
-              "%s", pi.name);
-      if (config.install_type == YMP)
-        fprintf(html,
-                "</a>");
       fprintf(html, 
               "</td></tr>\n");
     }
     if (pi.version[0])
       fprintf(html, 
-              "            <tr><td><b>Version:</b></td><td>%s</td></tr>\n",
-              pi.version);
+              "            <tr><td><b>Version:</b></td>"
+              "<td colspan=\"%d\">%s</td></tr>\n",
+              config.install_type == YMP ? 2 : 1, pi.version);
     if (pi.url[0])
       fprintf(html, 
               "            <tr><td><b>Url:</b></td>"
-              "<td><a href=\"%s\">%s</a></td></tr>\n",
-              pi.url, pi.url);
+              "<td colspan=\"%d\"><a href=\"%s\">%s</a></td></tr>\n",
+              config.install_type == YMP ? 2 : 1, pi.url, pi.url);
     if (pi.license[0])
       fprintf(html, 
-              "            <tr><td><b>License:</b></td><td>%s</td></tr>\n",
-              pi.license);
+              "            <tr><td><b>License:</b></td>"
+              "<td colspan=\"%d\">%s</td></tr>\n",
+              config.install_type == YMP ? 2 : 1, pi.license);
     if (pi.description[0])
       fprintf(html, 
-              "            <tr><td><b>Description:</b></td><td>%s</td></tr>\n",
-              pi.description);
+              "            <tr><td><b>Description:</b></td>"
+              "<td colspan=\"%d\">%s</td></tr>\n",
+              config.install_type == YMP ? 2 : 1, pi.description);
     if (config.install_type == REPO)
     {
       fprintf(html, 
