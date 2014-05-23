@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Fri May 23 14:20:39 UTC 2014 - pgajdos@suse.com
+
+Version 20140523
+  * fix sle12 ymp distroversion
+  * 1-click-install link explicitely visible on Font Card
+  * 1-click-install link in Family Overview page
+
+-------------------------------------------------------------------
 Fri Feb 28 08:21:49 UTC 2014 - pgajdos@suse.com
 
 Version 2014028
