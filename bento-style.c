@@ -553,7 +553,7 @@ static void content_families_detailed_index(FILE *html, config_t config,
   FcFontSet *fontset = (FcFontSet *)output_arg[0];
   int *generate_png_files = (int *)output_arg[1];
   int f;
-  FcChar8 *family, *family2;
+  FcChar8 *family, *family2, *file;
   char family_ww[FAMILY_NAME_LEN_MAX];
 
   FcChar32 ucs4_sentence[SENTENCE_NCHARS];
@@ -564,12 +564,16 @@ static void content_families_detailed_index(FILE *html, config_t config,
   uinterval_stat_t script_stats[NUMSCRIPTS];
   int nscripts, v;
 
+  package_info_t pi;
+  char filename[FILEPATH_MAX];
+
   assert(fcinfo_get_translated_string(fontset->fonts[0], FC_FAMILY, 
                                       LANG_EN, &family)
          == FcResultMatch);
   assert(fcinfo_get_translated_string(fontset->fonts[fontset->nfont-1], 
                                       FC_FAMILY, LANG_EN, &family2)
          == FcResultMatch);
+
   if (family[0] == family2[0])
     fprintf(html, 
             "          <h1>"FAMILIES_INDEX" in %s - %c</h1>\n", 
@@ -592,6 +596,10 @@ static void content_families_detailed_index(FILE *html, config_t config,
            == FcResultMatch);
     snprintf(family_ww, FAMILY_NAME_LEN_MAX, "%s", (const char *)family);
     remove_spaces_and_slashes(family_ww);    
+
+    assert(FcPatternGetString(fontset->fonts[0], FC_FILE, 0, &file)
+           == FcResultMatch);
+    file_from_package((char *)file, &pi);
 
     fprintf(html, 
             "            <tr>\n");
@@ -646,6 +654,19 @@ static void content_families_detailed_index(FILE *html, config_t config,
                        SPECIMEN_WIDTH_MAX, NULL, NULL);
     fprintf(html, 
             "              </td>\n");
+
+    if (config.install_type == YMP && pi.name[0])
+    {
+      generate_ymp(config, pi.name, filename);
+      fprintf(html,
+              "              <td style=\"vertical-align:middle\">\n");
+      fprintf(html,
+              "              <a style=\"font-weight:bold;color:#690\""
+              " href=../%s>1 Click Install</a>", filename);
+      fprintf(html,
+              "              </td>\n");
+    }
+
     fprintf(html, 
             "            </tr>\n");
   }
@@ -916,11 +937,11 @@ static void content_family_styles_indexes(FILE *html, config_t config,
                        SPECIMEN_WIDTH_MAX, NULL, NULL);
     fprintf(html, 
             "              </td>\n");
-    if (pi.name[0])
+    if (config.install_type == YMP && pi.name[0])
     {
       generate_ymp(config, pi.name, filename);
       fprintf(html,
-              "              <td>\n");
+              "              <td style=\"vertical-align:middle\">\n");
       fprintf(html,
               "              <a style=\"font-weight:bold;color:#690\""
               " href=../%s>1 Click Install</a>", filename);
