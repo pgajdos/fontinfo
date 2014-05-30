@@ -662,7 +662,7 @@ static void content_families_detailed_index(FILE *html, config_t config,
               "              <td style=\"vertical-align:middle\">\n");
       fprintf(html,
               "              <a style=\"font-weight:bold;color:#690\""
-              " href=../%s>1 Click Install</a>", filename);
+              " href=../%s>1&nbsp;Click Install</a>", filename);
       fprintf(html,
               "              </td>\n");
     }
@@ -944,7 +944,7 @@ static void content_family_styles_indexes(FILE *html, config_t config,
               "              <td style=\"vertical-align:middle\">\n");
       fprintf(html,
               "              <a style=\"font-weight:bold;color:#690\""
-              " href=../%s>1 Click Install</a>", filename);
+              " href=../%s>1&nbsp;Click Install</a>", filename);
       fprintf(html,
               "              </td>\n");
     }
@@ -1338,7 +1338,7 @@ static void content_font_card(FILE *html, config_t config,
         generate_ymp(config, pi.name, filename);
         fprintf(html,
                 "<a style=\"font-weight:bold;color:#690\" href=../%s>"
-                "1 Click Install</a>", filename);
+                "1&nbsp;Click Install</a>", filename);
       }
       fprintf(html, 
               "</td></tr>\n");
