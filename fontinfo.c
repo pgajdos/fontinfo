@@ -341,7 +341,7 @@ int main(int argc, char *argv[])
   } 
   else if (! strcmp(config.style, BENTO_STYLE))
   {
-//    bento_font_cards(config);
+    bento_font_cards(config);
     if (config.generate_indexes)
     {
       bento_families_index(config);
