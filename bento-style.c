@@ -655,7 +655,6 @@ static void content_families_detailed_index(FILE *html, config_t config,
     fprintf(html, 
             "              </td>\n");
 
-    fprintf(stderr, "%s: %s => %s\n", file, pi.name, filename);
     if (config.install_type == YMP && pi.name[0])
     {
       generate_ymp(config, pi.name, filename);
