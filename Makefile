@@ -115,6 +115,5 @@ release:
 		cp unicode/collections.sh fontinfo-$(VERSION)/unicode
 		cp unicode/collections-map.sh fontinfo-$(VERSION)/unicode
 		tar cvjf fontinfo-$(VERSION).tar.bz2 fontinfo-$(VERSION)
-		mkdir -p releases
-		mv fontinfo-$(VERSION) releases
+		rm -r fontinfo-$(VERSION)
 
