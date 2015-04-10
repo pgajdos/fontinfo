@@ -336,13 +336,13 @@ void write_png_charset(const char *subdir,
   FcChar32 char_index, first_char_in_line;
   FcChar32 text[2] = { '\0', '\0' };
   FcChar32 head_text[8] = { 'U', '+', 'x', 'x', 'x', 'x', 'x', '\0' };
-  char ucode[6];
+  char ucode[7];
 
   int line, column, nlines;
   int png_nparts, nlines_part, line_part;
   int empty_lines_part, last_line;
   int png_width, png_height_part;
-  int c, charset_head_width;
+  int c, d, charset_head_width;
 
   const FcChar8 *uchar_name;
 
@@ -462,9 +462,10 @@ void write_png_charset(const char *subdir,
       if (first_char_in_line < available) /* -> first_char_in_line set */
       {
         ft_bitmap_set_font(&bitmap, monospace, 0, NULL, 0, 0, NULL, NULL);
-        sprintf(ucode, "%05X", chars[first_char_in_line]);
-        for (c = 0; c < 4; c++)
-          head_text[c + 2] = ucode[c];
+        snprintf(ucode, 7, "%05X", chars[first_char_in_line]);
+        /* this will omit '+' after 'U' for Supplementary Private Use Area-B */
+        for (c = strlen(ucode) - 2, d = sizeof(head_text)/sizeof(head_text[0]) - 3; c >= 0; c--, d--)
+          head_text[d] = ucode[c];
         ft_draw_text(head_text,
                      0,
                      (line_part + 1)*(bs + CHARSET_PNG_HDIST)
