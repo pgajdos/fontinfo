@@ -26,6 +26,5 @@ fontinfo -l M17N:fonts \
          -r 'SUSE Linux Enterprise Desktop 12,http://download.opensuse.org/repositories/M17N:/fonts/openSUSE_Factory' \
          -r 'openSUSE 13.1,http://download.opensuse.org/repositories/M17N:/fonts/openSUSE_13.1' \
          -r 'openSUSE 12.3,http://download.opensuse.org/repositories/M17N:/fonts/openSUSE_12.3' \
-         -r 'openSUSE 12.2,http://download.opensuse.org/repositories/M17N:/fonts/openSUSE_12.2' \
          -r 'SUSE Linux Enterprise Server 11,http://download.opensuse.org/repositories/M17N:/fonts/SLE_11_SP3/' \
          -r 'SUSE Linux Enterprise Desktop 11,http://download.opensuse.org/repositories/M17N:/fonts/SLE_11_SP3/' \
