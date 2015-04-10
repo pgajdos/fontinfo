@@ -1,106 +1,63 @@
--------------------------------------------------------------------
-Wed Oct 29 07:46:21 UTC 2014 - pgajdos@suse.com
+Version 20150410
+  * prevent buffer overflow for Supplementary Private Use Area-B
+  * reformat CHANGES file
+  * remove 1-click install for 12.2
 
 Version 20141029
   * 1-click install for 13.2 and sle12
 
--------------------------------------------------------------------
-Mon Jun  9 09:35:24 UTC 2014 - pgajdos@suse.com
-
 Version 20140609
   * fixed 1-click-install link in detailed view
 
--------------------------------------------------------------------
-Fri May 30 09:50:32 UTC 2014 - pgajdos@suse.com
-
 Version 20140530
   * 1-click-install link even in detailed view
-
--------------------------------------------------------------------
-Fri May 23 14:20:39 UTC 2014 - pgajdos@suse.com
 
 Version 20140523
   * fix sle12 ymp distroversion
   * 1-click-install link explicitely visible on Font Card
   * 1-click-install link in Family Overview page
 
--------------------------------------------------------------------
-Fri Feb 28 08:21:49 UTC 2014 - pgajdos@suse.com
-
 Version 2014028
   * added sle12 and 13.2 to ymps
 
--------------------------------------------------------------------
-Fri Feb 21 11:38:49 UTC 2014 - pgajdos@suse.com
-
 Version 20140219
   * added sles11 to ymps
-
--------------------------------------------------------------------
-Tue Feb  4 13:31:19 UTC 2014 - pgajdos@suse.com
 
 Version 20140204
   * improved and added several specimen strings
   * better align t2b layout
 
--------------------------------------------------------------------
-Mon Jan 20 10:31:49 UTC 2014 - pgajdos@suse.com
-
 Version 20140120
   * use relative sorting for scripts again as absolute seem to
     have more cons than pros
 
--------------------------------------------------------------------
-Wed Jan 15 09:54:51 UTC 2014 - pgajdos@suse.com
-
-- Version 20140115
+Version 20140115
   * add or fix some specimen strings
   * alow rotation of specimen images (needed for Phags Pa and
     Mongolian)
   * charset toggle links has now block interval ranges
   * minor fixes
 
--------------------------------------------------------------------
-Fri Dec 20 14:22:18 UTC 2013 - pgajdos@suse.com
-
 Version 20131220
   * charset: view by unicode blocks, individual
     pngs download on demand
   * fixed or improve some specimen strings
 
--------------------------------------------------------------------
-Wed Dec 11 11:15:04 UTC 2013 - pgajdos@suse.com
-
 Version 20131211
   * polishing specimen view
-
--------------------------------------------------------------------
-Fri Dec  6 12:06:30 UTC 2013 - pgajdos@suse.com
 
 Version 20131206
   * improve opentype shaping (fix script tag indexing)
 
--------------------------------------------------------------------
-Thu Dec  5 16:09:03 UTC 2013 - pgajdos@suse.com
-
 Version 20131205
   * improve opentype shaping
-
--------------------------------------------------------------------
-Tue Dec  3 15:52:49 UTC 2013 - pgajdos@suse.com
 
 Version 20131203
   * involve harfbuzz to opentype shaping (not completely done)
 
--------------------------------------------------------------------
-Tue Nov 26 10:36:47 UTC 2013 - pgajdos@suse.com
-
 Verison 20131126
   * new string for Byzantine Musical Symbols (thanks to Konstantinos
     Terzopoulos)
-
--------------------------------------------------------------------
-Thu Nov 21 13:25:57 UTC 2013 - pgajdos@suse.com
 
 Version 20131119
   * no underscores in script names above specimens
@@ -108,15 +65,9 @@ Version 20131119
     for opentype shaping
   * new sentences for e. g. Math, Sundanese, etc.
 
--------------------------------------------------------------------
-Thu Nov 14 08:21:42 UTC 2013 - pgajdos@suse.com
-
 Version 20131114
   * extend Math and Musical_Symbols collections coverage
   * added sentences for Math and Musical_Symbols collections
-
--------------------------------------------------------------------
-Tue Nov 12 16:22:30 UTC 2013 - pgajdos@suse.com
 
 Version 20131112
   * index fonts by unicode blocks
@@ -125,89 +76,50 @@ Version 20131112
   * display software package description
   * added CHANGES
 
--------------------------------------------------------------------
-Fri Nov  8 11:47:40 UTC 2013 - pgajdos@suse.com
-
 Version 20131108
   * do not display 'unknown' language anywhere
-
--------------------------------------------------------------------
-Thu Nov  7 10:04:35 UTC 2013 - pgajdos@suse.com
 
 Version 20131107
   * check for markdown command in Makefile, and fallback to cat
     if not found
 
--------------------------------------------------------------------
-Wed Nov  6 05:39:06 UTC 2013 - pgajdos@suse.com
-
 Version 20131106
   * bento: very minor improvement in menu boxes
-
--------------------------------------------------------------------
-Tue Nov  5 13:13:24 UTC 2013 - pgajdos@suse.com
 
 Version 20131105
   * font format index marks fonts with bitmap strikes
   * bento: improved menu boxes
 
--------------------------------------------------------------------
-Fri Nov  1 11:06:09 UTC 2013 - pgajdos@suse.com
-
 Version 20131101
   * added specimen sentences for few scripts
   * better names for generated indexes
 
--------------------------------------------------------------------
-Thu Oct 31 08:25:21 UTC 2013 - pgajdos@suse.com
-
 Version 20131031
   * added specimen sentences for few scripts
   * script names displays now without underscores
-
--------------------------------------------------------------------
-Wed Oct 23 12:06:34 UTC 2013 - pgajdos@suse.com
 
 Version 20131023
   * display truetype tables used in font
   * do not crash when no fonts found
   * escape dashes in pattern
 
--------------------------------------------------------------------
-Wed Oct 16 12:15:39 UTC 2013 - pgajdos@suse.com
-
 Version 20131016
   * png charset as an table, generate vertical header
   * split long charsets in parts
 
--------------------------------------------------------------------
-Tue Oct 15 13:38:18 UTC 2013 - pgajdos@suse.com
-
 Version 20131015
   * better appearance of charsets and specimens of bitmap fonts
-
--------------------------------------------------------------------
-Mon Oct 14 10:29:35 UTC 2013 - pgajdos@suse.com
 
 Version 20131014
   * minor fixes in script and family indexes (do not display certain 
     fonts multiple times)
 
--------------------------------------------------------------------
-Fri Oct 11 16:12:50 UTC 2013 - pgajdos@suse.com
-
 Version 20131011
   * larger default size for charsets, trim large specimens
-
--------------------------------------------------------------------
-Thu Oct 10 13:57:19 UTC 2013 - pgajdos@suse.com
 
 Version 20131010
   * added sentences which fit special fonts
   * debug output, see new -g option
-
--------------------------------------------------------------------
-Tue Oct  8 10:37:27 UTC 2013 - pgajdos@suse.com
 
 Version 20131008
   * support for right to left text direction in specimens
@@ -216,32 +128,15 @@ Version 20131008
     -> if font doesn't cover minispecimen sentence
   * legal stuff
 
--------------------------------------------------------------------
-Fri Sep 13 09:22:42 UTC 2013 - pgajdos@suse.com
-
 Version 20130913
   * script font index displays script blocks with ranges
-
--------------------------------------------------------------------
-Wed Sep 11 12:28:12 UTC 2013 - pgajdos@suse.com
 
 Version 20130911
   * minor fix in Makefile to be parallel buildable
 - enable paralell build
 
--------------------------------------------------------------------
-Wed Sep 11 11:56:04 UTC 2013 - pgajdos@suse.com
-
-- format specfile
-
--------------------------------------------------------------------
-Thu Sep  5 07:23:17 UTC 2013 - pgajdos@suse.com
-
-Version 20130904:
+Version 20130904
   * script indexes
-
--------------------------------------------------------------------
-Tue Sep  3 14:29:07 UTC 2013 - pgajdos@suse.com
 
 Version 20130903
   * added support for unicode scripts: 
@@ -252,114 +147,66 @@ Version 20130903
   * -s now 'enforces' one sentence for all fonts
   * new -e option specifies text direction of sentence specified in -s
 
--------------------------------------------------------------------
-Fri May 10 07:20:58 UTC 2013 - pgajdos@suse.com
-
 Version 20130510
   * minor improvement of font format index
 
--------------------------------------------------------------------
-Thu May  9 07:42:56 UTC 2013 - pgajdos@suse.com
-
-Version 20130509:
+Version 20130509
   * new index added: Families by Font Formats
 
--------------------------------------------------------------------
-Fri Apr 12 07:31:02 UTC 2013 - pgajdos@suse.com
-
-Version 20130412:
+Version 20130412
   * slash in family name caught me unprepared
 
--------------------------------------------------------------------
-Thu Apr 11 10:41:50 UTC 2013 - pgajdos@suse.com
-
-Version 20130411:
+Version 20130411
   * font card lists also rgba and lcdfilter pattern elements
     if available
   * other minor improvements, such as embeddedbitmaps element
     is shown only if the font have at least one bitmap strike
 
--------------------------------------------------------------------
-Mon Apr  8 12:31:24 UTC 2013 - pgajdos@suse.com
-
-Version 20130408:
+Version 20130408
   * implement repository links (generic) and one click install 
     (openSUSE); see new -n and -r options
 
--------------------------------------------------------------------
-Thu Apr  4 11:37:43 UTC 2013 - pgajdos@suse.com
-
-Version 20130404:
+Version 20130404
   * can display both bitmap and outline specimen and switch
     between them (to see the difference between font rendered
     by default and font rendered on client's system); see new -a
     option
 
--------------------------------------------------------------------
-Mon Mar 25 13:27:18 UTC 2013 - pgajdos@suse.com
-
-Version 20130325:
+Version 20130325
   * render embedded bitmaps correctly
 
--------------------------------------------------------------------
-Thu Mar 21 13:49:47 UTC 2013 - pgajdos@suse.com
-
-Version 20130321:
+Version 20130321
   * display use of embedded bitmaps and available bitmaps in font
   * better rendered specimen of bitmap fonts
 
--------------------------------------------------------------------
-Fri Mar 15 09:42:25 UTC 2013 - pgajdos@suse.com
-
-Version 20130315:
+Version 20130315
   * display tooltips in specimens: font sizes (see new -z option)
   * display more files in File(s): section for bitmap fonts
 
--------------------------------------------------------------------
-Tue Mar 12 15:20:15 UTC 2013 - pgajdos@suse.com
-
-Version 20130312:
+Version 20130312
   * use freetype2 and libpng for image rendering, don't use
     ImageMagick
 
--------------------------------------------------------------------
-Fri Mar  1 11:29:22 UTC 2013 - pgajdos@suse.com
-
-Version 20130301:
+Version 20130301
   * detailed view also for ALL families
   * other minor improvements
 
--------------------------------------------------------------------
-Thu Feb 14 08:16:02 UTC 2013 - pgajdos@suse.com
-
-Version 20130214:
+Version 20130214
   * added forgotten package-manager.sh, which caused empty
     Software Package Information section
   * do not leak file descriptors
 
--------------------------------------------------------------------
-Wed Feb 13 07:46:55 UTC 2013 - pgajdos@suse.com
-
-Version 20130213:
+Version 20130213
   * added Software Package Information section to Font Card
   * added foundry, capability and fontformat to Family Overview
 
--------------------------------------------------------------------
-Thu Feb  7 08:06:15 UTC 2013 - pgajdos@suse.com
-
-Version 20130207:
+Version 20130207
   * minor improvements
 
--------------------------------------------------------------------
-Wed Feb  6 08:11:35 UTC 2013 - pgajdos@suse.com
-
-Version 20130206:
+Version 20130206
   * minor improvements
 
--------------------------------------------------------------------
-Tue Feb  5 15:08:15 UTC 2013 - pgajdos@suse.com
-
-Version 20130205:
+Version 20130205
   * code refactorized to be able to easily add styles
   * added bento style
   * possibility to switch between plain and bento style, 
@@ -367,16 +214,10 @@ Version 20130205:
   * when charset doesn't cover given specimen sentence, take
     first few characters from the charset as sentence
 
--------------------------------------------------------------------
-Tue Jan 15 11:43:59 UTC 2013 - pgajdos@suse.com
-
-Version 20130115:
+Version 20130115
   * character set is enriched by tooltips, see new -u option
 
--------------------------------------------------------------------
-Thu Dec 20 13:35:19 UTC 2012 - pgajdos@suse.com
-
-Version 20121220:
+Version 20121220
   * implement some suggestions: offer splitted index of families,
     increase fontsize in character set, minispecimens along family
     names, etc.
