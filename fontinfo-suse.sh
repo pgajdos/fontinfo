@@ -22,10 +22,8 @@ fontinfo -l M17N:fonts \
          -n ymp \
          -g \
          -r 'openSUSE Tumbleweed,http://download.opensuse.org/repositories/M17N:/fonts/openSUSE_Tumbleweed' \
-         -r 'openSUSE Leap 42.1,http://download.opensuse.org/repositories/M17N:/fonts/openSUSE_Leap_42.1' \
-         -r 'openSUSE 13.2,http://download.opensuse.org/repositories/M17N:/fonts/openSUSE_13.2' \
-         -r 'openSUSE 13.1,http://download.opensuse.org/repositories/M17N:/fonts/openSUSE_13.1' \
-         -r 'SUSE Linux Enterprise Server 12,http://download.opensuse.org/repositories/M17N:/fonts/SLE_12' \
-         -r 'SUSE Linux Enterprise Desktop 12,http://download.opensuse.org/repositories/M17N:/fonts/openSUSE_Factory' \
+         -r 'openSUSE Leap 42.2,http://download.opensuse.org/repositories/M17N:/fonts/openSUSE_Leap_42.2' \
+         -r 'SUSE Linux Enterprise Server 12,http://download.opensuse.org/repositories/M17N:/fonts/SLE_12_SP2' \
+         -r 'SUSE Linux Enterprise Desktop 12,http://download.opensuse.org/repositories/M17N:/fonts/SLE_12_SP2' \
          -r 'SUSE Linux Enterprise Server 11,http://download.opensuse.org/repositories/M17N:/fonts/SLE_11_SP4/' \
          -r 'SUSE Linux Enterprise Desktop 11,http://download.opensuse.org/repositories/M17N:/fonts/SLE_11_SP4/' \
