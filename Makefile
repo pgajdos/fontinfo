@@ -86,7 +86,6 @@ styles-commons.h:		doc/thanks.txt
 install:	fontinfo	
 		install -Dd -m 0755 $(PREFIX) $(DESTDIR)/usr/bin
 		install     -m 0755 fontinfo $(DESTDIR)/usr/bin
-		install     -m 0755 fontinfo_browse.sh $(DESTDIR)/usr/bin/fontinfo_browse
 		install     -m 0755 fontinfo-suse.sh $(DESTDIR)/usr/bin/fontinfo-suse
 
 clean:
