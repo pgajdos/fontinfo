@@ -1,3 +1,6 @@
+Version 20170626
+  * 1-click install for current distros
+
 Version 20150410
   * prevent buffer overflow for Supplementary Private Use Area-B
   * reformat CHANGES file
