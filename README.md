@@ -11,7 +11,7 @@ and see differences.
 
 Git Repository: [fontinfo](https://github.com/pgajdos/fontinfo/)
 
-Example of use: openSUSE's [M17N:fonts](http://fontinfo.opensuse.org) overview
+Example of use: openSUSE's [M17N:fonts](https://fontinfo.opensuse.org) overview
 
 Authors
 =======

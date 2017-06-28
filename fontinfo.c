@@ -162,7 +162,7 @@ void usage(const char *err)
   fprintf(stderr, "                     -r implies -n "DEFAULT_INSTALL_WHEN_REPO", if not specified otherwise; for "YMP_INSTALL", "
                                         "repo has to be exact product version\n");
   fprintf(stderr, "                     example: \n");
-  fprintf(stderr, "                      -r 'openSUSE 12.3,http://download.opensuse.org/repositories/M17N:/fonts/openSUSE_12.3/'\n");
+  fprintf(stderr, "                      -r 'openSUSE 12.3,https://download.opensuse.org/repositories/M17N:/fonts/openSUSE_12.3/'\n");
   fprintf(stderr, "\n");
   fprintf(stderr, "       Running fontinfo without any parameter will result\n");
   fprintf(stderr, "       in full information fontinfo is able to produce\n");
