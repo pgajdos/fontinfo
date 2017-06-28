@@ -160,7 +160,7 @@ static void bento_page(FILE *html, const char *title, html_links page_path,
   fprintf(html,
           "  \"//www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n");
   fprintf(html, 
-          "<html xmlns=\"//www.w3.org/1999/xhtml\" "
+          "<html xmlns=\"http://www.w3.org/1999/xhtml\" "
           "xml:lang=\"en\" lang=\"en\">\n");
   fprintf(html, 
           "  <head>\n");
