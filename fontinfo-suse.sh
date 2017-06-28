@@ -17,8 +17,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-# fonts-config package is needed to correctly fill in FcPattern entries
-rpm -q fonts-config >/dev/null 2>&1 || { echo 'fonts-config package not installed!'; exit 1; }
 fontinfo -l M17N:fonts \
          -y bento \
          -n ymp \
