@@ -71,8 +71,10 @@ int fc_to_css_weight(int fc_weight)
     case FC_WEIGHT_THIN:       /*   0 */
       return 100;
     case FC_WEIGHT_ULTRALIGHT: /*  40 */
+    case 45:                   /* hmm, get 45 but it is not FC_WEIGHT_ constant */
       return 200;
     case FC_WEIGHT_LIGHT:      /*  50 */
+    case FC_WEIGHT_DEMILIGHT:  /*  55 */
       return 300;
     case FC_WEIGHT_BOOK:       /*  75 */
     case FC_WEIGHT_REGULAR:    /*  80 */
