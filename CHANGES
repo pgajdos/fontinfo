@@ -1,3 +1,8 @@
+Version 20200115
+  * 1-click install for current distros
+  * cannot load or get a glyph is not fata
+  * consider new fontconfig weight constants
+
 Version 20170627
   * 1-click install for current distros
 
