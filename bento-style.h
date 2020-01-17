@@ -25,9 +25,14 @@
 
 # include "configuration.h"
 
+void bento_thanks(config_t config);
+void bento_script_index(config_t config);
+void bento_script_fonts_indexes(config_t config);
+void bento_scripts_index(config_t config);
 void bento_families_index(config_t config);
 void bento_families_partial_indexes(config_t config);
 void bento_family_styles_indexes(config_t config);
+void bento_families_detailed_indexes(config_t config);
 void bento_font_cards(config_t config);
 void bento_languages_index(config_t config);
 void bento_language_fonts_indexes(config_t config);

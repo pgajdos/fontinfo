@@ -25,8 +25,10 @@
 
 # include "configuration.h"
 
+void plain_thanks(config_t conig);
 void plain_families_index(config_t config);
 void plain_families_partial_indexes(config_t config);
+void plain_families_detailed_indexes(config_t config);
 void plain_family_styles_indexes(config_t config);
 void plain_font_cards(config_t config);
 void plain_languages_index(config_t config);
