@@ -331,7 +331,6 @@ static int ft_draw_text_(FcChar32 text[], int x,  int y,
       fprintf(stderr, "ft_draw_text_(): out of memory\n");
       exit(1);
     }
-
  
     pen.x = x << 6;
     if (bitmap->text_direction == 1)
@@ -352,15 +351,19 @@ static int ft_draw_text_(FcChar32 text[], int x,  int y,
                             glyph_codepoints[g], bitmap->load_flags);
       if (error)
       {
-        fprintf(stderr, "ft_draw_text(): can't load glyph\n");
-        exit(1);
+        fprintf(stderr, "ft_draw_text_(): can't load glyph %c (%u): %s (%d)\n", 
+			text[g], glyph_codepoints[g], FT_Error_String(error), error);
+        glyphs[g] = NULL;
+	continue;
       }
  
       error = FT_Get_Glyph(bitmap->face->glyph, &glyphs[g]);
       if (error)
       {
-        fprintf(stderr, "ft_draw_text(): can't get glyph\n");
-        exit(1);
+        fprintf(stderr, "ft_draw_text_(): can't get glyph %c (%u): %s (%d)\n", 
+			text[g], glyph_codepoints[g], FT_Error_String(error), error);
+        glyphs[g] = NULL;
+	continue;
       }
     }
 
@@ -428,16 +431,20 @@ static int ft_draw_text_(FcChar32 text[], int x,  int y,
                             glyph_codepoints[g], bitmap->load_flags);
       if (error)
       {
-        fprintf(stderr, "ft_draw_text(): can't load glyph\n");
-        exit(1);
+        fprintf(stderr, "ft_draw_text_(): can't load glyph %c (%u): %s (%d)\n", 
+			text[g], glyph_codepoints[g], FT_Error_String(error), error);
+	glyphs[g] = NULL;
+        continue;
       }
  
       slot = bitmap->face->glyph;
       error = FT_Get_Glyph(slot, &glyphs[g]);
       if (error)
       {
-        fprintf(stderr, "ft_draw_text(): can't get glyph\n");
-        exit(1);
+        fprintf(stderr, "ft_draw_text_(): can't get glyph %c (%u): %s (%d)\n", 
+			text[g], glyph_codepoints[g], FT_Error_String(error), error);
+        glyphs[g] = NULL;
+	continue;
       }
 
       if (bitmap->text_direction == 1)
@@ -474,6 +481,9 @@ static int ft_draw_text_(FcChar32 text[], int x,  int y,
   {
     for (g = 0; g < nglyphs; g++)
     {
+      if (glyphs[g] == NULL)
+        continue;
+
       monochrome = 0;
       if (bitmap->load_flags & FT_LOAD_TARGET_MONO || 
           glyphs[g]->format == FT_GLYPH_FORMAT_BITMAP)
@@ -521,7 +531,7 @@ void ft_initialize_info(face_info_t *info, FcChar8 *file)
   error = FT_New_Face(info->library, (char *)file, 0, &info->face);
   if (error)
   {
-    fprintf(stderr, "ft_draw_text(): can't create face object\n");
+    fprintf(stderr, "ft_initialize_info(): can't create face object\n");
     exit(1);
   }
 
