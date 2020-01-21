@@ -1,4 +1,7 @@
-Version 20200115
+Version 20200121
+  * updated THANKS.md
+
+Version 20200117
   * 1-click install for current distros
   * cannot load or get a glyph is not fata
   * consider new fontconfig weight constants

@@ -25,6 +25,8 @@ Technical support
 -----------------
 * Martin Čaj
 * Marcus Rückert
+* Theo Chatzimichos
+* Lars Vogdt
 
 I hope I haven't forgot anyone.
 
