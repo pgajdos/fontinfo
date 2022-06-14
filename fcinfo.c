@@ -351,9 +351,10 @@ FcFontSet * fcinfo_match(FcFontSet *fontset, const FcPattern *filter)
         assert(fcinfo_get_translated_string(fontset->fonts[f + 1], FC_FAMILY, 
                                             LANG_EN, &next_family)
                == FcResultMatch);
-        assert(fcinfo_get_translated_string(fontset->fonts[f + 1], FC_STYLE,
-                                            LANG_EN, &next_style)
-               == FcResultMatch);
+        /* if there is no style, next_style will remain the same ->
+         * skips this font too, https://github.com/pgajdos/fontinfo/issues/2 */
+        fcinfo_get_translated_string(fontset->fonts[f + 1], FC_STYLE,
+                                     LANG_EN, &next_style);
         f++;
       }
     }
@@ -380,9 +381,10 @@ FcFontSet * fcinfo_match(FcFontSet *fontset, const FcPattern *filter)
         assert(fcinfo_get_translated_string(fontset->fonts[f + 1], FC_FAMILY, 
                                             LANG_EN, &next_family)
                == FcResultMatch);
-        assert(fcinfo_get_translated_string(fontset->fonts[f + 1], FC_STYLE,
-                                            LANG_EN, &next_style)
-               == FcResultMatch);
+        /* if there is no style, next_style will remain the same ->
+	 * skips this font too, https://github.com/pgajdos/fontinfo/issues/2 */
+        fcinfo_get_translated_string(fontset->fonts[f + 1], FC_STYLE,
+                                            LANG_EN, &next_style);
 
         f++;
       }
