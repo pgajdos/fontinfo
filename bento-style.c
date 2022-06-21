@@ -749,7 +749,6 @@ void bento_families_detailed_indexes(config_t config)
   fontset_arg = FcFontSetCreate();
   prev_family = NULL;
 
-  arg[0] = fontset_arg;
   arg[1] = &generate_png_files;
   generate_png_files = 1;
 
@@ -768,6 +767,7 @@ void bento_families_detailed_indexes(config_t config)
 
 
       navigation_links_parts[nparts].active = 0;
+      arg[0] = fontset_arg;
       bento_page(html, FAMILIES_INDEX, path, navigation, 2,
                  content_families_detailed_index, config, arg);
       navigation_links_parts[nparts].active = 1;
@@ -788,6 +788,7 @@ void bento_families_detailed_indexes(config_t config)
   html = open_write(fname, "bento_families_detailed_indexes");
 
   navigation_links_parts[nparts].active = 0;
+  arg[0] = fontset_arg;
   bento_page(html, FAMILIES_INDEX, path, navigation, 2,
              content_families_detailed_index, config, arg);
   navigation_links_parts[nparts++].active = 1;
