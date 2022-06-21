@@ -1805,9 +1805,15 @@ static void content_language_font_index(FILE *html, config_t config,
     assert(fcinfo_get_translated_string(fontset->fonts[f], FC_FAMILY, 
                                         LANG_EN, &family)
            == FcResultMatch);
-    assert(fcinfo_get_translated_string(fontset->fonts[f], FC_STYLE, 
-                                        LANG_EN, &style)
-           == FcResultMatch);
+    if (fcinfo_get_translated_string(fontset->fonts[f], FC_STYLE, 
+                                     LANG_EN, &style)
+           != FcResultMatch)
+    {
+      /* there exist fonts withoug style field defined,
+       * ignore them https://github.com/pgajdos/fontinfo/issues/2 */
+      f++;
+      continue;
+    }
     snprintf(fname, FILEPATH_MAX, "%s%s.html", family, style);
     remove_spaces_and_slashes(fname);
 
@@ -2185,9 +2191,15 @@ static void content_script_font_index(FILE *html, config_t config,
     assert(fcinfo_get_translated_string(ranking[f], FC_FAMILY,
                                         LANG_EN, &family)
            == FcResultMatch);
-    assert(fcinfo_get_translated_string(ranking[f], FC_STYLE,
-                                        LANG_EN, &style)
-           == FcResultMatch);
+    if (fcinfo_get_translated_string(ranking[f], FC_STYLE,
+                                     LANG_EN, &style)
+           != FcResultMatch)
+    {
+      /* there exist fonts withoug style field defined,
+       * ignore them https://github.com/pgajdos/fontinfo/issues/2 */
+      f++;
+      continue;
+    }
     snprintf(fname, FILEPATH_MAX, "%s%s.html", family, style);
     remove_spaces_and_slashes(fname);
 
@@ -2473,9 +2485,15 @@ static void content_block_font_index(FILE *html, config_t config,
     assert(fcinfo_get_translated_string(ranking[f], FC_FAMILY,
                                         LANG_EN, &family)
            == FcResultMatch);
-    assert(fcinfo_get_translated_string(ranking[f], FC_STYLE,
-                                        LANG_EN, &style)
-           == FcResultMatch);
+    if (fcinfo_get_translated_string(ranking[f], FC_STYLE,
+                                     LANG_EN, &style)
+           != FcResultMatch)
+    {
+      /* there exist fonts withoug style field defined,
+       * ignore them https://github.com/pgajdos/fontinfo/issues/2 */
+      f++;
+      continue;
+    }
     snprintf(fname, FILEPATH_MAX, "%s%s.html", family, style);
     remove_spaces_and_slashes(fname);
 
