@@ -176,9 +176,6 @@ static void bento_page(FILE *html, const char *title, html_links page_path,
           "    <link rel=\"icon\" type=\"image/png\" "
           "href=\""BENTO_LOCATION"images/favicon.png\" />\n");
   fprintf(html,
-          "    <script src=\""BENTO_LOCATION"js/jquery.js\" "
-          "type=\"text/javascript\" charset=\"utf-8\"></script>\n");
-  fprintf(html,
           "    <script src=\""BENTO_LOCATION"js/script.js\" "
           "type=\"text/javascript\" charset=\"utf-8\"></script>\n");
   fprintf(html,
