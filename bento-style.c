@@ -417,7 +417,7 @@ static void bento_page(FILE *html, const char *title, html_links page_path,
 static void content_families_index(FILE *html, config_t config, 
                                    void *opt_arg[])
 {
-  int f;
+  int f, other;
 
   FcFontSet *fontset = (FcFontSet *)opt_arg[0];
   FcChar8 *family, *prev_family = NULL;
@@ -433,6 +433,7 @@ static void content_families_index(FILE *html, config_t config,
           "          <h1>"FAMILIES_INDEX" in %s</h1>\n", config.location);  
   fprintf(html, 
           "    \n");
+  other = 0;
   for (f = 0; f < fontset->nfont; f++)
   {
     assert(fcinfo_get_translated_string(fontset->fonts[f], FC_FAMILY, 
@@ -441,24 +442,40 @@ static void content_families_index(FILE *html, config_t config,
     snprintf(family_ww, FAMILY_NAME_LEN_MAX, "%s", (const char *)family);
     remove_spaces_and_slashes(family_ww);    
 
-    if (prev_family)
+    if (!other)
     {
-      if (toupper(prev_family[0]) != toupper(family[0]))
+      if (!isprint(family[0]))
       {
-	fprintf(html, " </p>\n");
-	fprintf(html, 
+	/* non print family[0] probably means family name
+	 * is in utf-8 or so, group them to Other section,
+	 * will not have detailidx page */
+        other = 1;
+        fprintf(html, " </p>\n");
+        fprintf(html, 
                 "          <h2>"
-                "<a href=\"%s/"FAMILIES_INDEX_NAME".%c.html\">%c</a></h2>\n", 
-		DETAILIDX_SUBDIR, tolower(family[0]), toupper(family[0]));
-	fprintf(html, "          <p> |");
+                "Other</h2>\n", 
+                DETAILIDX_SUBDIR);
+        fprintf(html, "          <p> |");
       }
-    }
-    else
-    {
-      fprintf(html, "          <h2>"
-                    "<a href=%s/"FAMILIES_INDEX_NAME".%c.html>%c</a></h2>\n", 
-		    DETAILIDX_SUBDIR, tolower(family[0]), toupper(family[0]));
-      fprintf(html, "          <p> |");
+      else if (prev_family)
+      {
+        if (toupper(prev_family[0]) != toupper(family[0]))
+        {
+          fprintf(html, " </p>\n");
+          fprintf(html, 
+                  "          <h2>"
+                  "<a href=\"%s/"FAMILIES_INDEX_NAME".%c.html\">%c</a></h2>\n", 
+                  DETAILIDX_SUBDIR, tolower(family[0]), toupper(family[0]));
+          fprintf(html, "          <p> |");
+        }
+      }
+      else
+      {
+        fprintf(html, "          <h2>"
+                      "<a href=%s/"FAMILIES_INDEX_NAME".%c.html>%c</a></h2>\n", 
+                      DETAILIDX_SUBDIR, tolower(family[0]), toupper(family[0]));
+        fprintf(html, "          <p> |");
+      }
     }
  
     fprintf(html, " <a href=\"%s/%s.html\">%s</a> |", 
@@ -510,6 +527,10 @@ void bento_families_index(config_t config)
     assert(fcinfo_get_translated_string(fontset->fonts[f], FC_FAMILY, 
                                         LANG_EN, &family)
            == FcResultMatch);
+    /* ignore non standard family names (probably utf-8 or so) */
+    if (!isprint(family[0]))
+      continue;
+
     if (!prev_family || toupper(prev_family[0]) != toupper(family[0]))
     {
       assert(nparts < FONT_INDEX_PARTS_MAX);
@@ -716,6 +737,11 @@ void bento_families_detailed_indexes(config_t config)
     assert(fcinfo_get_translated_string(fontset->fonts[f], FC_FAMILY, 
                                         LANG_EN, &family)
            == FcResultMatch);
+
+    /* ignore non standard family names (probably utf-8 or so) */
+    if (!isprint(family[0]))
+      continue;
+
     if (!prev_family || toupper(prev_family[0]) != toupper(family[0]))
     {
       assert(nparts < FONT_INDEX_PARTS_MAX);
