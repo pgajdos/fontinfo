@@ -18,7 +18,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 fontinfo -l M17N:fonts \
-         -y bento \
+         -y chameleon \
          -n ymp \
          -g \
          -r 'openSUSE Tumbleweed,https://download.opensuse.org/repositories/M17N:/fonts/openSUSE_Tumbleweed' \
