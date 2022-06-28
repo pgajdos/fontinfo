@@ -32,14 +32,16 @@ MYLIBS		 = $(PKGMAN_LIBS) $(FONTCONFIG_LIBS) $(LIBPNG_LIBS) $(FT2_LIBS) $(HB_LIB
 MARKDOWN_COMMAND = $(shell if [ -x /usr/bin/markdown ]; then echo "/usr/bin/markdown -f 'html'"; else echo "/usr/bin/cat"; fi)
 
 OBJS		= constants.o img.o ft.o hbz.o img_svg.o img_png.o img_common.o fcinfo.o \
-                  filesystem.o package-manager.o plain-style.o bento-style.o styles-commons.o js-lib.o ymp.o
+                  filesystem.o package-manager.o plain-style.o bento-style.o chameleon-style.o styles-commons.o js-lib.o ymp.o
 
-fontinfo:			$(OBJS) fontinfo.c configuration.h filesystem.h plain-style.h bento-style.h constants.h
+fontinfo:			$(OBJS) fontinfo.c configuration.h filesystem.h plain-style.h bento-style.h chameleon-style.h constants.h
 				gcc $(MYLDFLAGS) $(LDLAGS) -o fontinfo $(OBJS) fontinfo.c $(MYLIBS)
 plain-style.o:			plain-style.c plain-style.h fcinfo.h constants.h filesystem.h img.h package-manager.h configuration.h styles-commons.h ft.h ymp.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) plain-style.c
 bento-style.o:			bento-style.c bento-style.h fcinfo.h constants.h filesystem.h img.h package-manager.h configuration.h styles-commons.h ft.h js-lib.h ymp.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) bento-style.c
+chameleon-style.o:		chameleon-style.c chameleon-style.h fcinfo.h constants.h filesystem.h img.h package-manager.h configuration.h styles-commons.h ft.h js-lib.h ymp.h
+				gcc -c $(MYCFLAGS) $(CFLAGS) chameleon-style.c
 styles-commons.o:		styles-commons.c styles-commons.h fcinfo.h img_svg.h constants.h
 				gcc -c $(MYCFLAGS) $(CFLAGS) styles-commons.c
 fcinfo.o:			fcinfo.c fcinfo.h constants.h

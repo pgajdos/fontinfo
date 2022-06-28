@@ -29,6 +29,7 @@
 #include "filesystem.h"
 #include "plain-style.h"
 #include "bento-style.h"
+#include "chameleon-style.h"
 #include "constants.h"
 
 #define DEFAULT_LOCATION   "localhost" /* only for heading for Index of Families */
@@ -41,6 +42,7 @@
 
 #define PLAIN_STYLE     "plain"
 #define BENTO_STYLE     "bento"
+#define CHAMELEON_STYLE "chameleon"
 #define DEFAULT_STYLE   PLAIN_STYLE
 
 #define ON              "on"
@@ -355,6 +357,24 @@ int main(int argc, char *argv[])
       bento_thanks(config);
       bento_blocks_index(config);
       bento_block_fonts_indexes(config);
+    }
+  }
+  else if (! strcmp(config.style, CHAMELEON_STYLE))
+  {
+    chameleon_font_cards(config);
+    if (config.generate_indexes)
+    {
+      chameleon_families_index(config);
+      chameleon_families_detailed_indexes(config);
+      chameleon_family_styles_indexes(config);
+      chameleon_languages_index(config);
+      chameleon_language_fonts_indexes(config);
+      chameleon_fontformats_index(config);
+      chameleon_scripts_index(config);
+      chameleon_script_fonts_indexes(config);
+      chameleon_thanks(config);
+      chameleon_blocks_index(config);
+      chameleon_block_fonts_indexes(config);
     }
   }
   else
