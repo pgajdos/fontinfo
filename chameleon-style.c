@@ -185,6 +185,7 @@ static void chameleon_page(FILE *html, const char *title, html_links page_path,
   {
     js_write_script_specimen_view(config, "js-specimen-view.js");
     js_write_script_charset_view(config, "js-charset-view.js");
+    js_write_script_family_search(config, "js-family-search.js");
     js_written = 1;
   }
   fprintf(html,
@@ -192,6 +193,9 @@ static void chameleon_page(FILE *html, const char *title, html_links page_path,
           "type=\"text/javascript\" charset=\"utf-8\"></script>\n");
   fprintf(html,
           "  <script src=../"JS_SUBDIR"/js-charset-view.js "
+          "type=\"text/javascript\" charset=\"utf-8\"></script>\n");
+  fprintf(html,
+          "  <script src=../"JS_SUBDIR"/js-family-search.js "
           "type=\"text/javascript\" charset=\"utf-8\"></script>\n");
   
   fprintf(html,
@@ -298,51 +302,27 @@ static void content_families_index(FILE *html, config_t config,
           "          <h1>"FAMILIES_INDEX" in %s</h1>\n", config.location);  
   fprintf(html, 
           "    \n");
-  other = 0;
+  fprintf(html, 
+          "    <div id=family_filter\" onkeyup=\"filter_function()\" class=\"mb-3\">"
+	  "<input id=family_filter class=\"form-control mb-3\" "
+	  "type=\"text\" placeholder=\"Search in Family Names\"></div>\n");
+  fprintf(html, 
+          "    <br/>\n");
+
+  fprintf(html, 
+          "    <ul class=\"list-group\" id=\"list_families\">\n");
   for (f = 0; f < fontset->nfont; f++)
   {
-    assert(fcinfo_get_translated_string(fontset->fonts[f], FC_FAMILY, 
+    assert(fcinfo_get_translated_string(fontset->fonts[f], FC_FAMILY,
                                         LANG_EN, &family)
            == FcResultMatch);
     snprintf(family_ww, FAMILY_NAME_LEN_MAX, "%s", (const char *)family);
-    remove_spaces_and_slashes(family_ww);    
-
-    if (!other)
-    {
-      if (!isprint(family[0]))
-      {
-        other = 1;
-        fprintf(html, " </p>\n");
-        fprintf(html, 
-                "          <h2>"
-                "Other</h2>\n");
-        fprintf(html, "          <p> |");
-      }
-      else if (prev_family)
-      {
-        if (toupper(prev_family[0]) != toupper(family[0]))
-        {
-          fprintf(html, " </p>\n");
-          fprintf(html, 
-                  "          <h2>"
-                  "<a href=\"%s/"FAMILIES_INDEX_NAME".%c.html\">%c</a></h2>\n", 
-                  DETAILIDX_SUBDIR, tolower(family[0]), toupper(family[0]));
-          fprintf(html, "          <p> |");
-        }
-      }
-      else
-      {
-        fprintf(html, "          <h2>"
-                      "<a href=%s/"FAMILIES_INDEX_NAME".%c.html>%c</a></h2>\n", 
-          	    DETAILIDX_SUBDIR, tolower(family[0]), toupper(family[0]));
-        fprintf(html, "          <p> |");
-      }
-    }
- 
-    fprintf(html, " <a href=\"%s/%s.html\">%s</a> |", 
-	    FAMILIES_SUBDIR, family_ww, family);
-    prev_family = family;
+    remove_spaces_and_slashes(family_ww);
+    fprintf(html, "      <li class=\"list-group-item\" style=\"display:none\"><a href=\"%s/%s.html\">%s</a></li>\n",
+            FAMILIES_SUBDIR, family_ww, family);
   }
+  fprintf(html, 
+          "    </ul>\n");
 
   fprintf(html,
           " </p>\n");

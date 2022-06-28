@@ -210,3 +210,27 @@ void js_write_script_charset_view(config_t config, const char *js_fname)
   return;
 }
 
+void js_write_script_family_search(config_t config, const char *js_fname)
+{
+  js_write_script(config, js_fname,
+		  "function filter_function() {\n"
+                  "  var req_family_name, filter, ul, li, anchor, i, family_name;\n"
+                  "  req_family_name = document.getElementById(\"family_filter\");\n"
+                  "  filter = req_family_name.value.toUpperCase();\n"
+                  "  if (filter.length >= 3) {\n"
+                  "    ul = document.getElementById(\"list_families\");\n"
+                  "    li = ul.getElementsByTagName(\"li\");\n"
+                  "    for (i = 0; i < li.length; i++) {\n"
+                  "      anchor = li[i].getElementsByTagName(\"a\")[0];\n"
+                  "      family_name = anchor.textContent || anchor.innerText;\n"
+                  "      if (family_name.toUpperCase().indexOf(filter) > -1) {\n"
+                  "        li[i].style.display = \"\";\n"
+                  "      } else {\n"
+                  "        li[i].style.display = \"none\";\n"
+                  "      }\n"
+                  "    }\n"
+                  "  }\n"
+                  "}\n");
+
+  return;
+}
