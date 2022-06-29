@@ -112,7 +112,7 @@ void js_write_script_specimen_view(config_t config, const char *js_fname)
                   "      document.write(\"<td><div class=\\\"my-3\\\"><button class=\\\"btn btn-secondary\\\"\"\n"
 		  "                     + \"id='\" + scripts[i] + \"SpecimenAnchor' onclick=\\\"display_specimen('\"\n"
                   "                     + scripts[i] + \"', cspecimen_type)\\\">\" + script_wu + \"</button></div></td>\"); \n"
-                  "      if (i % 10 == 9)\n"
+                  "      if (i % 7 == 6)\n"
                   "      {\n"
                   "        document.write('</tr><tr>');\n"
                   "      }\n"
