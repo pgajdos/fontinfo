@@ -286,11 +286,22 @@ static void chameleon_page(FILE *html, const char *title, html_links page_path,
 static void content_families_index(FILE *html, config_t config, 
                                    void *opt_arg[])
 {
-  int f, other;
+  int f;
 
   FcFontSet *fontset = (FcFontSet *)opt_arg[0];
-  FcChar8 *family, *prev_family = NULL;
+  FcChar8 *family, *file;
   char family_ww[FAMILY_NAME_LEN_MAX];
+
+  FcChar32 ucs4_sentence[SENTENCE_NCHARS];
+  int dir, random;
+  const char *script;
+  const char *lang;
+
+  uinterval_stat_t script_stats[NUMSCRIPTS];
+  int nscripts, v;
+
+  package_info_t pi;
+  char filename[FILEPATH_MAX];
 
   if (fontset->nfont == 0)
   {
@@ -303,29 +314,109 @@ static void content_families_index(FILE *html, config_t config,
   fprintf(html, 
           "    \n");
   fprintf(html, 
-          "    <div id=family_filter\" onkeyup=\"filter_function()\" class=\"mb-3\">"
-	  "<input id=family_filter class=\"form-control mb-3\" "
-	  "type=\"text\" placeholder=\"Search in Family Names\"></div>\n");
+          "    <div class=\"mb-3\">"
+	  "<input id=family_filter onkeyup=\"filter_function()\" class=\"form-control mb-3\" "
+	  "type=\"text\" placeholder=\"Search in family names, e. g. Source, mono, etc. or all\"></div>\n");
   fprintf(html, 
           "    <br/>\n");
 
   fprintf(html, 
-          "    <ul class=\"list-group\" id=\"list_families\">\n");
-  for (f = 0; f < fontset->nfont; f++)
+          "    <div class=\"table-responsive\"><table class=\"table\" id=\"list_families\">\n");
+/*  for (f = 0; f < fontset->nfont; f++)
   {
     assert(fcinfo_get_translated_string(fontset->fonts[f], FC_FAMILY,
                                         LANG_EN, &family)
            == FcResultMatch);
     snprintf(family_ww, FAMILY_NAME_LEN_MAX, "%s", (const char *)family);
     remove_spaces_and_slashes(family_ww);
-    fprintf(html, "      <li class=\"list-group-item\" style=\"display:none\"><a href=\"%s/%s.html\">%s</a></li>\n",
+    fprintf(html, "      <tr class=\"list-group-item\" style=\"display:none\"><td><a href=\"%s/%s.html\">%s</a></td></tr>\n",
             FAMILIES_SUBDIR, family_ww, family);
+  }*/
+  for (f = 0; f < fontset->nfont; f++)
+  {
+    FcCharSet *charset;
+
+    assert(fcinfo_get_translated_string(fontset->fonts[f], FC_FAMILY, 
+                                        LANG_EN, &family)
+           == FcResultMatch);
+    snprintf(family_ww, FAMILY_NAME_LEN_MAX, "%s", (const char *)family);
+    remove_spaces_and_slashes(family_ww);    
+
+    assert(FcPatternGetString(fontset->fonts[f], FC_FILE, 0, &file)
+           == FcResultMatch);
+    file_from_package((char *)file, &pi);
+
+    fprintf(html, 
+            "            <tr style=\"display:none\">\n");
+    fprintf(html, 
+            "              <td style=\"vertical-align:middle\">"
+            "<a href=\"../%s/%s.html\">%s</a></td>", 
+            FAMILIES_SUBDIR, family_ww, family);
+
+    assert(FcPatternGetCharSet(fontset->fonts[f], FC_CHARSET, 0, &charset)
+           == FcResultMatch);
+
+    if (config.debug)
+      fprintf(stdout, "\nFONT(minispecimen, detailed index): %s\n", family);
+    script = config.minispecimen_script;
+    specimen_sentence(config, charset, config.minispecimen_script,
+                      &dir, NULL, &lang,
+                      &random, ucs4_sentence, SENTENCE_NCHARS);
+
+    if (random)
+    {
+      /* font doesn't cover any sentence from config.minispecimen_script */
+      /* try another script inside font */
+      nscripts = charset_uinterval_statistics(charset, script_stats, 
+                                              SCRIPT, UI_SORT_PERCENT);
+      for (v = 0; v < nscripts; v++)
+      {
+        if (config.debug)
+          fprintf(stdout, "trying %s script: ", script_stats[v].ui_name);
+        specimen_sentence(config, charset, script_stats[v].ui_name,
+                          &dir, NULL, &lang,
+                          &random, ucs4_sentence, SENTENCE_NCHARS);
+        if (! random)
+          break;
+      }
+
+      /* no sentence which would fit found, use random characters instead */
+      if (v == nscripts)
+        specimen_sentence(config, charset, config.minispecimen_script,
+                          &dir, NULL, &lang,
+                          &random, ucs4_sentence, SENTENCE_NCHARS);
+      else
+        script = script_stats[v].ui_name;
+    }
+
+    fprintf(html, 
+            "              <td>\n");
+    write_minispecimen(html, fontset->fonts[f], 
+                       "", config, ucs4_sentence, 
+                       script, lang, dir % 2, 
+                       "                ", 
+                       1, "specimenimgmap",
+                       SPECIMEN_WIDTH_MAX, NULL, NULL);
+    fprintf(html, 
+            "              </td>\n");
+
+    if (config.install_type == YMP && pi.name[0])
+    {
+      generate_ymp(config, pi.name, filename);
+      fprintf(html,
+              "              <td style=\"vertical-align:middle\">\n");
+      fprintf(html,
+              "              <a style=\"font-weight:bold;color:#690\""
+              " href=../%s>1&nbsp;Click Install</a>", filename);
+      fprintf(html,
+              "              </td>\n");
+    }
+
+    fprintf(html, 
+            "            </tr>\n");
   }
   fprintf(html, 
-          "    </ul>\n");
-
-  fprintf(html,
-          " </p>\n");
+          "    </table>\n");
 
   return;
 }
@@ -403,277 +494,6 @@ void chameleon_families_index(config_t config)
                  content_families_index, config, arg);
 
   fclose(html);
-  return;
-}
-
-static void content_families_detailed_index(FILE *html, config_t config, 
-                                           void *output_arg[])
-{
-  FcFontSet *fontset = (FcFontSet *)output_arg[0];
-  int *generate_png_files = (int *)output_arg[1];
-  int f;
-  FcChar8 *family, *family2, *file;
-  char family_ww[FAMILY_NAME_LEN_MAX];
-
-  FcChar32 ucs4_sentence[SENTENCE_NCHARS];
-  int dir, random;
-  const char *script;
-  const char *lang;
-
-  uinterval_stat_t script_stats[NUMSCRIPTS];
-  int nscripts, v;
-
-  package_info_t pi;
-  char filename[FILEPATH_MAX];
-
-  assert(fcinfo_get_translated_string(fontset->fonts[0], FC_FAMILY, 
-                                      LANG_EN, &family)
-         == FcResultMatch);
-  assert(fcinfo_get_translated_string(fontset->fonts[fontset->nfont-1], 
-                                      FC_FAMILY, LANG_EN, &family2)
-         == FcResultMatch);
-
-  if (isprint(family[0]) && family[0] == family2[0])
-    fprintf(html, 
-            "          <h1>"FAMILIES_INDEX" in %s - %c</h1>\n", 
-            config.location, toupper(family[0]));
-  else
-    fprintf(html, 
-            "          <h1>"FAMILIES_INDEX" in %s</h1>\n", 
-            config.location);
-  
-  fprintf(html,
-          "          \n");
-
-  fprintf(html, "          <table>\n");
-  for (f = 0; f < fontset->nfont; f++)
-  {
-    FcCharSet *charset;
-
-    assert(fcinfo_get_translated_string(fontset->fonts[f], FC_FAMILY, 
-                                        LANG_EN, &family)
-           == FcResultMatch);
-    snprintf(family_ww, FAMILY_NAME_LEN_MAX, "%s", (const char *)family);
-    remove_spaces_and_slashes(family_ww);    
-
-    assert(FcPatternGetString(fontset->fonts[f], FC_FILE, 0, &file)
-           == FcResultMatch);
-    file_from_package((char *)file, &pi);
-
-    fprintf(html, 
-            "            <tr>\n");
-    fprintf(html, 
-            "              <td style=\"vertical-align:middle\">"
-            "<a href=\"../%s/%s.html\">%s</a></td>", 
-            FAMILIES_SUBDIR, family_ww, family);
-
-    assert(FcPatternGetCharSet(fontset->fonts[f], FC_CHARSET, 0, &charset)
-           == FcResultMatch);
-
-    if (config.debug)
-      fprintf(stdout, "\nFONT(minispecimen, detailed index): %s\n", family);
-    script = config.minispecimen_script;
-    specimen_sentence(config, charset, config.minispecimen_script,
-                      &dir, NULL, &lang,
-                      &random, ucs4_sentence, SENTENCE_NCHARS);
-
-    if (random)
-    {
-      /* font doesn't cover any sentence from config.minispecimen_script */
-      /* try another script inside font */
-      nscripts = charset_uinterval_statistics(charset, script_stats, 
-                                              SCRIPT, UI_SORT_PERCENT);
-      for (v = 0; v < nscripts; v++)
-      {
-        if (config.debug)
-          fprintf(stdout, "trying %s script: ", script_stats[v].ui_name);
-        specimen_sentence(config, charset, script_stats[v].ui_name,
-                          &dir, NULL, &lang,
-                          &random, ucs4_sentence, SENTENCE_NCHARS);
-        if (! random)
-          break;
-      }
-
-      /* no sentence which would fit found, use random characters instead */
-      if (v == nscripts)
-        specimen_sentence(config, charset, config.minispecimen_script,
-                          &dir, NULL, &lang,
-                          &random, ucs4_sentence, SENTENCE_NCHARS);
-      else
-        script = script_stats[v].ui_name;
-    }
-
-    fprintf(html, 
-            "              <td>\n");
-    write_minispecimen(html, fontset->fonts[f], 
-                       DETAILIDX_SUBDIR, config, ucs4_sentence, 
-                       script, lang, dir % 2, 
-                       "                ", 
-                       *generate_png_files, "specimenimgmap",
-                       SPECIMEN_WIDTH_MAX, NULL, NULL);
-    fprintf(html, 
-            "              </td>\n");
-
-    if (config.install_type == YMP && pi.name[0])
-    {
-      generate_ymp(config, pi.name, filename);
-      fprintf(html,
-              "              <td style=\"vertical-align:middle\">\n");
-      fprintf(html,
-              "              <a style=\"font-weight:bold;color:#690\""
-              " href=../%s>1&nbsp;Click Install</a>", filename);
-      fprintf(html,
-              "              </td>\n");
-    }
-
-    fprintf(html, 
-            "            </tr>\n");
-  }
-  fprintf(html, 
-          "          </table>\n");
-
-  return;
-}
-
-void chameleon_families_detailed_indexes(config_t config)
-{
-  char dirname[FILEPATH_MAX];
-  char fname[FILEPATH_MAX];
-  char parts_letters[FONT_INDEX_PARTS_MAX][2];
-  char parts_links[FONT_INDEX_PARTS_MAX][FILEPATH_MAX]; 
-  char all_link[FILEPATH_MAX];
-
-  FILE *html;
-  int f, nparts;
-
-  FcFontSet *fontset, *fontset_arg;
-  FcChar8 *family, *prev_family;
-
-  const html_link path_links[] = 
-     {{FAMILIES_INDEX, FAMILIES_INDEX_NAME".html", FAMILIES_INDEX_DESC, 0}};
-  const html_links path = {"../", path_links, ASIZE(path_links), ""};
-  const html_link navigation_links[] = HEADER_LINKS; 
-  html_link navigation_links_parts[FONT_INDEX_PARTS_MAX + 1];/*+ 1 for 'ALL' */
-  html_links navigation[] = 
-    {{"../", navigation_links, ASIZE(navigation_links), MAIN_MENU},
-     {"", navigation_links_parts, 0, DETAILED_VIEW}};
-  void *arg[2];
-  int generate_png_files;
-
-  snprintf(dirname, FILEPATH_MAX, "%s/%s", config.dir, DETAILIDX_SUBDIR);
-  create_dir(dirname);
-
-  fontset = families_index(config);
-  if (fontset->nfont == 0)
-  {
-    fprintf(stderr, "chameleon_families_detailed_indexes(): no fonts found\n");
-    return;
-  }
-
-  /* create navigation links for parts A, B, C, ... */
-  prev_family = NULL;
-  nparts = 0;
-  for (f = 0; f < fontset->nfont; f++)
-  {
-    assert(fcinfo_get_translated_string(fontset->fonts[f], FC_FAMILY, 
-                                        LANG_EN, &family)
-           == FcResultMatch);
-
-    /* ignore non standard family names (probably utf-8 or so) */
-    if (!isprint(family[0]))
-      continue;
-
-    if (!prev_family || toupper(prev_family[0]) != toupper(family[0]))
-    {
-      assert(nparts < FONT_INDEX_PARTS_MAX);
-
-      parts_letters[nparts][0] = toupper(family[0]);
-      parts_letters[nparts][1] = '\0';
-      snprintf(parts_links[nparts], FILEPATH_MAX, 
-               FAMILIES_INDEX_NAME".%c.html", tolower(family[0]));
-      navigation_links_parts[nparts].text  = parts_letters[nparts];
-      navigation_links_parts[nparts].href  = parts_links[nparts];
-      navigation_links_parts[nparts].title = TITLE_DETAILED_LETTER;
-      navigation_links_parts[nparts].active = 1;
-      nparts++; // navigation_links[0] is link to "LANGUAGES_INDEX_NAME".html 
-    }
-
-    prev_family = family;
-  }
-
-  snprintf(all_link, FILEPATH_MAX, FAMILIES_INDEX_NAME".ALL.html");
-  navigation_links_parts[nparts].text = LINK_ALL;
-  navigation_links_parts[nparts].href = all_link;
-  navigation_links_parts[nparts].title = TITLE_DETAILED_ALL;
-  navigation_links_parts[nparts].active = 1;
-
-  navigation[1].nlinks = nparts + 1; /* + 1 for 'ALL' */
-
-  /* create html files */
-  fontset_arg = FcFontSetCreate();
-  prev_family = NULL;
-
-  arg[1] = &generate_png_files;
-  generate_png_files = 1;
-
-  nparts = 0;
-  for (f = 0; f < fontset->nfont; f++)
-  {
-    assert(fcinfo_get_translated_string(fontset->fonts[f], FC_FAMILY, 
-                                        LANG_EN, &family)
-           == FcResultMatch);
-
-    if (prev_family && toupper(prev_family[0]) != toupper(family[0]))
-    {
-      snprintf(fname, FILEPATH_MAX, "%s/"FAMILIES_INDEX_NAME".%c.html", 
-               dirname, tolower(prev_family[0]));
-      html = open_write(fname, "chameleon_families_detailed_indexes");
-
-
-      navigation_links_parts[nparts].active = 0;
-      arg[0] = fontset_arg;
-      chameleon_page(html, FAMILIES_INDEX, path, navigation, 2,
-                     content_families_detailed_index, config, arg);
-      navigation_links_parts[nparts].active = 1;
-
-      fclose(html);
-      FcFontSetDestroy(fontset_arg);
-      fontset_arg = FcFontSetCreate();
-      nparts++;
-    }
- 
-    FcFontSetAdd(fontset_arg, FcPatternDuplicate(fontset->fonts[f]));
-    prev_family = family;
-  }
-
-  /* last part */  
-  snprintf(fname, FILEPATH_MAX, "%s/"FAMILIES_INDEX_NAME".%c.html", 
-           dirname, tolower(prev_family[0]));
-  html = open_write(fname, "chameleon_families_detailed_indexes");
-
-  navigation_links_parts[nparts].active = 0;
-  arg[0] = fontset_arg;
-  chameleon_page(html, FAMILIES_INDEX, path, navigation, 2,
-                 content_families_detailed_index, config, arg);
-  navigation_links_parts[nparts++].active = 1;
-
-  fclose(html);
-
-  /* 'All' detailed page */
-  generate_png_files = 0; /* specimen pngs are created yet above */
-  arg[0] = fontset;       /* all families */
-  snprintf(fname, FILEPATH_MAX, "%s/"FAMILIES_INDEX_NAME".ALL.html", 
-           dirname);
-  html = open_write(fname, "chameleon_families_detailed_indexes");
-  
-  navigation_links_parts[nparts].active = 0;
-  chameleon_page(html, FAMILIES_INDEX, path, navigation, 2,
-                 content_families_detailed_index, config, arg);
-  navigation_links_parts[nparts].active = 1;
-
-  fclose(html);
-
-  FcFontSetDestroy(fontset_arg);
   return;
 }
 

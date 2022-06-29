@@ -310,7 +310,7 @@ void write_png_specimen(const char *subdir,
           family, style, script ? script : NO_SCRIPT);
   if (config.generate_stooltips)
     fprintf(html, " usemap=\"#%s%s\"", mapname_prefix, mapname);
-  fprintf(html, "/></a>\n");
+  fprintf(html, "/>\n");
   
   if (res_width)
     *res_width = png_width;

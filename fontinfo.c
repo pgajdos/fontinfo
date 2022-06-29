@@ -365,7 +365,6 @@ int main(int argc, char *argv[])
     if (config.generate_indexes)
     {
       chameleon_families_index(config);
-      chameleon_families_detailed_indexes(config);
       chameleon_family_styles_indexes(config);
       chameleon_languages_index(config);
       chameleon_language_fonts_indexes(config);
