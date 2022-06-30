@@ -322,16 +322,7 @@ static void content_families_index(FILE *html, config_t config,
 
   fprintf(html, 
           "    <div class=\"table-responsive\"><table class=\"table\" id=\"list_families\">\n");
-/*  for (f = 0; f < fontset->nfont; f++)
-  {
-    assert(fcinfo_get_translated_string(fontset->fonts[f], FC_FAMILY,
-                                        LANG_EN, &family)
-           == FcResultMatch);
-    snprintf(family_ww, FAMILY_NAME_LEN_MAX, "%s", (const char *)family);
-    remove_spaces_and_slashes(family_ww);
-    fprintf(html, "      <tr class=\"list-group-item\" style=\"display:none\"><td><a href=\"%s/%s.html\">%s</a></td></tr>\n",
-            FAMILIES_SUBDIR, family_ww, family);
-  }*/
+
   for (f = 0; f < fontset->nfont; f++)
   {
     FcCharSet *charset;
