@@ -140,7 +140,6 @@
 typedef void (*content_function)(FILE *html, config_t config, void *output_args[]);
 
 static void chameleon_page(FILE *html, const char *title, html_links page_path, 
-                           const html_links navigations[], int nnavigations,
                            content_function content_output, config_t config, 
                            void *output_arg[])
 {
@@ -428,15 +427,8 @@ void chameleon_families_index(config_t config)
   const html_link path_links[] = 
      {{FAMILIES_INDEX, FAMILIES_INDEX_NAME".html", FAMILIES_INDEX_DESC, 0}};
   const html_links path = {"", path_links, ASIZE(path_links), ""};
-  html_link navigation_links[] = HEADER_LINKS;
-  html_link navigation_links_parts[FONT_INDEX_PARTS_MAX + 1];/*+1 for'ALL'*/
-  html_links navigation[] = 
-    {{"", navigation_links, ASIZE(navigation_links), MAIN_MENU},
-     {DETAILIDX_SUBDIR"/", navigation_links_parts, 0, DETAILED_VIEW}};
 
   void *arg[1];
-
-  navigation_links[HL_FAMILIES_INDEX].active = 0;
 
   snprintf(fname, FILEPATH_MAX, "%s/"FAMILIES_INDEX_NAME".html", config.dir);
   html = open_write(fname, "chameleon_families_index");
@@ -462,26 +454,16 @@ void chameleon_families_index(config_t config)
       parts_letters[nparts][1] = '\0';
       snprintf(parts_links[nparts], FILEPATH_MAX, FAMILIES_INDEX_NAME".%c.html",
                tolower(family[0]));
-      navigation_links_parts[nparts].text  = parts_letters[nparts];
-      navigation_links_parts[nparts].href  = parts_links[nparts];
-      navigation_links_parts[nparts].title = TITLE_DETAILED_LETTER;
-      navigation_links_parts[nparts].active = 1;
-      nparts++; /* navigation_links[0] is link to "LANGUAGES_INDEX_NAME".html */
+      nparts++;
     }
 
     prev_family = family;
   }
 
   snprintf(all_link, FILEPATH_MAX, FAMILIES_INDEX_NAME".ALL.html");
-  navigation_links_parts[nparts].text = LINK_ALL;
-  navigation_links_parts[nparts].href = all_link;
-  navigation_links_parts[nparts].title = TITLE_DETAILED_ALL;
-  navigation_links_parts[nparts].active = 1;
-
-  navigation[1].nlinks = nparts + 1; /* + 1 for ALL */
 
   arg[0] = fontset;
-  chameleon_page(html, FAMILIES_INDEX, path, navigation, 2,
+  chameleon_page(html, FAMILIES_INDEX, path, 
                  content_families_index, config, arg);
 
   fclose(html);
@@ -657,9 +639,6 @@ void chameleon_family_styles_indexes(config_t config)
      {{FAMILIES_INDEX, FAMILIES_INDEX_NAME".html", FAMILIES_INDEX_DESC, 1}, 
       {NULL, NULL, NULL, 0}}; 
   const html_links path = {"../", path_links, ASIZE(path_links), ""};
-  html_link navigation_links[] = HEADER_LINKS;
-  html_links navigation[] = 
-    {{"../", navigation_links, ASIZE(navigation_links), MAIN_MENU}};
 
   FcFontSet *styleset;
   family_info_t fi;
@@ -691,7 +670,7 @@ void chameleon_family_styles_indexes(config_t config)
  
     arg[0] = styleset;
     arg[1] = &fi;
-    chameleon_page(html, (const char *)family, path, navigation, 1,
+    chameleon_page(html, (const char *)family, path,
                    content_family_styles_indexes, config, arg);
 
     fclose(html);
@@ -1338,27 +1317,13 @@ void chameleon_font_cards(config_t config)
       {NULL, NULL, NULL, 0},
       {NULL, NULL, NULL, 0}}; 
   const html_links path = {"../", path_links, ASIZE(path_links), ""};
-  const html_link navigation_links[] = HEADER_LINKS;
   const html_link lsw_package = {SOFTWARE_PACKAGE, "#sw_package", "", 1};
   const html_link lshape = {FONT_CARD_SHAPE, "#shape", "", 1};
   const html_link lrendering = {FONT_CARD_RENDERING, "#rendering", "", 1};
   const html_link llanguages = {FONT_CARD_LANGUAGES, "#languages", "", 1};
   const html_link lcharset = {FONT_CARD_CHARSET, "#character_set", "", 1};
-  html_link card_navigation[5];
-  html_links navigation[] = 
-    {{"../", navigation_links, ASIZE(navigation_links), MAIN_MENU},
-     {"", card_navigation,  0, FONT_CARD}};
   void *arg[1];
   int rendering_idx;
-
-  navigation[1].nlinks = 0;
-  if (config.generate_swpkginfo)
-    card_navigation[navigation[1].nlinks++] = lsw_package;
-  card_navigation[navigation[1].nlinks++] = lshape;
-  rendering_idx = navigation[1].nlinks++;
-  card_navigation[navigation[1].nlinks++] = llanguages;
-  if (config.generate_charset)
-    card_navigation[navigation[1].nlinks++] = lcharset;
 
   snprintf(dirname, FILEPATH_MAX, "%s/%s", config.dir, FONTS_SUBDIR);
   create_dir((const char *)dirname);
@@ -1380,8 +1345,6 @@ void chameleon_font_cards(config_t config)
     remove_spaces_and_slashes(&fname[strlen(dirname)+1]);
     html = open_write(fname, "chameleon_font_cards");
 
-    card_navigation[rendering_idx] = scalable ? lrendering : null_link;
-
     snprintf(fname, FILEPATH_MAX, FAMILIES_SUBDIR"/%s.html", family);
     remove_spaces_and_slashes(&fname[strlen(FAMILIES_SUBDIR)+1]);
     path_links[1].text  = (char *)family;
@@ -1398,7 +1361,7 @@ void chameleon_font_cards(config_t config)
     path_links[2].active = 0;
 
     arg[0] = fontset->fonts[f]; 
-    chameleon_page(html, (const char *)family, path, navigation, 2,
+    chameleon_page(html, (const char *)family, path, 
                content_font_card, config, arg);
 
     fclose(html);
@@ -1461,13 +1424,8 @@ void chameleon_languages_index(config_t config)
   const html_link path_links[] = 
      {{LANGUAGES_INDEX, LANGUAGES_INDEX_NAME".html", LANGUAGES_INDEX_DESC, 0}};
   const html_links path = {"", path_links, ASIZE(path_links), ""};
-  html_link navigation_links[] = HEADER_LINKS;
-  html_links navigation[] = 
-    {{"", navigation_links, ASIZE(navigation_links), MAIN_MENU}};
 
   void *arg[1];
-
-  navigation_links[HL_LANGUAGES_INDEX].active = 0;
 
   snprintf(fname, FILEPATH_MAX, "%s/"LANGUAGES_INDEX_NAME".html", config.dir);
   html = open_write(fname, "chameleon_languages_index");
@@ -1476,7 +1434,7 @@ void chameleon_languages_index(config_t config)
   langs = FcStrListCreate(strset);
 
   arg[0] = langs;
-  chameleon_page(html, LANGUAGES_INDEX, path, navigation, 1,
+  chameleon_page(html, LANGUAGES_INDEX, path,
                  content_languages_index, config, arg);
 
   fclose(html);
@@ -1578,9 +1536,6 @@ void chameleon_language_fonts_indexes(config_t config)
      {{LANGUAGES_INDEX, LANGUAGES_INDEX_NAME".html", LANGUAGES_INDEX_DESC, 1}, 
       {NULL, NULL, NULL, 0}}; 
   const html_links path = {"../", path_links, ASIZE(path_links), ""} ;
-  html_link navigation_links[] = HEADER_LINKS;
-  html_links navigation[] = 
-    {{"../", navigation_links, ASIZE(navigation_links), MAIN_MENU}};
 
   void *arg[1];
 
@@ -1612,7 +1567,7 @@ void chameleon_language_fonts_indexes(config_t config)
     path_links[1].active = 0;
 
     arg[0] = lang;
-    chameleon_page(html, title, path, navigation, 1,
+    chameleon_page(html, title, path, 
                    content_language_font_index, config, arg);
 
     fclose(html);
@@ -1708,13 +1663,8 @@ void chameleon_fontformats_index(config_t config)
   html_link path_links[] =
      {{FONTFORMATS_INDEX, FONTFORMATS_INDEX_NAME".html", FONTFORMATS_INDEX_DESC, 0}};
   html_links path = {"", path_links, ASIZE(path_links), ""};
-  html_link navigation_links[] = HEADER_LINKS;
-  html_links navigation[] = 
-    {{"", navigation_links, ASIZE(navigation_links), MAIN_MENU}};
 
   void *arg[1];
-
-  navigation_links[HL_FONTFORMATS_INDEX].active = 0;
 
   snprintf(fname, FILEPATH_MAX, "%s/"FONTFORMATS_INDEX_NAME".html", config.dir);
 
@@ -1724,7 +1674,7 @@ void chameleon_fontformats_index(config_t config)
   formats = FcStrListCreate(strset);
 
   arg[0] = formats;
-  chameleon_page(html, FONTFORMATS_INDEX, path, navigation, 1,
+  chameleon_page(html, FONTFORMATS_INDEX, path,
              content_fontformats_index, config, arg);
 
   fclose(html);
@@ -1805,15 +1755,8 @@ void chameleon_scripts_index(config_t config)
   const html_link path_links[] =
      {{SCRIPTS_INDEX, SCRIPTS_INDEX_NAME".html", LANGUAGES_INDEX_DESC, 0}};
   const html_links path = {"", path_links, ASIZE(path_links), ""};
-  html_link navigation_links[] = HEADER_LINKS;
-  html_link index_navigation[] = {{COLLECTIONS, "#collections", "", 0}};
-  html_links navigation[] = 
-    {{"", navigation_links, ASIZE(navigation_links), MAIN_MENU},
-     {"", index_navigation,  1, "Navigation"}};
 
   void *arg[1];
-
-  navigation_links[HL_SCRIPTS_INDEX].active = 0;
 
   snprintf(fname, FILEPATH_MAX, "%s/"SCRIPTS_INDEX_NAME".html", config.dir);
 
@@ -1831,15 +1774,13 @@ void chameleon_scripts_index(config_t config)
       if (script_stat[s][f] >= SCRIPTS_COVERAGE_MIN)
       {
         supported_scripts[sup++] = script;
-        if (script_is_collection(script))
-          index_navigation[0].active = 1;
         break;
       }
     }
   }
 
   arg[0] = supported_scripts;
-  chameleon_page(html, SCRIPTS_INDEX, path, navigation, 2,
+  chameleon_page(html, SCRIPTS_INDEX, path,
              content_scripts_index, config, arg);
 
   fclose(html);
@@ -1969,9 +1910,6 @@ void chameleon_script_fonts_indexes(config_t config)
      {{SCRIPTS_INDEX, SCRIPTS_INDEX_NAME".html", SCRIPTS_INDEX_DESC, 1}, 
       {NULL, NULL, NULL, 0}}; 
   const html_links path = {"../", path_links, ASIZE(path_links), ""};
-  html_link navigation_links[] = HEADER_LINKS;
-  html_links navigation[] = 
-    {{"../", navigation_links, ASIZE(navigation_links), MAIN_MENU}};
 
   void *arg[4];
 
@@ -2037,7 +1975,7 @@ void chameleon_script_fonts_indexes(config_t config)
     path_links[1].active = 0;
 
     arg[0] = ranking; arg[1] = svalues; arg[2] = &nranks; arg[3] = &s;
-    chameleon_page(html, title, path, navigation, 1,
+    chameleon_page(html, title, path, 
                    content_script_font_index, config, arg);
     fclose(html);
   }
@@ -2072,13 +2010,8 @@ void chameleon_thanks(config_t config)
   const html_link path_links[] =
      {{THANKS, "thanks.html", THANKS_DESC, 0}};
   const html_links path = {"", path_links, ASIZE(path_links), ""};
-  html_link navigation_links[] = HEADER_LINKS;
-  html_links navigation[] = 
-    {{"", navigation_links, ASIZE(navigation_links), MAIN_MENU}};
 
   void *arg[2];
-
-  navigation_links[HL_THANKS].active = 0;
 
   snprintf(fname, FILEPATH_MAX, "%s/thanks.html", config.dir);
 
@@ -2086,7 +2019,7 @@ void chameleon_thanks(config_t config)
 
   arg[0] = thanks_html_text();
   arg[1] = "    ";
-  chameleon_page(html, THANKS, path, navigation, 1,
+  chameleon_page(html, THANKS, path,
                  content_raw_html_text, config, arg);
 
   fclose(html);
@@ -2141,13 +2074,8 @@ void chameleon_blocks_index(config_t config)
   const html_link path_links[] =
      {{BLOCKS_INDEX, BLOCKS_INDEX_NAME".html", BLOCKS_INDEX_DESC, 0}};
   const html_links path = {"", path_links, ASIZE(path_links), ""};
-  html_link navigation_links[] = HEADER_LINKS;
-  html_links navigation[] =
-    {{"", navigation_links, ASIZE(navigation_links), MAIN_MENU}};
 
   void *arg[1];
-
-  navigation_links[HL_BLOCKS_INDEX].active = 0;
 
   snprintf(fname, FILEPATH_MAX, "%s/"BLOCKS_INDEX_NAME".html", config.dir);
 
@@ -2167,7 +2095,7 @@ void chameleon_blocks_index(config_t config)
       }
   }
   arg[0] = supported_blocks; 
-  chameleon_page(html, BLOCKS_INDEX, path, navigation, 1,
+  chameleon_page(html, BLOCKS_INDEX, path,
                  content_blocks_index, config, arg);
 
   fclose(html);
@@ -2266,9 +2194,6 @@ void chameleon_block_fonts_indexes(config_t config)
      {{BLOCKS_INDEX, BLOCKS_INDEX_NAME".html", BLOCKS_INDEX_DESC, 1},
       {NULL, NULL, NULL, 0}};
   const html_links path = {"../", path_links, ASIZE(path_links), ""};
-  html_link navigation_links[] = HEADER_LINKS;
-  html_links navigation[] =
-    {{"../", navigation_links, ASIZE(navigation_links), MAIN_MENU}};
 
   void *arg[4];
 
@@ -2332,7 +2257,7 @@ void chameleon_block_fonts_indexes(config_t config)
     path_links[1].active = 0;
 
     arg[0] = ranking; arg[1] = svalues; arg[2] = &nranks; arg[3] = &b;
-    chameleon_page(html, title, path, navigation, 1,
+    chameleon_page(html, title, path,
                content_block_font_index, config, arg);
     fclose(html);
   }
