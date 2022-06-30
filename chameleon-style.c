@@ -535,7 +535,7 @@ static void content_family_styles_indexes(FILE *html, config_t config,
 
 
   fprintf(html,
-          "          <h2><table style=\"width:100%\"><tr><td>"FAMILY_STYLES"</td>\n");
+          "          <table style=\"width:100%\"><tr><td><h2>"FAMILY_STYLES"</h2></td>\n");
 
   if (config.install_type == YMP && pi.name[0])
   {
@@ -545,7 +545,7 @@ static void content_family_styles_indexes(FILE *html, config_t config,
 	    "<a style=\"font-size:medium;font-weight:bold;color:#690\""
             " href=../%s>1&nbsp;Click Install</a></td>", filename);
   }
-  fprintf(html, "</tr></table></h2>\n");
+  fprintf(html, "</tr></table>\n");
 	  
   fprintf(html, 
 	  "    <div class=\"table-responsive\">\n");
