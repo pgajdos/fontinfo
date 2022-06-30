@@ -515,6 +515,10 @@ static void content_family_styles_indexes(FILE *html, config_t config,
   assert(fcinfo_get_translated_string(styleset->fonts[0], FC_FAMILY, 
                                       LANG_EN, &family)
          == FcResultMatch);
+  assert(FcPatternGetString(styleset->fonts[0], FC_FILE, 0, &file)
+             == FcResultMatch);
+  file_from_package((char *)file, &pi);
+
 
   fprintf(html, 
           "          <h1>"FAMILY_OVERVIEW"</h1>\n");
@@ -549,8 +553,18 @@ static void content_family_styles_indexes(FILE *html, config_t config,
 
 
   fprintf(html,
-          "          <h2>"FAMILY_STYLES"</h2>\n");
+          "          <h2><table style=\"width:100%\"><tr><td>"FAMILY_STYLES"</td>\n");
 
+  if (config.install_type == YMP && pi.name[0])
+  {
+    generate_ymp(config, pi.name, filename);
+    fprintf(html,
+            "              <td style=\"text-align:right\">"
+	    "<a style=\"font-size:medium;font-weight:bold;color:#690\""
+            " href=../%s>1&nbsp;Click Install</a></td>", filename);
+  }
+  fprintf(html, "</tr></table></h2>\n");
+	  
   fprintf(html, 
 	  "    <div class=\"table-responsive\">\n");
   fprintf(html, 
@@ -564,10 +578,6 @@ static void content_family_styles_indexes(FILE *html, config_t config,
     remove_spaces_and_slashes(family_ww);    
     snprintf(style_ww, STYLE_NAME_LEN_MAX, "%s", (char *)style);
     remove_spaces_and_slashes(style_ww);
-
-    assert(FcPatternGetString(styleset->fonts[s], FC_FILE, 0, &file)
-             == FcResultMatch);
-    file_from_package((char *)file, &pi);
 
     fprintf(html, 
             "            <tr>\n");
@@ -622,17 +632,6 @@ static void content_family_styles_indexes(FILE *html, config_t config,
                        SPECIMEN_WIDTH_MAX, NULL, NULL);
     fprintf(html, 
             "              </td>\n");
-    if (config.install_type == YMP && pi.name[0])
-    {
-      generate_ymp(config, pi.name, filename);
-      fprintf(html,
-              "              <td style=\"vertical-align:middle\">\n");
-      fprintf(html,
-              "              <a style=\"font-weight:bold;color:#690\""
-              " href=../%s>1&nbsp;Click Install</a>", filename);
-      fprintf(html,
-              "              </td>\n");
-    }
     fprintf(html, 
             "            </tr>\n");    
   }
