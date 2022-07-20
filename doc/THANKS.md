@@ -15,6 +15,7 @@ Ideas, bugreports
 * Marguerite Su
 * Alin Marin Elena
 * Behdad Esfahbod
+* Jacob Michalskie
 
 Patches, data
 -------------
