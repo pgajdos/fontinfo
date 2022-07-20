@@ -406,7 +406,7 @@ static void content_families_index(FILE *html, config_t config,
             "            </tr>\n");
   }
   fprintf(html, 
-          "    </table>\n");
+          "    </table></div>\n");
 
   return;
 }
